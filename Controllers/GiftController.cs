@@ -84,6 +84,8 @@ namespace server.Controllers
         }
 
         [HttpPut("lottery/{giftId}")]
+        [ProducesResponseType(typeof(GiftResponseDto), StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult> Lottery([FromRoute] int giftId)
         {
             try
@@ -98,6 +100,9 @@ namespace server.Controllers
 
         }
         [HttpGet("filterGifts")]
+        [ProducesResponseType(typeof(GiftResponseDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+
         public async Task<ActionResult<IEnumerable<GiftResponseDto>>> FilterGifts([FromQuery] string? giftName, [FromQuery] string? donorName, [FromQuery] int? buyerCount)
         {
             var gifts = await _giftService.FilterGifts(giftName,donorName,buyerCount);

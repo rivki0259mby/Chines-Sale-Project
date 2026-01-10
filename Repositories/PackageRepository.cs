@@ -61,7 +61,7 @@ namespace server.Repositories
                 "most_purchased" => query.OrderByDescending(p => p.Purchases.Count(pr => !pr.IsDraft)),
                 _ => query.OrderBy(p => p.Id)
             };
-            return await query.ToArrayAsync();
+            return await query.ToListAsync();
 
         }
 

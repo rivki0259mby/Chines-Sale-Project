@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using server.DTOs;
 using server.Interfaces;
+using server.Services;
 
 namespace server.Controllers
 {
@@ -72,7 +73,6 @@ namespace server.Controllers
             try
             {
                 var package = await _packageService.UpdatePackage(id, updateDto);
-                //return CreatedAtAction(nameof(GetById), new { id = category.Id, category });
                 return Ok(package);
             }
             catch (ArgumentException ex)
@@ -80,5 +80,14 @@ namespace server.Controllers
                 return BadRequest(new { messege = ex.Message });
             }
         }
+        [HttpGet("sortBy")]
+        [ProducesResponseType(typeof(PackageResponseDtos), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<IEnumerable<PackageResponseDtos>>> SortPackages([FromQuery] string ? sortBy)
+        {
+            var packages = await _packageService.SortPackages(sortBy);
+            return Ok(packages);
+        }
+
     }
 }

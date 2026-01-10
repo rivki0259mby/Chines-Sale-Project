@@ -1,6 +1,7 @@
 ﻿using server.DTOs;
 using server.Interfaces;
 using server.Models;
+using server.Repositories;
 
 namespace server.Services
 {
@@ -52,6 +53,12 @@ namespace server.Services
             var updatedCategory = await _packageRepository.UpdatePackage(existingPackage);
             return MapToResponeseDto(updatedCategory);
         }
+        public async Task<IEnumerable<PackageResponseDtos>> SortPackages(string? sortBy)
+        {
+            var packages = await _packageRepository.SortPackages(sortBy);
+            return packages.Select(MapToResponeseDto);
+
+        }
 
         private static PackageResponseDtos MapToResponeseDto(Package package)
         {
@@ -64,5 +71,6 @@ namespace server.Services
             };
 
         }
+       
     }
 }
