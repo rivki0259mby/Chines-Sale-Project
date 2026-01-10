@@ -3,15 +3,21 @@
     public class Gift
     {
         public int Id { get; set; }
-        public Category Category { get; set; }
         public string Name { get; set; }
         public string ?Description { get; set; }
-        public double Price { get; set; } = 10;
+        public decimal Price { get; set; } = 10;
         public string? ImageUrl { get; set; }
-        public int NumberOfWinner { get; set; } = 1;
-        public Donor Donor { get; set; }
+        public int CategoryId { get; set; }
+        public string DonorId { get; set; }
+        public string? WinnerId { get; set; }
+        public bool IsDrown { get; set; } = false;
 
-        public ICollection<Buyer> Winners { get; set; } = null;
+        public ICollection<Ticket> Tickets { get; set; } = new List<Ticket>();
+
+
+        public Category Category { get; set; }
+        public Donor Donor { get; set; }
+        public User ?Winner { get; set; }
 
     }
 }
