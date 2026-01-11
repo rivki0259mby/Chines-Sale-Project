@@ -1,6 +1,6 @@
 ﻿namespace server.DTOs
 {
-    public class LogintReauestDto
+    public class LogintRequestDto
     {
         public string Username { get; set; }
         public string Password { get; set; }

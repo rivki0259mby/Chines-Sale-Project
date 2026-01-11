@@ -9,9 +9,12 @@ namespace server.Services
 
     {
         private readonly ICategoryRepository _categoryRepository;
-        public CategoryService(ICategoryRepository categoryRepository)
+        private readonly ILogger<CategoryService> _logger;
+
+        public CategoryService(ICategoryRepository categoryRepository, ILogger<CategoryService> logger)
         {
             _categoryRepository = categoryRepository;
+            _logger = logger;
         }
         public async Task<CategoryResponseDto> AddCategory(CategoryCreateDto categoryDto)
         {
@@ -20,7 +23,9 @@ namespace server.Services
                 Name = categoryDto.Name,
                 Description = categoryDto.Description,
             };
+
             var createdCategory = await _categoryRepository.AddCategory(category);
+            _logger.LogInformation("Category created with ID: {CategoryId}", createdCategory.Id);
             return MapToResponeseDto(createdCategory);
         }
 

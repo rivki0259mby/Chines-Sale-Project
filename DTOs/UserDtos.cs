@@ -20,7 +20,10 @@ namespace server.DTOs
     }
     public class UserUpdateDto
     {
+        [Required, MaxLength(100)]
         public string FullName { get; set; }
+        [Required, MinLength(5)]
+        public string UserName { get; set; }
    
         [Required, EmailAddress]
         public string Email { get; set; }

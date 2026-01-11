@@ -12,10 +12,13 @@ namespace server.Controllers
     public class PurchaseController : ControllerBase
     {
         private readonly IPurchaseService _purchaseService;
+        private readonly ILogger<PurchaseController> _logger;
 
-        public PurchaseController(IPurchaseService purchaseService)
+
+        public PurchaseController(IPurchaseService purchaseService, ILogger<PurchaseController> logger)
         {
             _purchaseService = purchaseService;
+            _logger = logger;
         }
 
         [HttpGet]

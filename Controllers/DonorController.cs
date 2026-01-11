@@ -10,10 +10,13 @@ namespace server.Controllers
     public class DonorController : ControllerBase
     {
         private readonly IDonorService _donorService;
+        private readonly ILogger<DonorController> _logger;
 
-        public DonorController(IDonorService donorService)
+
+        public DonorController(IDonorService donorService, ILogger<DonorController> logger)
         {
             _donorService = donorService;
+            _logger = logger;
         }
 
         [HttpGet]

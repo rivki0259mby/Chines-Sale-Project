@@ -10,10 +10,13 @@ namespace server.Controllers
     public class TicketController : ControllerBase
     {
         private readonly ITicketService _ticketService;
+        private readonly ILogger<TicketController> _logger;
 
-        public TicketController(ITicketService ticketService)
+
+        public TicketController(ITicketService ticketService, ILogger<TicketController> logger)
         {
             _ticketService = ticketService;
+            _logger = logger;
         }
 
         [HttpGet]

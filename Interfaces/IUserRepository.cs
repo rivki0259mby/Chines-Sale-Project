@@ -11,7 +11,7 @@ namespace server.Interfaces
         Task<User> UpdateUser(User user);
         Task<bool> DeleteUser(string id);
         Task<bool> Exists(string id);
-        Task<bool> EmailExist(string email);
+        Task<bool> UserNameExists(string email);
 
     }
 }

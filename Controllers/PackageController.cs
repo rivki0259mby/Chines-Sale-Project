@@ -11,10 +11,13 @@ namespace server.Controllers
     public class PackageController : ControllerBase
     {
         private readonly IPackageService _packageService;
+        private readonly ILogger<PackageController> _logger;
 
-        public PackageController(IPackageService packageService)
+
+        public PackageController(IPackageService packageService, ILogger<PackageController> logger)
         {
             _packageService = packageService;
+            _logger = logger;
         }
 
         [HttpGet]

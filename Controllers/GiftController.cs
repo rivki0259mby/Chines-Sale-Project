@@ -12,10 +12,13 @@ namespace server.Controllers
     public class GiftController : ControllerBase
     {
         private readonly IGiftService _giftService;
+        private readonly ILogger<GiftController> _logger;
 
-        public GiftController(IGiftService giftService)
+
+        public GiftController(IGiftService giftService, ILogger<GiftController> logger)
         {
             _giftService = giftService;
+            _logger = logger;
         }
 
         [HttpGet]

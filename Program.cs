@@ -1,57 +1,169 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi;
+using Serilog;
 using server.Data;
 using server.Interfaces;
 using server.Repositories;
 using server.Services;
+using StoreApi.Services;
+using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using server.Middleware;
+using Microsoft.OpenApi.Models;
 
-var builder = WebApplication.CreateBuilder(args);
 
+
+
+
+try
+{
+    Log.Information("statring stote Api application");
+
+    var builder = WebApplication.CreateBuilder(args);
+
+    builder.Host.UseSerilog();
 // Add services to the container.
 builder.Services.AddControllers();
+    builder.Services.AddEndpointsApiExplorer();
+    builder.Services.AddSwaggerGen(options =>
+    {
+        options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+        {
+            Name = "Authorization",
+            Type = SecuritySchemeType.Http,
+            Scheme = "Bearer",
+            BearerFormat = "JWT",
+            In = ParameterLocation.Header,
+            Description = "Enter your JWT token in the format: Bearer {token}"
+        });
 
-//Database Context
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(
-        "Server=DESKTOP-FM7OT9G;DataBase=ChineseSaleDb;Integrated Security=SSPI;Persist Security Info=False;TrustServerCertificate=True"
-        )
-);
-builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
-builder.Services.AddScoped<ICategoryService, CategoryService>();
+        options.AddSecurityRequirement(new OpenApiSecurityRequirement
+        {
+        {
 
-builder.Services.AddScoped<IDonorRepository, DonorRepository>();
-builder.Services.AddScoped<IDonorService, DonorService>();
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            new string[] {}
+        }
+        });
+    });
 
-builder.Services.AddScoped<IGiftRepository, GiftRepository>();
-builder.Services.AddScoped<IGiftService, GiftService>();
 
-builder.Services.AddScoped<IPurchaseRepository, PurchaseRepository>();
-builder.Services.AddScoped<IPurchaseService, PurchaseService>();
 
-builder.Services.AddScoped<ITicketRepository, TicketRepository>();
-builder.Services.AddScoped<ITicketService, TicketService>();
 
-builder.Services.AddScoped<IPackageRepository, PackageRepository>();
-builder.Services.AddScoped<IPackageService, PackageService>();
+    //Database Context
+    builder.Services.AddDbContext<ApplicationDbContext>(options =>
+        options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+    builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+    builder.Services.AddScoped<ICategoryService, CategoryService>();
 
-var app = builder.Build();
+    builder.Services.AddScoped<IDonorRepository, DonorRepository>();
+    builder.Services.AddScoped<IDonorService, DonorService>();
 
-if (app.Environment.IsDevelopment())
+    builder.Services.AddScoped<IGiftRepository, GiftRepository>();
+    builder.Services.AddScoped<IGiftService, GiftService>();
+
+    builder.Services.AddScoped<IPurchaseRepository, PurchaseRepository>();
+    builder.Services.AddScoped<IPurchaseService, PurchaseService>();
+
+    builder.Services.AddScoped<ITicketRepository, TicketRepository>();
+    builder.Services.AddScoped<ITicketService, TicketService>();
+
+    builder.Services.AddScoped<IPackageRepository, PackageRepository>();
+    builder.Services.AddScoped<IPackageService, PackageService>();
+
+    builder.Services.AddScoped<IUserRepository, UserRepository>();
+    builder.Services.AddScoped<IUserService, UserService>();
+
+    builder.Services.AddScoped<ITokenService, TokenService>();
+
+
+
+    var jwtSettings = builder.Configuration.GetSection("JwtSettings");
+    var secretKey = jwtSettings["SecretKey"] ?? throw new InvalidOperationException("JWT SecretKey is not configured");
+
+    builder.Services.AddAuthentication(options =>
+    {
+        options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+        options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    })
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = jwtSettings["Issuer"],
+            ValidAudience = jwtSettings["Audience"],
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey)),
+            ClockSkew = TimeSpan.Zero
+        };
+
+        options.Events = new JwtBearerEvents
+        {
+            OnAuthenticationFailed = context =>
+            {
+                Log.Warning("JWT Authentication failed: {Error}", context.Exception.Message);
+                return Task.CompletedTask;
+            },
+            OnTokenValidated = context =>
+            {
+                var userId = context.Principal?.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+                Log.Debug("JWT token validated for user {UserId}", userId);
+                return Task.CompletedTask;
+            }
+        };
+    });
+    builder.Services.AddAuthorization();
+
+    builder.Services.AddControllers()
+        .AddJsonOptions(options =>
+        {
+            options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;
+        });
+
+
+
+    var app = builder.Build();
+
+    app.UseRequestLogging();
+
+    app.UseRateLimiting();
+
+
+
+
+    if (app.Environment.IsDevelopment())
+    {
+        app.UseSwagger();
+        app.UseSwaggerUI();
+    }
+
+    // Configure the HTTP request pipeline.
+
+    app.UseHttpsRedirection();
+
+    app.UseAuthorization();
+
+    app.MapControllers();
+
+    Log.Information("Store API is now running");
+    app.Run();
+}catch(Exception ex)
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    Log.Fatal(ex, "Application terminated unexpectedly");
 }
-
-// Configure the HTTP request pipeline.
-
-app.UseHttpsRedirection();
-
-app.UseAuthorization();
-
-app.MapControllers();
-
-
-
-app.Run();
+finally
+{
+    Log.CloseAndFlush();
+}

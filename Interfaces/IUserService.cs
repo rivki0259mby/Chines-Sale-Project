@@ -7,11 +7,10 @@ namespace server.Interfaces
     {
         Task<IEnumerable<UserResponseDto>> GetAll();
         Task<UserResponseDto> GetById(string id);
-        Task<UserResponseDto> GetByUserName(string name);
         Task<UserResponseDto> AddUser(UserCreateDto user);
-        Task<UserResponseDto> UpdateUser(UserUpdateDto user);
+        Task<UserResponseDto> UpdateUser(string id,UserUpdateDto user);
         Task<bool> DeleteUser(string id);
-        Task<bool> Exists(string id);
-        Task<bool> EmailExist(string email);
+        Task<LoginResponseDto> Authenticate(string userName, string password);
+
     }
 }
