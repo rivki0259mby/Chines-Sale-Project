@@ -26,18 +26,40 @@ public class UserService : IUserService
 
     public async Task<IEnumerable<UserResponseDto>> GetAll()
     {
-        var users = await _userRepository.GetAll();
-        return users.Select(MapToResponseDto);
+        _logger.LogInformation("Get / all user called");
+        try
+        {
+            var users = await _userRepository.GetAll();
+            return users.Select(MapToResponseDto);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error occurred while retrieving user");
+            throw;
+        }
+       
     }
 
     public async Task<UserResponseDto?> GetById(string id)
     {
-        var user = await _userRepository.GetById(id);
-        return user != null ? MapToResponseDto(user) : null;
+        _logger.LogInformation("Get / get user : {userId} called", id);
+        try
+        {
+            var user = await _userRepository.GetById(id);
+            return user != null ? MapToResponseDto(user) : null;
+        }
+        catch(Exception ex)
+        {
+            _logger.LogError(ex, "Error occurred while retrieving user by ID");
+            throw;
+        }
+        
     }
 
     public async Task<UserResponseDto> AddUser(UserCreateDto createDto)
     {
+        _logger.LogInformation("Post /add user called");
+
         if (await _userRepository.UserNameExists(createDto.UserName))
         {
             throw new ArgumentException($"user {createDto.UserName} is already registered.");
@@ -52,69 +74,107 @@ public class UserService : IUserService
             PhoneNumber = createDto.PhoneNumber
             
         };
+        try
+        {
+            var createdUser = await _userRepository.AddUser(user);
+            _logger.LogInformation("User created with ID: {UserId}", createdUser.Id);
 
-        var createdUser = await _userRepository.AddUser(user);
-        _logger.LogInformation("User created with ID: {UserId}", createdUser.Id);
-
-        return MapToResponseDto(createdUser);
+            return MapToResponseDto(createdUser);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error occurred while add user");
+            throw;
+        }
+       
     }
 
     public async Task<UserResponseDto?> UpdateUser(string id, UserUpdateDto updateDto)
     {
-        var existingUser = await _userRepository.GetById(id);
-        if (existingUser == null) return null;
-
-        if (updateDto.UserName != null && updateDto.UserName != existingUser.UserName)
+        _logger.LogInformation("PUT / update user : {userId} called", id);
+        try
         {
-            if (await _userRepository.UserNameExists(updateDto.UserName))
+            var existingUser = await _userRepository.GetById(id);
+            if (existingUser == null) return null;
+
+            if (updateDto.UserName != null && updateDto.UserName != existingUser.UserName)
             {
-                throw new ArgumentException($"user {updateDto.UserName} is already registered.");
+                if (await _userRepository.UserNameExists(updateDto.UserName))
+                {
+                    throw new ArgumentException($"user {updateDto.UserName} is already registered.");
+                }
+                existingUser.UserName = updateDto.UserName;
             }
-            existingUser.UserName = updateDto.UserName;
+
+            if (updateDto.FullName != null) existingUser.FullName = updateDto.FullName;
+            if (updateDto.Email != null) existingUser.Email = updateDto.Email;
+            if (updateDto.PhoneNumber != null) existingUser.PhoneNumber = updateDto.PhoneNumber;
+
+            var updatedUser = await _userRepository.UpdateUser(existingUser);
+            return updatedUser != null ? MapToResponseDto(updatedUser) : null;
         }
-
-        if (updateDto.FullName != null) existingUser.FullName = updateDto.FullName;
-        if (updateDto.Email != null) existingUser.Email = updateDto.Email;
-        if (updateDto.PhoneNumber != null) existingUser.PhoneNumber = updateDto.PhoneNumber;
-
-        var updatedUser = await _userRepository.UpdateUser(existingUser);
-        return updatedUser != null ? MapToResponseDto(updatedUser) : null;
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error occurred while updating user");
+            throw;
+        }
+        
     }
 
     public async Task<bool> DeleteUser(string id)
     {
-        return await _userRepository.DeleteUser(id);
+        _logger.LogInformation("Post / delete user {userId} deleted", id);
+        try
+        {
+            return await _userRepository.DeleteUser(id);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error occurred while deleting user");
+            throw;
+        }
+       
     }
 
     public async Task<LoginResponseDto?> Authenticate(string userName, string password)
     {
-        var user = await _userRepository.GetByUserName(userName);
-
-        if (user == null)
+        _logger.LogInformation("Post / Authenticate ");
+        try
         {
-            _logger.LogWarning("Login attempt failed: User not found for userName {UserName}", userName);
-            return null;
+            var user = await _userRepository.GetByUserName(userName);
+
+            if (user == null)
+            {
+                _logger.LogWarning("Login attempt failed: User not found for userName {UserName}", userName);
+                return null;
+            }
+
+            var hashedPassword = HashPassword(password);
+            if (user.Password != hashedPassword)
+            {
+                _logger.LogWarning("Login attempt failed: Invalid password for userName {UserName}", userName);
+                return null;
+            }
+
+            var token = _tokenService.GenerateToken(user.Id, user.Email, user.UserName);
+            var expiryMinutes = _configuration.GetValue<int>("JwtSettings:ExpiryMinutes", 60);
+
+            _logger.LogInformation("User {UserId} authenticated successfully", user.Id);
+
+            return new LoginResponseDto
+            {
+                Token = token,
+                TokenType = "Bearer",
+                ExpiresIn = expiryMinutes * 60,
+                User = MapToResponseDto(user)
+            };
         }
-
-        var hashedPassword = HashPassword(password);
-        if (user.Password != hashedPassword)
+        catch(Exception ex)
         {
-            _logger.LogWarning("Login attempt failed: Invalid password for userName {UserName}", userName);
-            return null;
+            _logger.LogError(ex, "Error occurred while Authenticate");
+            throw;
         }
-
-        var token = _tokenService.GenerateToken(user.Id, user.Email, user.UserName);
-        var expiryMinutes = _configuration.GetValue<int>("JwtSettings:ExpiryMinutes", 60);
-
-        _logger.LogInformation("User {UserId} authenticated successfully", user.Id);
-
-        return new LoginResponseDto
-        {
-            Token = token,
-            TokenType = "Bearer",
-            ExpiresIn = expiryMinutes * 60, 
-            User = MapToResponseDto(user)
-        };
+        
     }
 
     private static UserResponseDto MapToResponseDto(User user)

@@ -12,8 +12,8 @@ using server.Data;
 namespace server.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20260101200329_InitialCreate2")]
-    partial class InitialCreate2
+    [Migration("20260111203034_AddNewModelsAndChanges")]
+    partial class AddNewModelsAndChanges
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,21 @@ namespace server.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("PackagePurchase", b =>
+                {
+                    b.Property<int>("PackagesId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PurchasesId")
+                        .HasColumnType("int");
+
+                    b.HasKey("PackagesId", "PurchasesId");
+
+                    b.HasIndex("PurchasesId");
+
+                    b.ToTable("PurchasePackages", (string)null);
+                });
 
             modelBuilder.Entity("server.Models.Category", b =>
                 {
@@ -54,7 +69,6 @@ namespace server.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Email")
-                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
@@ -123,6 +137,34 @@ namespace server.Migrations
                     b.HasIndex("WinnerId");
 
                     b.ToTable("Gifts");
+                });
+
+            modelBuilder.Entity("server.Models.Package", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<int>("Price")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quentity")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Packages");
                 });
 
             modelBuilder.Entity("server.Models.Purchase", b =>
@@ -210,7 +252,22 @@ namespace server.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Buyers");
+                    b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("PackagePurchase", b =>
+                {
+                    b.HasOne("server.Models.Package", null)
+                        .WithMany()
+                        .HasForeignKey("PackagesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("server.Models.Purchase", null)
+                        .WithMany()
+                        .HasForeignKey("PurchasesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("server.Models.Gift", b =>

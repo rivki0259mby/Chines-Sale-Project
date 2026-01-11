@@ -18,42 +18,92 @@ namespace server.Services
         }
         public async Task<CategoryResponseDto> AddCategory(CategoryCreateDto categoryDto)
         {
+            _logger.LogInformation("Post /add category called");
+            
             var category = new Category
             {
                 Name = categoryDto.Name,
                 Description = categoryDto.Description,
             };
-
-            var createdCategory = await _categoryRepository.AddCategory(category);
-            _logger.LogInformation("Category created with ID: {CategoryId}", createdCategory.Id);
-            return MapToResponeseDto(createdCategory);
+            try
+            {
+                var createdCategory = await _categoryRepository.AddCategory(category);
+                _logger.LogInformation("category created with ID: {categoryId}", createdCategory.Id);
+                return MapToResponeseDto(createdCategory);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error occurred while adding category");
+                throw;
+            }
         }
 
         public async Task<bool> DeleteCategory(int id)
         {
-            return await _categoryRepository.DeleteCategory(id);
+            _logger.LogInformation("Post / delete category {categoryId} deleted", id);
+            try
+            {
+                return await _categoryRepository.DeleteCategory(id);
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error occurred while deleting category");
+                throw;
+            }
         }
 
         public async Task<IEnumerable<CategoryResponseDto>> GetAll()
         {
-            var categories = await _categoryRepository.GetAll();
-            return categories.Select(MapToResponeseDto);
+            _logger.LogInformation("Get / all category called");
+            try
+            {
+                var categories = await _categoryRepository.GetAll();
+                return categories.Select(MapToResponeseDto);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error occurred while retrieving categories");
+                throw;
+            }
+            
         }
 
         public async Task<CategoryResponseDto> GetById(int id)
         {
-            var category = await _categoryRepository.GetById(id);
-            return category != null ? MapToResponeseDto(category) : null;
+            _logger.LogInformation("Get / get category : {categoryId} called",id);
+
+            try
+            {
+                var category = await _categoryRepository.GetById(id);
+                return category != null ? MapToResponeseDto(category) : null;
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError(ex, "Error occurred while retrieving category by ID");
+                throw;
+            }
+           
         }
 
         public async Task<CategoryResponseDto> UpdateCategory(int categoryId, CategoryUpdateDto categoryDto)
         {
-            var existingCategory = await _categoryRepository.GetById(categoryId);
-            if (existingCategory == null)
-                return null;
-            existingCategory.Name = categoryDto.Name;
-            var updatedCategory = await _categoryRepository.UpdateCategory(existingCategory);
-            return MapToResponeseDto(updatedCategory);
+            _logger.LogInformation("PUT / update category : {categoryId} called", categoryId);
+            try
+            {
+                var existingCategory = await _categoryRepository.GetById(categoryId);
+                if (existingCategory == null)
+                    return null;
+                existingCategory.Name = categoryDto.Name;
+                var updatedCategory = await _categoryRepository.UpdateCategory(existingCategory);
+                return MapToResponeseDto(updatedCategory);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error occurred while updating category");
+                throw;
+            }
+            
         }
 
         private static CategoryResponseDto MapToResponeseDto(Category category)

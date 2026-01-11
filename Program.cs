@@ -1,6 +1,5 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi;
 using Serilog;
 using server.Data;
 using server.Interfaces;
@@ -12,19 +11,13 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using server.Middleware;
 using Microsoft.OpenApi.Models;
 
-
-
-
-
 try
 {
     Log.Information("statring stote Api application");
-
     var builder = WebApplication.CreateBuilder(args);
-
     builder.Host.UseSerilog();
-// Add services to the container.
-builder.Services.AddControllers();
+    // Add services to the container.
+    builder.Services.AddControllers();
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen(options =>
     {
@@ -54,14 +47,14 @@ builder.Services.AddControllers();
         }
         });
     });
-
-
-
-
     //Database Context
+    //builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    //options.UseSqlServer(
+    //     "Server=DESKTOP-IN2P6D4;DataBase=ChineseSaleDb;Integrated Security=SSPI;Persist Security Info=False;TrustServerCertificate=True"
+    //     //"Server=srv2\\pupils;DataBase=ChineseSaleDb216306829;Integrated Security=SSPI;Persist Security Info=False;TrustServerCertificate=True"
+    //    )
     builder.Services.AddDbContext<ApplicationDbContext>(options =>
         options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-
     builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
     builder.Services.AddScoped<ICategoryService, CategoryService>();
 
@@ -85,8 +78,8 @@ builder.Services.AddControllers();
 
     builder.Services.AddScoped<ITokenService, TokenService>();
 
-
-
+    builder.Services.AddEndpointsApiExplorer();
+    builder.Services.AddSwaggerGen();
     var jwtSettings = builder.Configuration.GetSection("JwtSettings");
     var secretKey = jwtSettings["SecretKey"] ?? throw new InvalidOperationException("JWT SecretKey is not configured");
 
@@ -131,17 +124,7 @@ builder.Services.AddControllers();
         {
             options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;
         });
-
-
-
     var app = builder.Build();
-
-    app.UseRequestLogging();
-
-    app.UseRateLimiting();
-
-
-
 
     if (app.Environment.IsDevelopment())
     {
@@ -159,7 +142,8 @@ builder.Services.AddControllers();
 
     Log.Information("Store API is now running");
     app.Run();
-}catch(Exception ex)
+}
+catch (Exception ex)
 {
     Log.Fatal(ex, "Application terminated unexpectedly");
 }

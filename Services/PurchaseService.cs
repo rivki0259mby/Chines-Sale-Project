@@ -7,123 +7,236 @@ namespace server.Services
     public class PurchaseService:IPurchaseService
     {
         private readonly IPurchaseRepository _purchaseRepository;
+        private readonly ILogger<PurchaseService> _logger;
         
         
-        public PurchaseService(IPurchaseRepository purchaseRepository)
+        public PurchaseService(IPurchaseRepository purchaseRepository,ILogger<PurchaseService> logger)
         {
             _purchaseRepository = purchaseRepository;
+            _logger = logger;
            
         }
         public async Task<PurchaseResponseDtos> AddPurchase(PurchaseCreateDtos PurchaseDto)
         {
+            _logger.LogInformation("Post /add purchase called");
+
             var purchase = new Purchase
             {
                 BuyerId = PurchaseDto.BuyerId,
                 TotalAmount = PurchaseDto.TotalAmount,
                 OrderDate = PurchaseDto.OrderDate,
             };
-            var createdPurchase = await _purchaseRepository.AddPurchase(purchase);
-            return MapToResponeseDto(createdPurchase);
+            try
+            {
+                var createdPurchase = await _purchaseRepository.AddPurchase(purchase);
+                return MapToResponeseDto(createdPurchase);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error occurred while adding purchase");
+                throw;
+            }
+            
         }
 
         public async Task<bool> DeletePurchase(int id)
         {
-            return await _purchaseRepository.DeletePurchase(id);
+            _logger.LogInformation("Post / delete purchase {purchaseId} deleted", id);
+            try
+            {
+                return await _purchaseRepository.DeletePurchase(id);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error occurred while deleting purchase");
+                throw;
+            }
+            
         }
 
         public async Task<IEnumerable<PurchaseResponseDtos>> GetAll()
         {
-            var purchases = await _purchaseRepository.GetAll();
-            return purchases.Select(MapToResponeseDto);
+            _logger.LogInformation("Get / all purchase called");
+            try
+            {
+                var purchases = await _purchaseRepository.GetAll();
+                return purchases.Select(MapToResponeseDto);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error occurred while retrieving purchase");
+                throw;
+            }
+           
         }
 
         public async Task<PurchaseResponseDtos> GetById(int id)
         {
-            var purchase = await _purchaseRepository.GetById(id);
-            return purchase != null ? MapToResponeseDto(purchase) : null;
+            _logger.LogInformation("Get / get purchase : {purchaseId} called", id);
+            try
+            {
+                var purchase = await _purchaseRepository.GetById(id);
+                return purchase != null ? MapToResponeseDto(purchase) : null;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error occurred while retrieving purchase by ID");
+                throw;
+            }
+            
         }
 
         public async Task<PurchaseResponseDtos> GetByUserId(string userId)
         {
-            var purchase = await _purchaseRepository.GetByUserId(userId);
-            return purchase != null ? MapToResponeseDto(purchase) : null;
+            _logger.LogInformation("Get / get purchase by user : {userId} called", userId);
+            try
+            {
+                var purchase = await _purchaseRepository.GetByUserId(userId);
+                return purchase != null ? MapToResponeseDto(purchase) : null;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error occurred while retrieving purchase by userID");
+                throw;
+            }
         }
+           
         public async Task<PurchaseResponseDtos> UpdatePurchase(int purchaseId, PurchaseUpdateDtos purchaseDto)
         {
-            var existingPurchase = await _purchaseRepository.GetById(purchaseId);
-            if (existingPurchase == null)
-                return null;
-            existingPurchase.BuyerId = purchaseDto.BuyerId;
-            existingPurchase.TotalAmount = purchaseDto.TotalAmount;
-            existingPurchase.OrderDate = purchaseDto.OrderDate;
-            existingPurchase.IsDraft = purchaseDto.IsDraft;
-            var updatedPurchase = await _purchaseRepository.UpdatePurchase(existingPurchase);
-            return MapToResponeseDto(updatedPurchase);
+            _logger.LogInformation("PUT / update purchase : {purchaseId} called", purchaseId);
+            try
+            {
+                var existingPurchase = await _purchaseRepository.GetById(purchaseId);
+                if (existingPurchase == null)
+                    return null;
+                existingPurchase.BuyerId = purchaseDto.BuyerId;
+                existingPurchase.TotalAmount = purchaseDto.TotalAmount;
+                existingPurchase.OrderDate = purchaseDto.OrderDate;
+                existingPurchase.IsDraft = purchaseDto.IsDraft;
+                var updatedPurchase = await _purchaseRepository.UpdatePurchase(existingPurchase);
+                return MapToResponeseDto(updatedPurchase);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error occurred while updating purchase");
+                throw;
+            }
+            
         }
 
         public async Task<PurchaseResponseDtos> AddTickeToPurchase(int purchaseId, Ticket tikcet)
         {
-            var purchase = await _purchaseRepository.GetById(purchaseId);
-            if (purchase == null) return null;
-
-            if (!purchase.IsDraft)
-                throw new InvalidOperationException("cannot modigy a finalized purchase");
-
-            if (GetRemainingTicketsCount(purchase) <= 0)
+            _logger.LogInformation("POST / add ticket to purchase : {purchaseId} called", purchaseId);
+            try
             {
-                throw new InvalidOperationException("you need to buy a new package");
+                var purchase = await _purchaseRepository.GetById(purchaseId);
+                if (purchase == null) return null;
+
+                if (!purchase.IsDraft)
+                    throw new InvalidOperationException("cannot modigy a finalized purchase");
+
+                if (GetRemainingTicketsCount(purchase) <= 0)
+                {
+                    throw new InvalidOperationException("you need to buy a new package");
+                }
+
+                if (purchase.Tickets.Any(t => t.Id == tikcet.Id))
+                    tikcet.Quantity++;
+
+                var update = await _purchaseRepository.AddTicketToPurchase(purchaseId, tikcet);
+                return MapToResponeseDto(update);
             }
-
-            if (purchase.Tickets.Any(t => t.Id == tikcet.Id))
-                tikcet.Quantity++;
-
-            var update = await _purchaseRepository.AddTicketToPurchase(purchaseId, tikcet);
-            return MapToResponeseDto(update);
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error occurred while add ticket to purchase");
+                throw;
+            }
+            
         }
         public async Task<PurchaseResponseDtos> DeleteTicketFromPurchase(int purchaseId,int ticketId)
         {
-            var purchase = await _purchaseRepository.GetById(purchaseId);
-            if (purchase == null) return null;
+            _logger.LogInformation("POST / delete ticket from purchase : {purchaseId} called", purchaseId);
+            try
+            {
+                var purchase = await _purchaseRepository.GetById(purchaseId);
+                if (purchase == null) return null;
 
-            if (!purchase.IsDraft)
-                throw new InvalidOperationException("cannot modigy a finalized purchase");
+                if (!purchase.IsDraft)
+                    throw new InvalidOperationException("cannot modigy a finalized purchase");
 
-            var update = await _purchaseRepository.DeleteTicketFromPurchase(purchaseId,ticketId);
-            return MapToResponeseDto(update);
+                var update = await _purchaseRepository.DeleteTicketFromPurchase(purchaseId, ticketId);
+                return MapToResponeseDto(update);
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError(ex, "Error occurred while delete ticket from purchase");
+                throw;
+            }
+           
                 
         }
         public async Task<PurchaseResponseDtos> AddPackageToPurchase(int purchaseId, Package package)
         {
-            var purchase = await _purchaseRepository.GetById(purchaseId);
-            if (purchase == null) return null;
+            _logger.LogInformation("POST / add package to purchase : {purchaseId} called", purchaseId);
+            try
+            {
+                var purchase = await _purchaseRepository.GetById(purchaseId);
+                if (purchase == null) return null;
 
-            if (!purchase.IsDraft)
-                throw new InvalidOperationException("cannot modigy a finalized purchase");
+                if (!purchase.IsDraft)
+                    throw new InvalidOperationException("cannot modigy a finalized purchase");
 
 
-            var update = await _purchaseRepository.AddPackageToPurchase(purchaseId, package);
-            return MapToResponeseDto(update);
+                var update = await _purchaseRepository.AddPackageToPurchase(purchaseId, package);
+                return MapToResponeseDto(update);
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError(ex, "Error occurred while add package to purchase");
+                throw;
+            }
+            
         }
         public async Task<PurchaseResponseDtos> DeletePackageFromPurchase(int purchaseId, int packageId)
         {
-            var purchase = await _purchaseRepository.GetById(purchaseId);
-            if (purchase == null) return null;
+            _logger.LogInformation("POST / delet package from purchase : {purchaseId} called", purchaseId);
+            try
+            {
+                var purchase = await _purchaseRepository.GetById(purchaseId);
+                if (purchase == null) return null;
 
-            if (!purchase.IsDraft)
-                throw new InvalidOperationException("cannot modigy a finalized purchase");
+                if (!purchase.IsDraft)
+                    throw new InvalidOperationException("cannot modigy a finalized purchase");
 
 
 
-            var update = await _purchaseRepository.DeletePackageFromPurchase(purchaseId, packageId);
-            return MapToResponeseDto(update);
+                var update = await _purchaseRepository.DeletePackageFromPurchase(purchaseId, packageId);
+                return MapToResponeseDto(update);
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error occurred while delet package from purchase");
+                throw;
+            }
+
 
         }
 
         private int GetRemainingTicketsCount(Purchase purchase)
         {
-            var packageCount = purchase.Packages.Sum(p => p.Quentity);
-            var ticketCount = purchase.Tickets.Sum(t => t.Quantity);
-            return packageCount - ticketCount;
+            _logger.LogInformation("GET / Get Remaining Tickets Count");
+            try
+            {
+                var packageCount = purchase.Packages.Sum(p => p.Quentity);
+                var ticketCount = purchase.Tickets.Sum(t => t.Quantity);
+                return packageCount - ticketCount;
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError(ex, "Error occurred while Get Remaining Tickets Count");
+                throw;
+            }
         }
 
 

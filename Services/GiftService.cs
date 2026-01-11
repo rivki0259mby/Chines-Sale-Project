@@ -7,12 +7,16 @@ namespace server.Services
     public class GiftService:IGiftService
     {
         private readonly IGiftRepository _giftRepository;
-        public GiftService(IGiftRepository giftRepository)
+        private readonly ILogger<GiftService> _logger;
+        public GiftService(IGiftRepository giftRepository, ILogger<GiftService> logger)
         {
             _giftRepository = giftRepository;
+            _logger = logger;
         }
         public async Task<GiftResponseDto> AddGift(CreateGiftDto giftDto)
         {
+            _logger.LogInformation("Post /add gift called");
+
             var gift = new Gift
             {
                 Name = giftDto.Name,
@@ -23,41 +27,91 @@ namespace server.Services
                 DonorId = giftDto.DonorId,
                 WinnerId = giftDto.WinnerId,
             };
-            var createdGift = await _giftRepository.AddGift(gift);
-            return MapToResponeseDto(createdGift);
+            try
+            {
+                var createdGift = await _giftRepository.AddGift(gift);
+                return MapToResponeseDto(createdGift);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error occurred while adding gift");
+                throw;
+            }
         }
+            
 
         public async Task<bool> DeleteGift(int id)
         {
-            return await _giftRepository.DeleteGift(id);
+            _logger.LogInformation("Post / delete gift {giftId} deleted", id);
+            try
+            {
+                return await _giftRepository.DeleteGift(id);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error occurred while deleting gift");
+                throw;
+            }
+            
         }
 
         public async Task<IEnumerable<GiftResponseDto>> GetAll()
         {
-            var gifts = await _giftRepository.GetAll();
-            return gifts.Select(MapToResponeseDto);
+            _logger.LogInformation("Get / all gift called");
+            try
+            {
+                var gifts = await _giftRepository.GetAll();
+                return gifts.Select(MapToResponeseDto);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error occurred while retrieving gifts");
+                throw;
+            }
+            
         }
 
         public async Task<GiftResponseDto> GetById(int id)
         {
-            var gift = await _giftRepository.GetById(id);
-            return gift != null ? MapToResponeseDto(gift) : null;
+            _logger.LogInformation("Get / get gift : {giftId} called", id);
+            try
+            {
+                var gift = await _giftRepository.GetById(id);
+                return gift != null ? MapToResponeseDto(gift) : null;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error occurred while retrieving gift by ID");
+                throw;
+            }
         }
+            
         public async Task<GiftResponseDto> UpdateGift(int giftId, UpdateGiftDto giftDto)
         {
-            var existingGift = await _giftRepository.GetById(giftId);
-            if (existingGift == null)
-                return null;
-            existingGift.Name = giftDto.Name;
-            existingGift.Description = giftDto.Description;
-            existingGift.Price = giftDto.Price;
-            existingGift.ImageUrl = giftDto.ImageUrl;
-            existingGift.CategoryId = giftDto.CategoryId;
-            existingGift.DonorId = giftDto.DonorId;
-            existingGift.WinnerId = giftDto.WinnerId;
-            existingGift.IsDrown = giftDto.IsDrown;
-            var updatedGift = await _giftRepository.UpdateGift(existingGift);
-            return MapToResponeseDto(updatedGift);
+            _logger.LogInformation("PUT / update gift : {giftId} called", giftId);
+            try
+            {
+                var existingGift = await _giftRepository.GetById(giftId);
+                if (existingGift == null)
+                    return null;
+                existingGift.Name = giftDto.Name;
+                existingGift.Description = giftDto.Description;
+                existingGift.Price = giftDto.Price;
+                existingGift.ImageUrl = giftDto.ImageUrl;
+                existingGift.CategoryId = giftDto.CategoryId;
+                existingGift.DonorId = giftDto.DonorId;
+                existingGift.WinnerId = giftDto.WinnerId;
+                existingGift.IsDrown = giftDto.IsDrown;
+                var updatedGift = await _giftRepository.UpdateGift(existingGift);
+                return MapToResponeseDto(updatedGift);
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError(ex, "Error occurred while updating gift");
+                throw;
+            }
+
+            
         }
 
 
@@ -79,39 +133,61 @@ namespace server.Services
         }
         public async Task<GiftResponseDto> Lottery(int giftId)
         {
-            var gift = await _giftRepository.GetById(giftId);
-            if (gift == null)
-                throw new InvalidOperationException("this gift not exist");
-            if (gift.IsDrown)
+            _logger.LogInformation("PUT / lottery gift : {giftId} called", giftId);
+            try
             {
-                throw new InvalidOperationException("this gift alredy drown");
+                var gift = await _giftRepository.GetById(giftId);
+                if (gift == null)
+                    throw new InvalidOperationException("this gift not exist");
+                if (gift.IsDrown)
+                {
+                    throw new InvalidOperationException("this gift alredy drown");
+                }
+                var tickets = gift.Tickets.Where(t => !t.Purchase.IsDraft).ToList();
+                if (!tickets.Any())
+                    throw new InvalidOperationException("No tickets avilable for lottery");
+
+                var random = new Random();
+                var randomTicket = tickets[random.Next(tickets.Count)];
+
+                gift.WinnerId = randomTicket.Purchase.BuyerId;
+                gift.IsDrown = true;
+
+
+                var result = await _giftRepository.UpdateGift(gift);
+                if (result != null)
+                {
+                    return MapToResponeseDto(result);
+                }
+                else
+                {
+                    throw new InvalidOperationException("error");
+
+                }
             }
-            var tickets = gift.Tickets.Where(t=>!t.Purchase.IsDraft).ToList();
-            if (!tickets.Any())
-                throw new InvalidOperationException("No tickets avilable for lottery");
-             
-            var random = new Random();
-            var randomTicket = tickets[random.Next(tickets.Count)];
-
-            gift.WinnerId = randomTicket.Purchase.BuyerId;
-            gift.IsDrown = true;
-
-            
-            var result = await _giftRepository.UpdateGift(gift);
-            if (result != null)
+            catch (Exception ex)
             {
-                return MapToResponeseDto(result);
+                _logger.LogError(ex, "Error occurred while lottery gift");
+                throw;
             }
-            else
-            {
-                throw new InvalidOperationException("error");
 
-            }
+           
         }
         public async Task<IEnumerable<GiftResponseDto>> FilterGifts(string? giftName, string? donorName, int? buyersCount)
         {
-            var gifts = await _giftRepository.FilterGifts(giftName, donorName, buyersCount);
-            return gifts.Select(MapToResponeseDto);
+            _logger.LogInformation("Get / filter gift called");
+            try
+            {
+                var gifts = await _giftRepository.FilterGifts(giftName, donorName, buyersCount);
+                return gifts.Select(MapToResponeseDto);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error occurred while filter gift");
+                throw;
+            }
+
+           
 
         }
 
