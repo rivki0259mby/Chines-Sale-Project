@@ -19,7 +19,7 @@ namespace server.Services
 
             var donor = new Donor
             {
-                
+                Id = donorDto.Id,
                 Name = donorDto.Name,
                 PhoneNumber = donorDto.PhoneNumber,
                 Email = donorDto.Email,
@@ -92,6 +92,7 @@ namespace server.Services
                 var existingDonor = await _donorRepository.GetById(donorId);
                 if (existingDonor == null)
                     return null;
+                existingDonor.Id = donorDto.Id;
                 existingDonor.Name = donorDto.Name;
                 existingDonor.PhoneNumber = donorDto.PhoneNumber;
                 existingDonor.Email = donorDto.Email;

@@ -95,6 +95,7 @@ namespace server.Services
                 if (existingCategory == null)
                     return null;
                 existingCategory.Name = categoryDto.Name;
+                existingCategory.Description = categoryDto.Description;
                 var updatedCategory = await _categoryRepository.UpdateCategory(existingCategory);
                 return MapToResponeseDto(updatedCategory);
             }

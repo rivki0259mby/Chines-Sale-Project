@@ -13,7 +13,8 @@ namespace server.DTOs
     }
     public class DonorCreateDto
     {
-        
+        [Required,MaxLength(9)]
+        public string Id { get; set; }
         [Required, MaxLength(100)]
         public string Name { get; set; } = string.Empty;
         [Required,MaxLength(10),Phone]
@@ -24,6 +25,8 @@ namespace server.DTOs
     }
     public class DonorUpdateDto
     {
+        [ MaxLength(9)]
+        public string Id { get; set; }
         [MaxLength(100)]
         public string Name { get; set; }
         [MaxLength(10)]

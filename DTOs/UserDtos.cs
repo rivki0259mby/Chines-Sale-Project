@@ -4,7 +4,7 @@ namespace server.DTOs
 {
     public class UserCreateDto
     {
-        [Required,Range(9,9)]
+        
         public string Id { get; set; }
         [Required, MaxLength(100)]
         public string FullName { get; set; }
