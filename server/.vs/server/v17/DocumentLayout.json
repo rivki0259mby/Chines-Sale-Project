@@ -1,0 +1,266 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\New folder\\server\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{0479D469-033F-4252-977A-DE2F7A9B3182}|server\\server.csproj|d:\\new folder\\server\\server\\services\\usersrvice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0479D469-033F-4252-977A-DE2F7A9B3182}|server\\server.csproj|solutionrelative:server\\services\\usersrvice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0479D469-033F-4252-977A-DE2F7A9B3182}|server\\server.csproj|d:\\new folder\\server\\server\\interfaces\\iuserservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0479D469-033F-4252-977A-DE2F7A9B3182}|server\\server.csproj|solutionrelative:server\\interfaces\\iuserservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0479D469-033F-4252-977A-DE2F7A9B3182}|server\\server.csproj|d:\\new folder\\server\\server\\dtos\\userdtos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0479D469-033F-4252-977A-DE2F7A9B3182}|server\\server.csproj|solutionrelative:server\\dtos\\userdtos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0479D469-033F-4252-977A-DE2F7A9B3182}|server\\server.csproj|d:\\new folder\\server\\server\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0479D469-033F-4252-977A-DE2F7A9B3182}|server\\server.csproj|solutionrelative:server\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0479D469-033F-4252-977A-DE2F7A9B3182}|server\\server.csproj|d:\\new folder\\server\\server\\models\\donor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0479D469-033F-4252-977A-DE2F7A9B3182}|server\\server.csproj|solutionrelative:server\\models\\donor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0479D469-033F-4252-977A-DE2F7A9B3182}|server\\server.csproj|d:\\new folder\\server\\server\\controllers\\categorycontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0479D469-033F-4252-977A-DE2F7A9B3182}|server\\server.csproj|solutionrelative:server\\controllers\\categorycontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0479D469-033F-4252-977A-DE2F7A9B3182}|server\\server.csproj|d:\\new folder\\server\\server\\models\\category.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0479D469-033F-4252-977A-DE2F7A9B3182}|server\\server.csproj|solutionrelative:server\\models\\category.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0479D469-033F-4252-977A-DE2F7A9B3182}|server\\server.csproj|d:\\new folder\\server\\server\\services\\categoryservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0479D469-033F-4252-977A-DE2F7A9B3182}|server\\server.csproj|solutionrelative:server\\services\\categoryservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0479D469-033F-4252-977A-DE2F7A9B3182}|server\\server.csproj|d:\\new folder\\server\\server\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0479D469-033F-4252-977A-DE2F7A9B3182}|server\\server.csproj|solutionrelative:server\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0479D469-033F-4252-977A-DE2F7A9B3182}|server\\server.csproj|d:\\new folder\\server\\server\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{0479D469-033F-4252-977A-DE2F7A9B3182}|server\\server.csproj|solutionrelative:server\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0479D469-033F-4252-977A-DE2F7A9B3182}|server\\server.csproj|d:\\new folder\\server\\server\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{0479D469-033F-4252-977A-DE2F7A9B3182}|server\\server.csproj|solutionrelative:server\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0479D469-033F-4252-977A-DE2F7A9B3182}|server\\server.csproj|d:\\new folder\\server\\server\\dtos\\authdtos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0479D469-033F-4252-977A-DE2F7A9B3182}|server\\server.csproj|solutionrelative:server\\dtos\\authdtos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0479D469-033F-4252-977A-DE2F7A9B3182}|server\\server.csproj|d:\\new folder\\server\\server\\server.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{0479D469-033F-4252-977A-DE2F7A9B3182}|server\\server.csproj|solutionrelative:server\\server.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0479D469-033F-4252-977A-DE2F7A9B3182}|server\\server.csproj|d:\\new folder\\server\\server\\dtos\\donordtos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0479D469-033F-4252-977A-DE2F7A9B3182}|server\\server.csproj|solutionrelative:server\\dtos\\donordtos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0479D469-033F-4252-977A-DE2F7A9B3182}|server\\server.csproj|d:\\new folder\\server\\server\\services\\donorservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0479D469-033F-4252-977A-DE2F7A9B3182}|server\\server.csproj|solutionrelative:server\\services\\donorservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "IUserService.cs",
+              "DocumentMoniker": "D:\\New folder\\server\\server\\Interfaces\\IUserService.cs",
+              "RelativeDocumentMoniker": "server\\Interfaces\\IUserService.cs",
+              "ToolTip": "D:\\New folder\\server\\server\\Interfaces\\IUserService.cs",
+              "RelativeToolTip": "server\\Interfaces\\IUserService.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-14T17:39:35.273Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "UserSrvice.cs",
+              "DocumentMoniker": "D:\\New folder\\server\\server\\Services\\UserSrvice.cs",
+              "RelativeDocumentMoniker": "server\\Services\\UserSrvice.cs",
+              "ToolTip": "D:\\New folder\\server\\server\\Services\\UserSrvice.cs",
+              "RelativeToolTip": "server\\Services\\UserSrvice.cs",
+              "ViewState": "AgIAAIMAAAAAAAAAAAAswJcAAAA4AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-14T17:38:33.253Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "User.cs",
+              "DocumentMoniker": "D:\\New folder\\server\\server\\Models\\User.cs",
+              "RelativeDocumentMoniker": "server\\Models\\User.cs",
+              "ToolTip": "D:\\New folder\\server\\server\\Models\\User.cs",
+              "RelativeToolTip": "server\\Models\\User.cs",
+              "ViewState": "AgIAAA0AAAAAAAAAAAAwwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-14T17:33:15.204Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Donor.cs",
+              "DocumentMoniker": "D:\\New folder\\server\\server\\Models\\Donor.cs",
+              "RelativeDocumentMoniker": "server\\Models\\Donor.cs",
+              "ToolTip": "D:\\New folder\\server\\server\\Models\\Donor.cs",
+              "RelativeToolTip": "server\\Models\\Donor.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-14T17:33:14.083Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "UserDtos.cs",
+              "DocumentMoniker": "D:\\New folder\\server\\server\\DTOs\\UserDtos.cs",
+              "RelativeDocumentMoniker": "server\\DTOs\\UserDtos.cs",
+              "ToolTip": "D:\\New folder\\server\\server\\DTOs\\UserDtos.cs",
+              "RelativeToolTip": "server\\DTOs\\UserDtos.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAAYAAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-13T21:29:37.042Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "CategoryService.cs",
+              "DocumentMoniker": "D:\\New folder\\server\\server\\Services\\CategoryService.cs",
+              "RelativeDocumentMoniker": "server\\Services\\CategoryService.cs",
+              "ToolTip": "D:\\New folder\\server\\server\\Services\\CategoryService.cs",
+              "RelativeToolTip": "server\\Services\\CategoryService.cs",
+              "ViewState": "AgIAAGIAAAAAAAAAAAAMwHYAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-13T23:51:48.042Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "CategoryController.cs",
+              "DocumentMoniker": "D:\\New folder\\server\\server\\Controllers\\CategoryController.cs",
+              "RelativeDocumentMoniker": "server\\Controllers\\CategoryController.cs",
+              "ToolTip": "D:\\New folder\\server\\server\\Controllers\\CategoryController.cs",
+              "RelativeToolTip": "server\\Controllers\\CategoryController.cs",
+              "ViewState": "AgIAADwAAAAAAAAAAAAwwFQAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-13T21:03:18.241Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Category.cs",
+              "DocumentMoniker": "D:\\New folder\\server\\server\\Models\\Category.cs",
+              "RelativeDocumentMoniker": "server\\Models\\Category.cs",
+              "ToolTip": "D:\\New folder\\server\\server\\Models\\Category.cs",
+              "RelativeToolTip": "server\\Models\\Category.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-13T23:54:40.356Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "launchSettings.json",
+              "DocumentMoniker": "D:\\New folder\\server\\server\\Properties\\launchSettings.json",
+              "RelativeDocumentMoniker": "server\\Properties\\launchSettings.json",
+              "ToolTip": "D:\\New folder\\server\\server\\Properties\\launchSettings.json",
+              "RelativeToolTip": "server\\Properties\\launchSettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABgAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-01-13T22:05:09.119Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "AuthDtos.cs",
+              "DocumentMoniker": "D:\\New folder\\server\\server\\DTOs\\AuthDtos.cs",
+              "RelativeDocumentMoniker": "server\\DTOs\\AuthDtos.cs",
+              "ToolTip": "D:\\New folder\\server\\server\\DTOs\\AuthDtos.cs",
+              "RelativeToolTip": "server\\DTOs\\AuthDtos.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-13T21:29:28.239Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "server.csproj",
+              "DocumentMoniker": "D:\\New folder\\server\\server\\server.csproj",
+              "RelativeDocumentMoniker": "server\\server.csproj",
+              "ToolTip": "D:\\New folder\\server\\server\\server.csproj",
+              "RelativeToolTip": "server\\server.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2026-01-13T21:27:32.442Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "DonorService.cs",
+              "DocumentMoniker": "D:\\New folder\\server\\server\\Services\\DonorService.cs",
+              "RelativeDocumentMoniker": "server\\Services\\DonorService.cs",
+              "ToolTip": "D:\\New folder\\server\\server\\Services\\DonorService.cs",
+              "RelativeToolTip": "server\\Services\\DonorService.cs",
+              "ViewState": "AgIAACoAAAAAAAAAAAAowF4AAAAvAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-12T11:05:35.7Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\New folder\\server\\server\\Program.cs",
+              "RelativeDocumentMoniker": "server\\Program.cs",
+              "ToolTip": "D:\\New folder\\server\\server\\Program.cs",
+              "RelativeToolTip": "server\\Program.cs",
+              "ViewState": "AgIAAEoAAAAAAAAAAAAmwFUAAABIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-11T20:38:12.64Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "D:\\New folder\\server\\server\\appsettings.json",
+              "RelativeDocumentMoniker": "server\\appsettings.json",
+              "ToolTip": "D:\\New folder\\server\\server\\appsettings.json",
+              "RelativeToolTip": "server\\appsettings.json",
+              "ViewState": "AgIAACcAAAAAAAAAAAAAADEAAABCAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-01-12T17:35:39.508Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "DonorDtos.cs",
+              "DocumentMoniker": "D:\\New folder\\server\\server\\DTOs\\DonorDtos.cs",
+              "RelativeDocumentMoniker": "server\\DTOs\\DonorDtos.cs",
+              "ToolTip": "D:\\New folder\\server\\server\\DTOs\\DonorDtos.cs",
+              "RelativeToolTip": "server\\DTOs\\DonorDtos.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABsAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-12T11:04:53.98Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

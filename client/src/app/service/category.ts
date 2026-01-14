@@ -1,0 +1,38 @@
+import { HttpClient } from '@angular/common/http';
+import { inject, Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { CategoryModel } from '../models/category.model';
+
+@Injectable({
+  providedIn: 'root',
+})
+export class CategoryService {
+
+  BASE_URL = 'https://localhost:7280/api/Category';
+
+  http: HttpClient = inject(HttpClient);
+  constructor(){}
+
+  getAll(): Observable<CategoryModel[]>{
+    return this.http.get<CategoryModel[]>(this.BASE_URL);
+  }
+
+  getById(id:number):Observable<CategoryModel>{
+    return this.http.get<CategoryModel>(this.BASE_URL+ '/' +id);
+  }
+
+  update(item:CategoryModel):Observable<CategoryModel>{
+    return this.http.put<CategoryModel>(`https://localhost:7280/api/Category/${item.id}`,item);
+  }
+
+  add(item:CategoryModel):Observable<CategoryModel>{
+  
+    alert(item)
+    
+    return this.http.post<CategoryModel>(this.BASE_URL,item);
+  }
+
+  delete(id:number){
+    return this.http.delete(`https://localhost:7280/api/Category/${id}`)
+  }
+}
