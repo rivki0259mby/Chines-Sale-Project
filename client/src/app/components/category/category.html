@@ -1,17 +1,17 @@
 <p>category works!</p>
-    <input type="text" placeholder="name" #name />
-    <input type="text" placeholder="description" #description />
+    <input type="text" placeholder="name" #name  />
+    <input type="text" placeholder="description" #description  />
     <button (click)="add(name.value,description.value)">Add</button>
 @if(flagUpdate){
     
-    <input type="text" placeholder="name" #name />
-    <input type="text" placeholder="description" #description />
+    <input type="text" placeholder="name" #name  [value]="currentName"/>
+    <input type="text" placeholder="description" #description [value]="currentDescription" />
     <button (click)="update(name.value,description.value)">update</button>
 }
 @for(c of list$ | async ; track c  ){
     <div>
        <span>{{c.name}} - {{c.description}} </span> 
        <button (click) = "delete(c.id!)">מחק</button>
-       <button (click) = "updateOpen(c.id!)">עדכן</button>
+       <button (click) = "updateOpen(c)">עדכן</button>
     </div>
 }

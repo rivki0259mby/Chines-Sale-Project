@@ -21,8 +21,8 @@ export class CategoryService {
     return this.http.get<CategoryModel>(this.BASE_URL+ '/' +id);
   }
 
-  update(item:CategoryModel):Observable<CategoryModel>{
-    return this.http.put<CategoryModel>(`https://localhost:7280/api/Category/${item.id}`,item);
+  update(id:number,item:CategoryModel):Observable<CategoryModel>{
+    return this.http.put<CategoryModel>(`https://localhost:7280/api/Category/${id}`,item);
   }
 
   add(item:CategoryModel):Observable<CategoryModel>{

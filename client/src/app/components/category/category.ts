@@ -16,6 +16,8 @@ export class Category {
     flagUpdate :boolean = false;
     itemUpdate: CategoryModel = {};
     currentId:number = 0;
+    currentName:string = '';
+    currentDescription:string = '';
 
 
     add(name:string | undefined , description :string |undefined){
@@ -24,28 +26,30 @@ export class Category {
       if(name && description){
         this.categorySrv.add({name :name ,description :description}).subscribe(date =>{
           this.list$ = this.categorySrv.getAll();
+          
         });
       }
     }
-    updateOpen(id :number | undefined ){
+    updateOpen(c : CategoryModel ){
       if(!this.flagUpdate){
-        this.currentId = id!;
+        this.currentId = c.id!;
+        this.currentName = c.name!;
+        this.currentDescription = c.description!;
       }
       this.flagUpdate = !this.flagUpdate;
     }
     update(name : string | undefined , description : string | undefined  ){
-      console.log(name,description);
       
-      this.categorySrv.getById(this.currentId).subscribe({
-        next : (item) =>{
-          if(!item) return;
-          item.name = name;
-          item.description = description;
-          this.categorySrv.update(item).subscribe( c =>{
-            this.list$ = this.categorySrv.getAll();  
-      })
-    },
-    });
+          let item = {
+            name,
+            description 
+          }
+          
+          this.categorySrv.update(this.currentId,item).subscribe( c =>{
+          this.list$ = this.categorySrv.getAll();  
+          this.updateOpen(item);
+    
+    })
     }
 
     delete(id:number){
