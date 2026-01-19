@@ -21,6 +21,13 @@ export class CategoryService {
     return this.http.get<CategoryModel>(this.BASE_URL+ '/' +id);
   }
 
+<<<<<<< HEAD
+=======
+  update(id:number,item:CategoryModel):Observable<CategoryModel>{
+    return this.http.put<CategoryModel>(`https://localhost:7280/api/Category/${id}`,item);
+  }
+
+>>>>>>> f978e9afe15bc038fa62762b353524bb4b9c5c0f
   add(item:CategoryModel):Observable<CategoryModel>{
   
     alert(item)
@@ -28,11 +35,16 @@ export class CategoryService {
     return this.http.post<CategoryModel>(this.BASE_URL,item);
   }
 
+<<<<<<< HEAD
   update(id:number,item:CategoryModel):Observable<CategoryModel>{
     return this.http.put<CategoryModel>(this.BASE_URL + `/${id}`,item);
   }
 
   delete(id:number){
     return this.http.delete(this.BASE_URL + `/${id}`)
+=======
+  delete(id:number){
+    return this.http.delete(`https://localhost:7280/api/Category/${id}`)
+>>>>>>> f978e9afe15bc038fa62762b353524bb4b9c5c0f
   }
 }

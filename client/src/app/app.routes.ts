@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+<<<<<<< HEAD
 import { Category } from './components/category/category';
 import { Login } from './components/login/login';
 import { Register } from './components/register/register';
@@ -13,3 +14,7 @@ export const routes: Routes = [
     
     // {path:'logout',}
 ];
+=======
+
+export const routes: Routes = [];
+>>>>>>> f978e9afe15bc038fa62762b353524bb4b9c5c0f

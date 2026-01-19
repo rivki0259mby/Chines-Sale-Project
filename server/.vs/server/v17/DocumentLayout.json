@@ -1,5 +1,6 @@
 {
   "Version": 1,
+<<<<<<< HEAD
   "WorkspaceRootPath": "C:\\Users\\me\\Downloads\\Chines-Sale-Project-main\\Chines-Sale-Project-main\\server\\",
   "Documents": [
     {
@@ -65,6 +66,73 @@
     {
       "AbsoluteMoniker": "D:0:0:{0479D469-033F-4252-977A-DE2F7A9B3182}|server\\server.csproj|c:\\users\\me\\downloads\\chines-sale-project-main\\chines-sale-project-main\\server\\server\\server.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
       "RelativeMoniker": "D:0:0:{0479D469-033F-4252-977A-DE2F7A9B3182}|server\\server.csproj|solutionrelative:server\\server.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+=======
+  "WorkspaceRootPath": "D:\\Chines-Sale-Project\\server\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{0479D469-033F-4252-977A-DE2F7A9B3182}|server\\server.csproj|d:\\chines-sale-project\\server\\server\\dtos\\userdtos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0479D469-033F-4252-977A-DE2F7A9B3182}|server\\server.csproj|solutionrelative:server\\dtos\\userdtos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0479D469-033F-4252-977A-DE2F7A9B3182}|server\\server.csproj|d:\\chines-sale-project\\server\\server\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0479D469-033F-4252-977A-DE2F7A9B3182}|server\\server.csproj|solutionrelative:server\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0479D469-033F-4252-977A-DE2F7A9B3182}|server\\server.csproj|d:\\chines-sale-project\\server\\server\\dtos\\authdtos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0479D469-033F-4252-977A-DE2F7A9B3182}|server\\server.csproj|solutionrelative:server\\dtos\\authdtos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0479D469-033F-4252-977A-DE2F7A9B3182}|server\\server.csproj|d:\\chines-sale-project\\server\\server\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0479D469-033F-4252-977A-DE2F7A9B3182}|server\\server.csproj|solutionrelative:server\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0479D469-033F-4252-977A-DE2F7A9B3182}|server\\server.csproj|d:\\chines-sale-project\\server\\server\\services\\usersrvice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0479D469-033F-4252-977A-DE2F7A9B3182}|server\\server.csproj|solutionrelative:server\\services\\usersrvice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0479D469-033F-4252-977A-DE2F7A9B3182}|server\\server.csproj|d:\\chines-sale-project\\server\\server\\interfaces\\iuserservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0479D469-033F-4252-977A-DE2F7A9B3182}|server\\server.csproj|solutionrelative:server\\interfaces\\iuserservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0479D469-033F-4252-977A-DE2F7A9B3182}|server\\server.csproj|d:\\chines-sale-project\\server\\server\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0479D469-033F-4252-977A-DE2F7A9B3182}|server\\server.csproj|solutionrelative:server\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0479D469-033F-4252-977A-DE2F7A9B3182}|server\\server.csproj|d:\\chines-sale-project\\server\\server\\models\\donor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0479D469-033F-4252-977A-DE2F7A9B3182}|server\\server.csproj|solutionrelative:server\\models\\donor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0479D469-033F-4252-977A-DE2F7A9B3182}|server\\server.csproj|d:\\chines-sale-project\\server\\server\\controllers\\categorycontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0479D469-033F-4252-977A-DE2F7A9B3182}|server\\server.csproj|solutionrelative:server\\controllers\\categorycontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0479D469-033F-4252-977A-DE2F7A9B3182}|server\\server.csproj|d:\\chines-sale-project\\server\\server\\models\\category.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0479D469-033F-4252-977A-DE2F7A9B3182}|server\\server.csproj|solutionrelative:server\\models\\category.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0479D469-033F-4252-977A-DE2F7A9B3182}|server\\server.csproj|d:\\chines-sale-project\\server\\server\\services\\categoryservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0479D469-033F-4252-977A-DE2F7A9B3182}|server\\server.csproj|solutionrelative:server\\services\\categoryservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0479D469-033F-4252-977A-DE2F7A9B3182}|server\\server.csproj|d:\\chines-sale-project\\server\\server\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{0479D469-033F-4252-977A-DE2F7A9B3182}|server\\server.csproj|solutionrelative:server\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0479D469-033F-4252-977A-DE2F7A9B3182}|server\\server.csproj|d:\\chines-sale-project\\server\\server\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{0479D469-033F-4252-977A-DE2F7A9B3182}|server\\server.csproj|solutionrelative:server\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0479D469-033F-4252-977A-DE2F7A9B3182}|server\\server.csproj|d:\\chines-sale-project\\server\\server\\server.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{0479D469-033F-4252-977A-DE2F7A9B3182}|server\\server.csproj|solutionrelative:server\\server.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0479D469-033F-4252-977A-DE2F7A9B3182}|server\\server.csproj|d:\\chines-sale-project\\server\\server\\dtos\\donordtos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0479D469-033F-4252-977A-DE2F7A9B3182}|server\\server.csproj|solutionrelative:server\\dtos\\donordtos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0479D469-033F-4252-977A-DE2F7A9B3182}|server\\server.csproj|d:\\chines-sale-project\\server\\server\\services\\donorservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0479D469-033F-4252-977A-DE2F7A9B3182}|server\\server.csproj|solutionrelative:server\\services\\donorservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+>>>>>>> f978e9afe15bc038fa62762b353524bb4b9c5c0f
     }
   ],
   "DocumentGroupContainers": [
@@ -74,6 +142,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
+<<<<<<< HEAD
           "SelectedChildIndex": 7,
           "Children": [
             {
@@ -206,6 +275,17 @@
               "DocumentMoniker": "C:\\Users\\me\\Downloads\\Chines-Sale-Project-main\\Chines-Sale-Project-main\\server\\server\\Controllers\\AuthController.cs",
               "RelativeDocumentMoniker": "server\\Controllers\\AuthController.cs",
               "ToolTip": "C:\\Users\\me\\Downloads\\Chines-Sale-Project-main\\Chines-Sale-Project-main\\server\\server\\Controllers\\AuthController.cs",
+=======
+          "SelectedChildIndex": 3,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "AuthController.cs",
+              "DocumentMoniker": "D:\\Chines-Sale-Project\\server\\server\\Controllers\\AuthController.cs",
+              "RelativeDocumentMoniker": "server\\Controllers\\AuthController.cs",
+              "ToolTip": "D:\\Chines-Sale-Project\\server\\server\\Controllers\\AuthController.cs",
+>>>>>>> f978e9afe15bc038fa62762b353524bb4b9c5c0f
               "RelativeToolTip": "server\\Controllers\\AuthController.cs",
               "ViewState": "AgIAACQAAAAAAAAAAAAWwDsAAAAEAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -214,11 +294,116 @@
             },
             {
               "$type": "Document",
+<<<<<<< HEAD
               "DocumentIndex": 7,
               "Title": "IUserService.cs",
               "DocumentMoniker": "C:\\Users\\me\\Downloads\\Chines-Sale-Project-main\\Chines-Sale-Project-main\\server\\server\\Interfaces\\IUserService.cs",
               "RelativeDocumentMoniker": "server\\Interfaces\\IUserService.cs",
               "ToolTip": "C:\\Users\\me\\Downloads\\Chines-Sale-Project-main\\Chines-Sale-Project-main\\server\\server\\Interfaces\\IUserService.cs",
+=======
+              "DocumentIndex": 6,
+              "Title": "User.cs",
+              "DocumentMoniker": "D:\\Chines-Sale-Project\\server\\server\\Models\\User.cs",
+              "RelativeDocumentMoniker": "server\\Models\\User.cs",
+              "ToolTip": "D:\\Chines-Sale-Project\\server\\server\\Models\\User.cs",
+              "RelativeToolTip": "server\\Models\\User.cs",
+              "ViewState": "AgIAAA0AAAAAAAAAAAAwwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-14T17:33:15.204Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "Donor.cs",
+              "DocumentMoniker": "D:\\Chines-Sale-Project\\server\\server\\Models\\Donor.cs",
+              "RelativeDocumentMoniker": "server\\Models\\Donor.cs",
+              "ToolTip": "D:\\Chines-Sale-Project\\server\\server\\Models\\Donor.cs",
+              "RelativeToolTip": "server\\Models\\Donor.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-14T17:33:14.083Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "UserDtos.cs",
+              "DocumentMoniker": "D:\\Chines-Sale-Project\\server\\server\\DTOs\\UserDtos.cs",
+              "RelativeDocumentMoniker": "server\\DTOs\\UserDtos.cs",
+              "ToolTip": "D:\\Chines-Sale-Project\\server\\server\\DTOs\\UserDtos.cs",
+              "RelativeToolTip": "server\\DTOs\\UserDtos.cs",
+              "ViewState": "AgIAABkAAAAAAAAAAIA9wCYAAAAkAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-13T21:29:37.042Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "CategoryService.cs",
+              "DocumentMoniker": "D:\\Chines-Sale-Project\\server\\server\\Services\\CategoryService.cs",
+              "RelativeDocumentMoniker": "server\\Services\\CategoryService.cs",
+              "ToolTip": "D:\\Chines-Sale-Project\\server\\server\\Services\\CategoryService.cs",
+              "RelativeToolTip": "server\\Services\\CategoryService.cs",
+              "ViewState": "AgIAAGIAAAAAAAAAAAAMwHYAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-13T23:51:48.042Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "CategoryController.cs",
+              "DocumentMoniker": "D:\\Chines-Sale-Project\\server\\server\\Controllers\\CategoryController.cs",
+              "RelativeDocumentMoniker": "server\\Controllers\\CategoryController.cs",
+              "ToolTip": "D:\\Chines-Sale-Project\\server\\server\\Controllers\\CategoryController.cs",
+              "RelativeToolTip": "server\\Controllers\\CategoryController.cs",
+              "ViewState": "AgIAADwAAAAAAAAAAAAwwFQAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-13T21:03:18.241Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "Category.cs",
+              "DocumentMoniker": "D:\\Chines-Sale-Project\\server\\server\\Models\\Category.cs",
+              "RelativeDocumentMoniker": "server\\Models\\Category.cs",
+              "ToolTip": "D:\\Chines-Sale-Project\\server\\server\\Models\\Category.cs",
+              "RelativeToolTip": "server\\Models\\Category.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-13T23:54:40.356Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\Chines-Sale-Project\\server\\server\\Program.cs",
+              "RelativeDocumentMoniker": "server\\Program.cs",
+              "ToolTip": "D:\\Chines-Sale-Project\\server\\server\\Program.cs",
+              "RelativeToolTip": "server\\Program.cs",
+              "ViewState": "AgIAAI0AAAAAAAAAAAAmwKcAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-11T20:38:12.64Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "AuthDtos.cs",
+              "DocumentMoniker": "D:\\Chines-Sale-Project\\server\\server\\DTOs\\AuthDtos.cs",
+              "RelativeDocumentMoniker": "server\\DTOs\\AuthDtos.cs",
+              "ToolTip": "D:\\Chines-Sale-Project\\server\\server\\DTOs\\AuthDtos.cs",
+              "RelativeToolTip": "server\\DTOs\\AuthDtos.cs",
+              "ViewState": "AgIAAAIAAAAAAAAAAAAxwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-13T21:29:28.239Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "IUserService.cs",
+              "DocumentMoniker": "D:\\Chines-Sale-Project\\server\\server\\Interfaces\\IUserService.cs",
+              "RelativeDocumentMoniker": "server\\Interfaces\\IUserService.cs",
+              "ToolTip": "D:\\Chines-Sale-Project\\server\\server\\Interfaces\\IUserService.cs",
+>>>>>>> f978e9afe15bc038fa62762b353524bb4b9c5c0f
               "RelativeToolTip": "server\\Interfaces\\IUserService.cs",
               "ViewState": "AgIAAAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -226,11 +411,19 @@
             },
             {
               "$type": "Document",
+<<<<<<< HEAD
               "DocumentIndex": 6,
               "Title": "UserSrvice.cs",
               "DocumentMoniker": "C:\\Users\\me\\Downloads\\Chines-Sale-Project-main\\Chines-Sale-Project-main\\server\\server\\Services\\UserSrvice.cs",
               "RelativeDocumentMoniker": "server\\Services\\UserSrvice.cs",
               "ToolTip": "C:\\Users\\me\\Downloads\\Chines-Sale-Project-main\\Chines-Sale-Project-main\\server\\server\\Services\\UserSrvice.cs",
+=======
+              "DocumentIndex": 4,
+              "Title": "UserSrvice.cs",
+              "DocumentMoniker": "D:\\Chines-Sale-Project\\server\\server\\Services\\UserSrvice.cs",
+              "RelativeDocumentMoniker": "server\\Services\\UserSrvice.cs",
+              "ToolTip": "D:\\Chines-Sale-Project\\server\\server\\Services\\UserSrvice.cs",
+>>>>>>> f978e9afe15bc038fa62762b353524bb4b9c5c0f
               "RelativeToolTip": "server\\Services\\UserSrvice.cs",
               "ViewState": "AgIAAIMAAAAAAAAAAAAswJcAAAA4AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -238,11 +431,19 @@
             },
             {
               "$type": "Document",
+<<<<<<< HEAD
               "DocumentIndex": 13,
               "Title": "launchSettings.json",
               "DocumentMoniker": "C:\\Users\\me\\Downloads\\Chines-Sale-Project-main\\Chines-Sale-Project-main\\server\\server\\Properties\\launchSettings.json",
               "RelativeDocumentMoniker": "server\\Properties\\launchSettings.json",
               "ToolTip": "C:\\Users\\me\\Downloads\\Chines-Sale-Project-main\\Chines-Sale-Project-main\\server\\server\\Properties\\launchSettings.json",
+=======
+              "DocumentIndex": 11,
+              "Title": "launchSettings.json",
+              "DocumentMoniker": "D:\\Chines-Sale-Project\\server\\server\\Properties\\launchSettings.json",
+              "RelativeDocumentMoniker": "server\\Properties\\launchSettings.json",
+              "ToolTip": "D:\\Chines-Sale-Project\\server\\server\\Properties\\launchSettings.json",
+>>>>>>> f978e9afe15bc038fa62762b353524bb4b9c5c0f
               "RelativeToolTip": "server\\Properties\\launchSettings.json",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABgAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
@@ -250,11 +451,19 @@
             },
             {
               "$type": "Document",
+<<<<<<< HEAD
               "DocumentIndex": 15,
               "Title": "server.csproj",
               "DocumentMoniker": "C:\\Users\\me\\Downloads\\Chines-Sale-Project-main\\Chines-Sale-Project-main\\server\\server\\server.csproj",
               "RelativeDocumentMoniker": "server\\server.csproj",
               "ToolTip": "C:\\Users\\me\\Downloads\\Chines-Sale-Project-main\\Chines-Sale-Project-main\\server\\server\\server.csproj",
+=======
+              "DocumentIndex": 13,
+              "Title": "server.csproj",
+              "DocumentMoniker": "D:\\Chines-Sale-Project\\server\\server\\server.csproj",
+              "RelativeDocumentMoniker": "server\\server.csproj",
+              "ToolTip": "D:\\Chines-Sale-Project\\server\\server\\server.csproj",
+>>>>>>> f978e9afe15bc038fa62762b353524bb4b9c5c0f
               "RelativeToolTip": "server\\server.csproj",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
@@ -262,15 +471,50 @@
             },
             {
               "$type": "Document",
+<<<<<<< HEAD
               "DocumentIndex": 14,
               "Title": "appsettings.json",
               "DocumentMoniker": "C:\\Users\\me\\Downloads\\Chines-Sale-Project-main\\Chines-Sale-Project-main\\server\\server\\appsettings.json",
               "RelativeDocumentMoniker": "server\\appsettings.json",
               "ToolTip": "C:\\Users\\me\\Downloads\\Chines-Sale-Project-main\\Chines-Sale-Project-main\\server\\server\\appsettings.json",
+=======
+              "DocumentIndex": 15,
+              "Title": "DonorService.cs",
+              "DocumentMoniker": "D:\\Chines-Sale-Project\\server\\server\\Services\\DonorService.cs",
+              "RelativeDocumentMoniker": "server\\Services\\DonorService.cs",
+              "ToolTip": "D:\\Chines-Sale-Project\\server\\server\\Services\\DonorService.cs",
+              "RelativeToolTip": "server\\Services\\DonorService.cs",
+              "ViewState": "AgIAACoAAAAAAAAAAAAowF4AAAAvAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-12T11:05:35.7Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "D:\\Chines-Sale-Project\\server\\server\\appsettings.json",
+              "RelativeDocumentMoniker": "server\\appsettings.json",
+              "ToolTip": "D:\\Chines-Sale-Project\\server\\server\\appsettings.json",
+>>>>>>> f978e9afe15bc038fa62762b353524bb4b9c5c0f
               "RelativeToolTip": "server\\appsettings.json",
               "ViewState": "AgIAACcAAAAAAAAAAAAAADEAAABCAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
               "WhenOpened": "2026-01-12T17:35:39.508Z"
+<<<<<<< HEAD
+=======
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "DonorDtos.cs",
+              "DocumentMoniker": "D:\\Chines-Sale-Project\\server\\server\\DTOs\\DonorDtos.cs",
+              "RelativeDocumentMoniker": "server\\DTOs\\DonorDtos.cs",
+              "ToolTip": "D:\\Chines-Sale-Project\\server\\server\\DTOs\\DonorDtos.cs",
+              "RelativeToolTip": "server\\DTOs\\DonorDtos.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABsAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-12T11:04:53.98Z"
+>>>>>>> f978e9afe15bc038fa62762b353524bb4b9c5c0f
             }
           ]
         }
