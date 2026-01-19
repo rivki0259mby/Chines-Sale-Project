@@ -1,0 +1,8 @@
+<p>login works!</p>
+<form [formGroup]="profileForm" (ngSubmit)="login()">
+    <input type ="text" placeholder="שם משתמש" formControlName=Username>
+    <input type = "password" placeholder="סיסמא" formControlName = Password>
+    <button  type="submit">התחבר</button>
+    
+</form>
+<button type="button" (click)="logout()">התנתק</button>
