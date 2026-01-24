@@ -1,24 +1,26 @@
 <p>donor works!</p>
-    <input type="text" placeholder="id" #id  />
-    <input type="text" placeholder="name" #name  />
-    <input type="text" placeholder="phonNumber" #phonNumber  />
-    <input type="email" placeholder="email" #email  />
-    <input type="text" placeholder="logoUrl" #logoUrl  />
-    <button (click)="add(id.value,name.value,phonNumber.value,email.value,logoUrl.value)">Add</button>
+<div>
+  <input #nameInput type="text" placeholder="Name" />
+  <input #emailInput type="text" placeholder="Email" />
+  <input #giftIdInput type="number" placeholder="Gift ID" />
+  <button type="button" (click)="filter(nameInput.value,emailInput.value, giftIdInput.value ? +giftIdInput.value : undefined )">Filter</button>
+  <button type="button" (click)="refreshList()">Clear Filters</button>
+</div>
 
-    @if(flagUpdate){
-         <input type="text" placeholder="id" #id  />
-        <input type="text" placeholder="name" #name  />
-        <input type="text" placeholder="phonNumber" #phonNumber  />
-        <input type="email" placeholder="email" #email  />
-        <input type="text" placeholder="logoUrl" #logoUrl  />
-        <button (click)="update(id.value,name.value,phonNumber.value,email.value,logoUrl.value)">update</button>
-
-    }
-    @for(d of list$ | async ; track d){
+ @for(d of list$ | async ; track d){
     <div>
         <span>{{d.name}}</span>
          <button (click) = "delete(d.id!)">מחק</button>
-       <button (click) = "updateOpen(d)">עדכן</button>
+       <button (click) = "openEdit(d)">עדכן</button>
     </div>
     }
+
+    <input [(ngModel)] = "draftDonor.id" placeholder="id" />
+    <input [(ngModel)] = "draftDonor.name"  placeholder="name" #name  />
+    <input [(ngModel)] = "draftDonor.phoneNumber"  placeholder="phonNumber" #phonNumber  />
+    <input [(ngModel)] = "draftDonor.email"  placeholder="email" #email  />
+    <input [(ngModel)] = "draftDonor.logoUrl"  placeholder="logoUrl" #logoUrl  />
+    <button type="button" (click)="save()">{{flagUpdate ? 'update' :'Add'}}</button>
+
+    <button type="button" (click)="resetForm()" *ngIf="flagUpdate">בטל</button>
+   

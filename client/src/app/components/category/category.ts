@@ -2,60 +2,78 @@ import { Component, inject } from '@angular/core';
 import { CategoryService } from '../../service/category';
 import { CategoryModel } from '../../models/category.model';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { Gift } from '../gift/gift';
+import { RouterModule } from "@angular/router";
 
 @Component({
   selector: 'app-category',
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule, Gift, RouterModule],
   templateUrl: './category.html',
   styleUrl: './category.css',
 })
 export class Category {
-    categorySrv : CategoryService = inject(CategoryService)
+  categorySrv: CategoryService = inject(CategoryService)
 
-    list$ = this.categorySrv.getAll();
-    flagUpdate :boolean = false;
-    itemUpdate: CategoryModel = {};
-    currentId:number = 0;
-    currentName:string = '';
-    currentDescription:string = '';
+  list$ = this.categorySrv.getAll();
+  flagUpdate: boolean = false;
+  itemUpdate: CategoryModel = {};
+  categoryId ?: number = 0;
 
-
-    add(name:string | undefined , description :string |undefined){
-    
-    
-      if(name && description){
-        this.categorySrv.add({name :name ,description :description}).subscribe(date =>{
-          this.list$ = this.categorySrv.getAll();
-          
-        });
-      }
-    }
-    updateOpen(c : CategoryModel ){
-      if(!this.flagUpdate){
-        this.currentId = c.id!;
-        this.currentName = c.name!;
-        this.currentDescription = c.description!;
-      }
-      this.flagUpdate = !this.flagUpdate;
-    }
-    update(name : string | undefined , description : string | undefined  ){
-      
-          let item = {
-            name,
-            description 
-          }
-          
-          this.categorySrv.update(this.currentId,item).subscribe( c =>{
-          this.list$ = this.categorySrv.getAll();  
-          this.updateOpen(item);
-    
-    })
-    }
-
-    delete(id:number){
-      this.categorySrv.delete(id).subscribe(d =>{
-        this.list$ = this.categorySrv.getAll();
+  draftCategory: CategoryModel = {
+    id: 0,
+    name: '',
+    description: ''
+  }
+  openEdit(d: CategoryModel) {
+    this.flagUpdate = true;
+    this.draftCategory = {
+      id: d.id ?? 0,
+      name: d.name ?? '',
+      description: d.description ?? ''
+    };
+  }
+  save() {
+    if (!this.draftCategory.name || !this.draftCategory.description) return;
+    const id = this.draftCategory.id;
+    if (this.flagUpdate) {
+      this.categorySrv.update(id!, this.draftCategory).subscribe(d => {
+        this.refreshList();
+        this.resetForm();
       });
     }
+    else {
+      this.categorySrv.add(this.draftCategory).subscribe(d => {
+        this.refreshList();
+        this.resetForm();
+      });
+    }
+
+  }
+
+  getById(id:number){
+    if(id == 0 ){
+      this.categoryId = 0;
+    }
+    else{
+    this.categorySrv.getById(id).subscribe(c =>{      
+      this.categoryId = c.id;    
+    });}
+  }
+  refreshList() {
+    this.list$ = this.categorySrv.getAll();
+  }
+  resetForm() {
+    this.flagUpdate = false;
+    this.draftCategory = { id: 0, name: '', description: ''};
+  }
+
+
+
+  delete(id: number) {
+    this.categorySrv.delete(id).subscribe(d => {
+      this.list$ = this.categorySrv.getAll();
+    });
+  }
 
 }

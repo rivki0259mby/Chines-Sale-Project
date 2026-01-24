@@ -84,7 +84,7 @@ namespace server.Controllers
             }
         }
 
-        [HttpGet("filterDonor")]
+        [HttpGet("filter")]
         public async Task<ActionResult<IEnumerable<DonorResponseDto>>> FilterDonors([FromQuery] string? name , [FromQuery] string? email, [FromQuery] int? giftId)
         {
             var donors = await _donorService.FilterDonors(name, email, giftId);

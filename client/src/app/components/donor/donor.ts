@@ -2,10 +2,11 @@ import { Component, inject } from '@angular/core';
 import { DonorSevice } from '../../service/donor';
 import { CommonModule } from '@angular/common';
 import { donorModel } from '../../models/donor.model';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-donor',
-  imports: [CommonModule],
+  imports: [CommonModule,FormsModule],
   templateUrl: './donor.html',
   styleUrl: './donor.css',
 })
@@ -15,13 +16,19 @@ export class Donor {
 
   flagUpdate: boolean = false;
   itemUpdate: donorModel = {};
-  currentId: string = '';
-  currentName: string = '';
-  currentPhoneNumber: string = '';
-  currentEmail: string = '';
-  currentLogoUrl: string = '';
-  
+ 
   list$ = this.donorSrv.getAll();
+
+  draftDonor: donorModel = {
+    id: '',
+    name: '',
+    phoneNumber: '',
+    email: '',
+    logoUrl: ''
+  };
+
+  
+ 
 
   add(Id:string | undefined , name:string | undefined , phoneNumber :string | undefined , email :string | undefined , logoUrl :string | undefined){
     
@@ -33,29 +40,40 @@ export class Donor {
     }
   }
 
-  updateOpen(d : donorModel){
-    if(!this.flagUpdate){
-      this.currentId = d.id!;
-      this.currentName = d.name!;
-      this.currentPhoneNumber = d.phoneNumber!;
-      this.currentEmail = d.email!;
-      this.currentLogoUrl = d.logoUrl!;
-    }
-    this.flagUpdate = !this.flagUpdate;
+  openEdit(d : donorModel){
+    this.flagUpdate = true;
+    this.draftDonor = { 
+      id: d.id ?? '',
+      name: d.name ?? '',
+      phoneNumber: d.phoneNumber ?? '',
+      email: d.email ?? '',
+      logoUrl: d.logoUrl ?? ''
+    };
   }
-  
-  update(id : string | undefined , name : string | undefined , phoneNumber : string | undefined , email : string | undefined , logoUrl : string | undefined  ){
-    let donor = {
-      id,
-      name,
-      phoneNumber,
-      email,
-      logoUrl
+  save(){
+    if(!this.draftDonor.name || !this.draftDonor.email) return;
+    const id = this.draftDonor.id;
+    if(this.flagUpdate){
+      this.donorSrv.update(id!, this.draftDonor).subscribe( d =>{
+       this.refreshList();
+       this.resetForm();
+      });
     }
-    this.donorSrv.update(this.currentId,donor).subscribe( d =>{
-      this.list$ = this.donorSrv.getAll();  
-      this.updateOpen(donor);
-    })
+    else{
+      this.donorSrv.add(this.draftDonor).subscribe( d =>{
+       this.refreshList();
+       this.resetForm();
+      });
+    }
+      
+      }
+  
+  refreshList(){
+    this.list$ = this.donorSrv.getAll();
+  }
+  resetForm(){
+    this.flagUpdate = false;
+    this.draftDonor = { id: '', name: '', phoneNumber: '', email: '', logoUrl: '' };
   }
 
   delete(id:string){
@@ -64,5 +82,9 @@ export class Donor {
     })
   }
 
+  filter(name?:string , email?:string , giftId?:number){
+    this.list$ = this.donorSrv.filter(name,email,giftId);
+
+  }
 
 }

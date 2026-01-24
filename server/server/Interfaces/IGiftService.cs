@@ -11,7 +11,7 @@ namespace server.Interfaces
         Task<GiftResponseDto> UpdateGift(int giftId,UpdateGiftDto gift);
         Task<bool> DeleteGift(int id);
         Task<GiftResponseDto> Lottery(int giftId);
-        Task<IEnumerable<GiftResponseDto>> FilterGifts(string? giftName, string? donorName, int? buyersCount);
+        Task<IEnumerable<GiftResponseDto>> FilterGifts(string? giftName, string? donorName, int? buyersCount,int? categoryId);
 
     }
 }

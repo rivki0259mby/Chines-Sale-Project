@@ -1,17 +1,15 @@
 <p>category works!</p>
-    <input type="text" placeholder="name" #name  />
-    <input type="text" placeholder="description" #description  />
-    <button (click)="add(name.value,description.value)">Add</button>
-@if(flagUpdate){
-    
-    <input type="text" placeholder="name" #name  [value]="currentName"/>
-    <input type="text" placeholder="description" #description [value]="currentDescription" />
-    <button (click)="update(name.value,description.value)">update</button>
+<button type="button" (click)="getById(0)">Refresh List</button>
+@for(c of list$ | async ; track c ){
+<div>
+    <button (click)="getById(c.id!)">{{c.name}}</button> <span>{{c.description}} </span>
+    <button (click)="delete(c.id!)">מחק</button>
+    <button (click)="openEdit(c)">עדכן</button>
+</div>
 }
-@for(c of list$ | async ; track c  ){
-    <div>
-       <span>{{c.name}} - {{c.description}} </span> 
-       <button (click) = "delete(c.id!)">מחק</button>
-       <button (click) = "updateOpen(c)">עדכן</button>
-    </div>
-}
+<input [(ngModel)]="draftCategory.name" placeholder="name" />
+<input [(ngModel)]="draftCategory.description"  placeholder="description"  />
+<button type="button" (click)="save()">{{flagUpdate ? 'update' :'Add'}}</button>
+
+    <button type="button" (click)="resetForm()" *ngIf="flagUpdate">בטל</button>
+<app-gift [categoryId] = "categoryId" ></app-gift>     

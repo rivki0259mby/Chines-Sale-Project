@@ -21,11 +21,9 @@ namespace server.Services
             {
                 Name = giftDto.Name,
                 Description = giftDto.Description,
-                Price = giftDto.Price,
                 ImageUrl = giftDto.ImageUrl,
                 CategoryId = giftDto.CategoryId,
-                DonorId = giftDto.DonorId,
-                WinnerId = giftDto.WinnerId,
+                DonorId = giftDto.DonorId
             };
             try
             {
@@ -96,11 +94,14 @@ namespace server.Services
                     return null;
                 existingGift.Name = giftDto.Name;
                 existingGift.Description = giftDto.Description;
-                existingGift.Price = giftDto.Price;
                 existingGift.ImageUrl = giftDto.ImageUrl;
                 existingGift.CategoryId = giftDto.CategoryId;
                 existingGift.DonorId = giftDto.DonorId;
-                existingGift.WinnerId = giftDto.WinnerId;
+                if (existingGift.WinnerId == null)
+                {
+                    existingGift.WinnerId = giftDto.WinnerId;
+
+                }
                 existingGift.IsDrown = giftDto.IsDrown;
                 var updatedGift = await _giftRepository.UpdateGift(existingGift);
                 return MapToResponeseDto(updatedGift);
@@ -123,7 +124,6 @@ namespace server.Services
                 Id = gift.Id,
                 Name = gift.Name,
                 Description = gift.Description,
-                Price = gift.Price,
                 ImageUrl = gift.ImageUrl,
                 CategoryId = gift.CategoryId,
                 DonorId = gift.DonorId,
@@ -173,12 +173,12 @@ namespace server.Services
 
            
         }
-        public async Task<IEnumerable<GiftResponseDto>> FilterGifts(string? giftName, string? donorName, int? buyersCount)
+        public async Task<IEnumerable<GiftResponseDto>> FilterGifts(string? giftName, string? donorName, int? buyersCount, int? categoryId)
         {
             _logger.LogInformation("Get / filter gift called");
             try
             {
-                var gifts = await _giftRepository.FilterGifts(giftName, donorName, buyersCount);
+                var gifts = await _giftRepository.FilterGifts(giftName, donorName, buyersCount,categoryId);
                 return gifts.Select(MapToResponeseDto);
             }
             catch (Exception ex)

@@ -52,7 +52,7 @@ namespace server.Repositories
             return gift;
         }
 
-        public async Task<IEnumerable<Gift>> FilterGifts(string? giftName, string? donorName, int? buyersCount)
+        public async Task<IEnumerable<Gift>> FilterGifts(string? giftName, string? donorName, int? buyersCount,int? categoryId)
         {
 
             var query = _context.Gifts
@@ -67,6 +67,10 @@ namespace server.Repositories
             if (!string.IsNullOrWhiteSpace(donorName))
             {
                 query = query.Where(g => g.Donor.Name.Contains(donorName));
+            }
+            if (categoryId.HasValue){
+                query = query.Where(g => g.CategoryId == categoryId);
+               
             }
             if (buyersCount.HasValue)
             {

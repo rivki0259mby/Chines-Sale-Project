@@ -9,7 +9,7 @@ namespace server.Interfaces
         Task<Gift> AddGift(Gift gift);
         Task<Gift> UpdateGift(Gift gift);
         Task<bool> DeleteGift(int id);
-        Task<IEnumerable<Gift>> FilterGifts(string? giftName, string? donorName, int? buyersCount );
+        Task<IEnumerable<Gift>> FilterGifts(string? giftName, string? donorName, int? buyersCount,int? categoryId );
 
     }
 }

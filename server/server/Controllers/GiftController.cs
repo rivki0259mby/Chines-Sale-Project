@@ -106,9 +106,9 @@ namespace server.Controllers
         [ProducesResponseType(typeof(GiftResponseDto), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
 
-        public async Task<ActionResult<IEnumerable<GiftResponseDto>>> FilterGifts([FromQuery] string? giftName, [FromQuery] string? donorName, [FromQuery] int? buyerCount)
+        public async Task<ActionResult<IEnumerable<GiftResponseDto>>> FilterGifts([FromQuery] string? giftName, [FromQuery] string? donorName, [FromQuery] int? buyerCount, [FromQuery ] int? categoryId)
         {
-            var gifts = await _giftService.FilterGifts(giftName,donorName,buyerCount);
+            var gifts = await _giftService.FilterGifts(giftName,donorName,buyerCount, categoryId);
             return Ok(gifts);
         }
     }
