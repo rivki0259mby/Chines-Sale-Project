@@ -2,14 +2,19 @@
 <button type="button" (click)="getById(0)">Refresh List</button>
 @for(c of list$ | async ; track c ){
 <div>
-    <button (click)="getById(c.id!)">{{c.name}}</button> <span>{{c.description}} </span>
-    <button (click)="delete(c.id!)">מחק</button>
-    <button (click)="openEdit(c)">עדכן</button>
+    <button (click)="getById(c.id!)">{{c.name}}</button>
+    <span>{{c.description}} </span>
+    @if(authService.isAdmin()){
+        <button (click)="delete(c.id!)">מחק</button>
+        <button (click)="openEdit(c)">עדכן</button>
+    }
 </div>
 }
+@if(authService.isAdmin()){
 <input [(ngModel)]="draftCategory.name" placeholder="name" />
-<input [(ngModel)]="draftCategory.description"  placeholder="description"  />
+<input [(ngModel)]="draftCategory.description" placeholder="description" />
 <button type="button" (click)="save()">{{flagUpdate ? 'update' :'Add'}}</button>
 
-    <button type="button" (click)="resetForm()" *ngIf="flagUpdate">בטל</button>
-<app-gift [categoryId] = "categoryId" ></app-gift>     
+<button type="button" (click)="resetForm()" *ngIf="flagUpdate">בטל</button>
+
+}<app-gift [categoryId]="categoryId"></app-gift>

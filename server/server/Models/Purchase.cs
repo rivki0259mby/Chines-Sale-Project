@@ -6,10 +6,10 @@
         public string BuyerId { get; set; }
         public decimal TotalAmount { get; set; } = 0;
         public DateTime OrderDate { get; set; }
-        public bool IsDraft { get; set; }
+        public bool IsDraft { get; set; } = true;
         public User Buyer { get; set; }
         public ICollection<Ticket> Tickets { get; set; } = new List<Ticket>();
 
-        public ICollection<Package> Packages { get; set; } = new List<Package>();
+        public ICollection<PurchasePackage> PurchasePackages { get; set; } = new List<PurchasePackage>();
     }
 }

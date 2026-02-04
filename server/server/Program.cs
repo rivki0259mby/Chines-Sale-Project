@@ -17,7 +17,7 @@ try
     var builder = WebApplication.CreateBuilder(args);
 
     // 1. Serilog Configuration
-    builder.Host.UseSerilog();
+    builder.Host.UseSerilog((context,configuration)=> configuration.ReadFrom.Configuration(context.Configuration));
 
     // 2. Add services to the container
     builder.Services.AddControllers()
@@ -131,6 +131,7 @@ try
 
     // --- Build Application ---
     var app = builder.Build();
+    app.UseSerilogRequestLogging();
 
     // 8. Configure the HTTP request pipeline (ORDER MATTERS)
 

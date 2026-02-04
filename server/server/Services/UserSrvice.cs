@@ -9,6 +9,7 @@ public class UserService : IUserService
 {
     private readonly IUserRepository _userRepository;
     private readonly ITokenService _tokenService;
+    private readonly IPurchaseService _purchaseService;
     private readonly IConfiguration _configuration;
     private readonly ILogger<UserService> _logger;
 
@@ -16,11 +17,13 @@ public class UserService : IUserService
         IUserRepository userRepository,
         ITokenService tokenService,
         IConfiguration configuration,
+        IPurchaseService purchaseService,
         ILogger<UserService> logger)
     {
         _userRepository = userRepository;
         _tokenService = tokenService;
         _configuration = configuration;
+        _purchaseService = purchaseService;
         _logger = logger;
     }
 
@@ -71,13 +74,19 @@ public class UserService : IUserService
             UserName = createDto.UserName,
             Email = createDto.Email,
             Password = HashPassword(createDto.Password), 
-            PhoneNumber = createDto.PhoneNumber
+            PhoneNumber = createDto.PhoneNumber,
+            Role = "User"
             
         };
+       
         try
         {
             var createdUser = await _userRepository.AddUser(user);
             _logger.LogInformation("User created with ID: {UserId}", createdUser.Id);
+            var purchase = await _purchaseService.AddPurchase(new PurchaseCreateDtos
+            {
+                BuyerId = createdUser.Id
+            });
 
             return MapToResponseDto(createdUser);
         }
@@ -156,7 +165,7 @@ public class UserService : IUserService
                 return null;
             }
 
-            var token = _tokenService.GenerateToken(user.Id, user.Email, user.UserName);
+            var token = _tokenService.GenerateToken(user.Id, user.Email, user.UserName,user.Role);
             var expiryMinutes = _configuration.GetValue<int>("JwtSettings:ExpiryMinutes", 60);
 
             _logger.LogInformation("User {UserId} authenticated successfully", user.Id);
@@ -182,9 +191,10 @@ public class UserService : IUserService
         return new UserResponseDto
         {
             Id = user.Id,
-            FullName = user.UserName,
+            FullName = user.FullName,
             Email = user.Email,
             PhoneNumber = user.PhoneNumber,
+            Role = user.Role
             
         };
     }

@@ -130,6 +130,7 @@ namespace server.Services
                 Name = package.Name,
                 Description = package.Description,
                 Quentity = package.Quentity,
+                Price = package.Price
             };
 
         }

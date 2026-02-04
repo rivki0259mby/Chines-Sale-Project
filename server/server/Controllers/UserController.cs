@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using server.DTOs;
 using server.Interfaces;
 
@@ -20,6 +21,7 @@ public class UsersController : ControllerBase
         _logger = logger;
     }
 
+    [Authorize(Roles ="Admin")]
     [HttpGet]
     [ProducesResponseType(typeof(IEnumerable<UserResponseDto>), StatusCodes.Status200OK)]
     public async Task<ActionResult<IEnumerable<UserResponseDto>>> GetAll()
@@ -28,6 +30,7 @@ public class UsersController : ControllerBase
         return Ok(users);
     }
 
+    [Authorize]
     [HttpGet("{id}")]
     [ProducesResponseType(typeof(UserResponseDto), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -59,6 +62,7 @@ public class UsersController : ControllerBase
         }
     }
 
+    [Authorize]
     [HttpPut("{id}")]
     [ProducesResponseType(typeof(UserResponseDto), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -82,6 +86,7 @@ public class UsersController : ControllerBase
         }
     }
 
+    [Authorize(Roles = "Admin")]
     [HttpDelete("{id}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]

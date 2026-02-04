@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Gift } from '../gift/gift';
 import { RouterModule } from "@angular/router";
+import { AuthService } from '../../auth/auth-service';
 
 @Component({
   selector: 'app-category',
@@ -14,11 +15,14 @@ import { RouterModule } from "@angular/router";
 })
 export class Category {
   categorySrv: CategoryService = inject(CategoryService)
+  authService : AuthService =  inject(AuthService)
+ 
 
   list$ = this.categorySrv.getAll();
   flagUpdate: boolean = false;
   itemUpdate: CategoryModel = {};
   categoryId ?: number = 0;
+
 
   draftCategory: CategoryModel = {
     id: 0,
@@ -67,6 +71,7 @@ export class Category {
     this.flagUpdate = false;
     this.draftCategory = { id: 0, name: '', description: ''};
   }
+ 
 
 
 
@@ -75,5 +80,6 @@ export class Category {
       this.list$ = this.categorySrv.getAll();
     });
   }
+ 
 
 }

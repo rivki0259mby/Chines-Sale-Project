@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace server.Migrations
 {
     /// <inheritdoc />
-    public partial class AddNewModelsAndChanges : Migration
+    public partial class migration1 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -65,7 +65,8 @@ namespace server.Migrations
                     UserName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Password = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Email = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
-                    PhoneNumber = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false)
+                    PhoneNumber = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
+                    Role = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -80,7 +81,6 @@ namespace server.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
-                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     ImageUrl = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
                     CategoryId = table.Column<int>(type: "int", nullable: false),
                     DonorId = table.Column<string>(type: "nvarchar(450)", nullable: false),
@@ -133,24 +133,25 @@ namespace server.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "PurchasePackages",
+                name: "purchasePackages",
                 columns: table => new
                 {
-                    PackagesId = table.Column<int>(type: "int", nullable: false),
-                    PurchasesId = table.Column<int>(type: "int", nullable: false)
+                    PurchaseId = table.Column<int>(type: "int", nullable: false),
+                    PackageId = table.Column<int>(type: "int", nullable: false),
+                    Quantity = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PurchasePackages", x => new { x.PackagesId, x.PurchasesId });
+                    table.PrimaryKey("PK_purchasePackages", x => new { x.PurchaseId, x.PackageId });
                     table.ForeignKey(
-                        name: "FK_PurchasePackages_Packages_PackagesId",
-                        column: x => x.PackagesId,
+                        name: "FK_purchasePackages_Packages_PackageId",
+                        column: x => x.PackageId,
                         principalTable: "Packages",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_PurchasePackages_Purchases_PurchasesId",
-                        column: x => x.PurchasesId,
+                        name: "FK_purchasePackages_Purchases_PurchaseId",
+                        column: x => x.PurchaseId,
                         principalTable: "Purchases",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -199,9 +200,9 @@ namespace server.Migrations
                 column: "WinnerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PurchasePackages_PurchasesId",
-                table: "PurchasePackages",
-                column: "PurchasesId");
+                name: "IX_purchasePackages_PackageId",
+                table: "purchasePackages",
+                column: "PackageId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Purchases_BuyerId",
@@ -223,7 +224,7 @@ namespace server.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "PurchasePackages");
+                name: "purchasePackages");
 
             migrationBuilder.DropTable(
                 name: "Tickets");

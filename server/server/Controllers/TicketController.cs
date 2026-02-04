@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using server.DTOs;
 using server.Interfaces;
@@ -7,6 +8,7 @@ namespace server.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class TicketController : ControllerBase
     {
         private readonly ITicketService _ticketService;
@@ -20,6 +22,7 @@ namespace server.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         [ProducesResponseType(typeof(IEnumerable<TicketResponseDtos>), StatusCodes.Status200OK)]
         public async Task<ActionResult<IEnumerable<TicketResponseDtos>>> GetAll()
         {

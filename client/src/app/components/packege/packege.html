@@ -1,0 +1,29 @@
+<p>packege works!</p>
+<div>
+
+    <select #sortBySelect (change)="sortBy(sortBySelect.value)">
+        <option value="price_desc">Price Descending</option>
+        <option value="most_purchased">Most Purchases</option>
+    </select>
+</div>
+@for(p of list$ | async ; track p){
+<div>
+    <h2>{{p.name}}-{{p.description}}-{{p.price}}-{{p.quentity}}</h2>
+    @if(authSrv.isAdmin()){
+    <button (click)="delete(p.id!)">מחק</button>
+    <button (click)="openEdit(p)">עדכן</button>
+    }
+    <button (click)="addPackage(p)">+</button>
+    <span></span>
+    <button (click)="deletePackage(p.id!)">-</button>
+    
+</div>
+}
+@if(authSrv.isAdmin()){
+<input [(ngModel)]="draftPackage.name" placeholder="name" #name />
+<input [(ngModel)]="draftPackage.description" placeholder="description" #description />
+<input [(ngModel)]="draftPackage.price" placeholder="price" #price />
+<input [(ngModel)]="draftPackage.quentity" placeholder="quentity" #quentity />
+<button type="button" (click)="save()">{{flagUpdate ? 'update' :'Add'}}</button>
+<button type="button" (click)="resetForm()" *ngIf="flagUpdate">בטל</button>
+}

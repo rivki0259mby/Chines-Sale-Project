@@ -8,15 +8,13 @@ namespace server.Services
     public class TicketService:ITicketService
     {
         private readonly ITicketRepository _ticketRepository;
-        private readonly IPurchaseService _purchaseService;
         private readonly IGiftService _giftService;
         private readonly ILogger<TicketService> _logger;
 
 
-        public TicketService(ITicketRepository ticketRepository, IPurchaseService purchaseService,IGiftService giftService, ILogger<TicketService> logger)
+        public TicketService(ITicketRepository ticketRepository,IGiftService giftService, ILogger<TicketService> logger)
         {
             _ticketRepository = ticketRepository;
-            _purchaseService = purchaseService;
             _giftService = giftService;
             _logger = logger;
         }
@@ -46,7 +44,6 @@ namespace server.Services
             try
             {
                 var createdTicket = await _ticketRepository.AddTicket(ticket);
-                await _purchaseService.AddTickeToPurchase(ticketDto.PurchaseId, createdTicket);
 
                 return MapToResponeseDto(createdTicket);
             }

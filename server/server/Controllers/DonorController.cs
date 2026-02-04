@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using server.DTOs;
 using server.Interfaces;
@@ -20,6 +21,7 @@ namespace server.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         [ProducesResponseType(typeof(IEnumerable<DonorResponseDto>), StatusCodes.Status200OK)]
         public async Task<ActionResult<IEnumerable<DonorResponseDto>>> GetAll()
         {
@@ -27,6 +29,7 @@ namespace server.Controllers
             return Ok(donors);
         }
         [HttpGet("{id}")]
+        [Authorize(Roles = "Admin")]
         [ProducesResponseType(typeof(DonorResponseDto), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult> GetById(string id)
@@ -39,6 +42,7 @@ namespace server.Controllers
             return Ok(donor);
         }
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         [ProducesResponseType(typeof(DonorResponseDto), StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult> AddDonor([FromBody] DonorCreateDto createDto)
@@ -55,6 +59,7 @@ namespace server.Controllers
             }
         }
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin")]
         [ProducesResponseType(typeof(DonorResponseDto), StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> DeleteDonor(string id)
@@ -68,6 +73,7 @@ namespace server.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize(Roles = "Admin")]
         [ProducesResponseType(typeof(DonorResponseDto), StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult> UpdateDonor([FromRoute]string id, [FromBody] DonorUpdateDto updateDto)
@@ -85,6 +91,7 @@ namespace server.Controllers
         }
 
         [HttpGet("filter")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<IEnumerable<DonorResponseDto>>> FilterDonors([FromQuery] string? name , [FromQuery] string? email, [FromQuery] int? giftId)
         {
             var donors = await _donorService.FilterDonors(name, email, giftId);

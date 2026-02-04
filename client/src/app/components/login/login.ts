@@ -20,7 +20,6 @@ export class Login {
 
   login(){
     console.log("im in login");
-    
     this.authService.login(this.profileForm.value).subscribe();
     console.log("succes",this.profileForm.value);
     

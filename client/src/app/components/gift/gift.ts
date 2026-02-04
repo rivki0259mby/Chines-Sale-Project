@@ -5,6 +5,9 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Input,OnChanges,SimpleChanges } from '@angular/core';
 import { Router } from '@angular/router';
+import { BusketService } from '../../service/busket';
+import { busketModel } from '../../models/busket.model';
+import { AuthService } from '../../auth/auth-service';
 
 @Component({
   selector: 'app-gift',
@@ -15,13 +18,15 @@ import { Router } from '@angular/router';
 export class Gift  {
   
   router = inject(Router);
-
+  authSrv:AuthService = inject(AuthService)
   giftSrv: GiftService = inject(GiftService)
+  basketSrv:BusketService = inject(BusketService);
 
   list$ = this.giftSrv.getAll();
   flagUpdate: boolean = false;
-  itemUpdate: giftModel = {};
   @Input() categoryId ?: number = 0;
+  basket : busketModel = {}
+  user:any = {}
 
   draftGift: giftModel = {
     id: 0,
@@ -33,6 +38,19 @@ export class Gift  {
     donorId: '',
     winnerId: '',
     isDrown: false
+  }
+  ngOnInit(){
+    this.user = localStorage.getItem('user')
+    if(this.user){
+      this.user = JSON.parse(this.user)
+      this.getByUserId(this.user.id)
+    }
+  }
+  getByUserId(userId:string){
+    this.basketSrv.getByUserId(userId).subscribe(b =>{
+      this.basket = b;
+
+    })
   }
   ngOnChanges(changes: SimpleChanges): void {
     
@@ -110,6 +128,12 @@ export class Gift  {
     this.giftSrv.lottery(giftId).subscribe(d =>{
       this.refreshList();
     });
+  }
+  addGift(item : giftModel){
+    return this.basketSrv.addTicket(item).subscribe();
+  }
+  deleteGift(giftId:number){
+    return this.basketSrv.deleteTicket(this.basket.id!,giftId).subscribe()
   }
 
 

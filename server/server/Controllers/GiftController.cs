@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using server.DTOs;
 using server.Interfaces;
@@ -41,6 +42,7 @@ namespace server.Controllers
             return Ok(gift);
         }
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         [ProducesResponseType(typeof(GiftResponseDto), StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult> AddGIft([FromBody] CreateGiftDto createDto)
@@ -57,6 +59,7 @@ namespace server.Controllers
             }
         }
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin")]
         [ProducesResponseType(typeof(GiftResponseDto), StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> DeleteGift(int id)
@@ -70,6 +73,7 @@ namespace server.Controllers
         }
 
         [HttpPut("{giftId}")]
+        [Authorize(Roles = "Admin")]
         [ProducesResponseType(typeof(GiftResponseDto), StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult> UpdateGift([FromRoute] int giftId, [FromBody] UpdateGiftDto createDto)
@@ -87,6 +91,7 @@ namespace server.Controllers
         }
 
         [HttpPut("lottery/{giftId}")]
+        [Authorize(Roles = "Admin")]
         [ProducesResponseType(typeof(GiftResponseDto), StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult> Lottery([FromRoute] int giftId)

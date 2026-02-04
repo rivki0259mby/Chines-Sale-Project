@@ -1,19 +1,24 @@
 ﻿using server.DTOs;
 using server.Interfaces;
 using server.Models;
+using System.Text;
 
 namespace server.Services
 {
-    public class PurchaseService:IPurchaseService
+    public class PurchaseService : IPurchaseService
     {
         private readonly IPurchaseRepository _purchaseRepository;
+        private readonly ITicketService _ticketService;
+        private readonly IUserService _userService;
         private readonly ILogger<PurchaseService> _logger;
         
         
-        public PurchaseService(IPurchaseRepository purchaseRepository,ILogger<PurchaseService> logger)
+        public PurchaseService(IPurchaseRepository purchaseRepository,ITicketService ticketService,ILogger<PurchaseService> logger,IUserService userService)
         {
             _purchaseRepository = purchaseRepository;
+            _ticketService = ticketService;
             _logger = logger;
+            _userService = userService;
            
         }
         public async Task<PurchaseResponseDtos> AddPurchase(PurchaseCreateDtos PurchaseDto)
@@ -25,6 +30,7 @@ namespace server.Services
                 BuyerId = PurchaseDto.BuyerId,
                 TotalAmount = PurchaseDto.TotalAmount,
                 OrderDate = PurchaseDto.OrderDate,
+                
             };
             try
             {
@@ -124,27 +130,48 @@ namespace server.Services
             
         }
 
-        public async Task<PurchaseResponseDtos> AddTickeToPurchase(int purchaseId, Ticket tikcet)
+        public async Task<PurchaseResponseDtos> AddTickeToPurchase( TicketCreateDtos ticketDto)
         {
-            _logger.LogInformation("POST / add ticket to purchase : {purchaseId} called", purchaseId);
+            _logger.LogInformation("POST / add ticket to purchase : {purchaseId} called", ticketDto.PurchaseId);
             try
             {
-                var purchase = await _purchaseRepository.GetById(purchaseId);
+                var purchase = await _purchaseRepository.GetById(ticketDto.PurchaseId);
                 if (purchase == null) return null;
 
                 if (!purchase.IsDraft)
                     throw new InvalidOperationException("cannot modigy a finalized purchase");
+                int remainig = GetRemainingTicketsCount(purchase);
 
-                if (GetRemainingTicketsCount(purchase) <= 0)
+                if (remainig < ticketDto.Quantity)
                 {
                     throw new InvalidOperationException("you need to buy a new package");
                 }
+                var ticket = await _ticketService.AddTicket(ticketDto);
+                var existTicket = purchase.Tickets.FirstOrDefault(t => t.Id == ticket.Id);
+                if (existTicket != null)
+                {       
+                 
+                    await _ticketService.UpdateTicket(existTicket.Id, new TicketUpdateDtos
+                    {
+                        GiftId = existTicket.GiftId,
+                        PurchaseId = existTicket.PurchaseId,
+                        Quantity = existTicket.Quantity
 
-                if (purchase.Tickets.Any(t => t.Id == tikcet.Id))
-                    tikcet.Quantity++;
-
-                var update = await _purchaseRepository.AddTicketToPurchase(purchaseId, tikcet);
+                    });
+                   
+                    return MapToResponeseDto(purchase);
+                }
+                var update = await _purchaseRepository.AddTicketToPurchase( new Ticket
+                {
+                    Id = ticket.Id,
+                    GiftId = ticket.GiftId,
+                    PurchaseId = ticket.PurchaseId,
+                    Quantity = ticket.Quantity
+                });
                 return MapToResponeseDto(update);
+
+
+
             }
             catch (Exception ex)
             {
@@ -175,7 +202,7 @@ namespace server.Services
            
                 
         }
-        public async Task<PurchaseResponseDtos> AddPackageToPurchase(int purchaseId, Package package)
+        public async Task<PurchaseResponseDtos> AddPackageToPurchase(int purchaseId, int  packageId)
         {
             _logger.LogInformation("POST / add package to purchase : {purchaseId} called", purchaseId);
             try
@@ -187,7 +214,7 @@ namespace server.Services
                     throw new InvalidOperationException("cannot modigy a finalized purchase");
 
 
-                var update = await _purchaseRepository.AddPackageToPurchase(purchaseId, package);
+                var update = await _purchaseRepository.AddPackageToPurchase(purchaseId, packageId);
                 return MapToResponeseDto(update);
             }
             catch(Exception ex)
@@ -228,9 +255,13 @@ namespace server.Services
             _logger.LogInformation("GET / Get Remaining Tickets Count");
             try
             {
-                var packageCount = purchase.Packages.Sum(p => p.Quentity);
-                var ticketCount = purchase.Tickets.Sum(t => t.Quantity);
-                return packageCount - ticketCount;
+
+                int remainingTicketsCount = purchase.PurchasePackages?
+                    .Where(pp => pp.Package != null)
+                    .Sum(pp => pp.Package.Quentity * (pp.Quantity)) ?? 0;
+                int useTicket = purchase.Tickets?.Count ?? 0;
+                int remaining = remainingTicketsCount - useTicket;
+                return remaining > 0 ? remaining : 0;
             }
             catch(Exception ex)
             {
@@ -238,6 +269,54 @@ namespace server.Services
                 throw;
             }
         }
+         public async Task<PurchaseResponseDtos> CompletionPurchase(int purchaseId,PurchaseUpdateDtos purchase)
+        {
+            _logger.LogInformation("PUT complete purchase");
+            try
+            {
+                var existPurchase = await _purchaseRepository.GetById(purchaseId);
+                var sum = existPurchase.PurchasePackages?
+                    .Where(pp => pp.Package != null)
+                    .Sum(pp => pp.Package.Price * (pp.Quantity)) ?? 0;
+
+                var updatePurchase = await UpdatePurchase(purchaseId, new PurchaseUpdateDtos
+                {
+                    BuyerId = purchase.BuyerId,
+                    IsDraft = false
+                });
+
+                var user =await _userService.GetById(purchase.BuyerId);
+
+                if (user == null)
+                {
+                    throw new Exception("user does not exist");
+                }
+                else
+                {
+                    // 1. הגדרת התוכן עם ה-Email של המשתמש שחזר מה-Service
+                    // שים לב לשימוש ב-$ לפני המרכאות כדי להכניס משתנים בפנים
+                    var jsonBody = $"{{\"personalizations\":[{{\"to\":[{{\"email\":\"{user.Email}\"}}]}}],\"from\":{{\"email\":\"system@yourdomain.com\"}},\"subject\":\"אישור רכישה\",\"content\":[{{\"type\":\"text/plain\",\"value\":\"נשלח\"}}]}}";
+
+                    var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
+
+                    // 2. שורת השליחה האמיתית (ההדק)
+                    using (var client = new HttpClient())
+                    {
+                        client.DefaultRequestHeaders.Add("Authorization", "Bearer YOUR_API_KEY");
+                        await client.PostAsync("https://api.sendgrid.com/v3/mail/send", content);
+                    }
+                }
+
+                return updatePurchase; // או כל ערך אחר שאתה מחזיר
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error occurred while completing purchase");
+                throw;
+            }
+        }
+
+
 
 
 
@@ -254,7 +333,6 @@ namespace server.Services
             };
         }
 
-        
-        
+       
     }
 }

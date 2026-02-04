@@ -5,8 +5,11 @@ import { Register } from './components/register/register';
 import { Donor } from './components/donor/donor';
 import { GetGiftById } from './components/gift/get-gift-by-id/get-gift-by-id';
 
+import { Packege } from './components/packege/packege';
+
 export const routes: Routes = [
     // {path:'',component:},
+    {path:'package',component:Packege},
     {path:'category',component:Category},
     {path:'gift/:id',component:GetGiftById},
     {path:'donors',component:Donor},

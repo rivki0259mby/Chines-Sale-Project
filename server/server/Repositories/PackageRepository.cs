@@ -51,14 +51,14 @@ namespace server.Repositories
 
         public async Task<IEnumerable<Package>> SortPackages(string ? sortBy)
         {
-            var query = _context.Packages
-                .Include(p => p.Purchases)
+            var query =  _context.Packages
+                .Include(p => p.PurchasePackages)
                 .AsQueryable();
 
             query = sortBy switch
             {
                 "price_desc" => query.OrderByDescending(p => p.Price),
-                "most_purchased" => query.OrderByDescending(p => p.Purchases.Count(pr => !pr.IsDraft)),
+                "most_purchased" => query.OrderByDescending(p => p.PurchasePackages.Count(pr => !pr.Purchase.IsDraft)),
                 _ => query.OrderBy(p => p.Id)
             };
             return await query.ToListAsync();

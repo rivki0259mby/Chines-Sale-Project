@@ -13,6 +13,7 @@ namespace server.Data
         public DbSet<Purchase> Purchases { get; set; }
         public DbSet<Ticket> Tickets { get; set; }
         public DbSet<Package> Packages { get; set; }
+        public DbSet<PurchasePackage> purchasePackages { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -64,6 +65,7 @@ namespace server.Data
                 entity.Property(e => e.Password).IsRequired().HasMaxLength(50);
                 entity.Property(e => e.Email).HasMaxLength(100);
                 entity.Property(e => e.PhoneNumber).IsRequired().HasMaxLength(10);
+                entity.Property(e => e.Role).IsRequired().HasMaxLength(10);
                 entity.HasMany(e => e.Purchases)
                 .WithOne(p => p.Buyer)
                 .HasForeignKey(p => p.BuyerId)
@@ -84,7 +86,6 @@ namespace server.Data
                 .WithOne(t => t.Purchase)
                 .HasForeignKey(t => t.PurchaseId)
                 .OnDelete(DeleteBehavior.Restrict);
-                entity.HasMany(p => p.Packages).WithMany(pc => pc.Purchases).UsingEntity(j => j.ToTable("PurchasePackages"));
                 
             });
 
@@ -105,6 +106,19 @@ namespace server.Data
                 entity.Property(e => e.Description).IsRequired();
                 entity.Property(e => e.Quentity).IsRequired();
                 entity.Property(e => e.Price).IsRequired();
+            });
+            modelBuilder.Entity<PurchasePackage>(entity =>
+            {
+                entity.HasKey(pp => new { pp.PurchaseId, pp.PackageId });
+                entity.HasOne(pp => pp.Purchase)
+                        .WithMany(p => p.PurchasePackages)
+                        .HasForeignKey(pp => pp.PurchaseId);
+                entity.HasOne(pp => pp.Package)
+                        .WithMany(p => p.PurchasePackages)
+                        .HasForeignKey(pp => pp.PackageId);
+
+                entity.Property(pp => pp.Quantity).IsRequired();
+
             });
         }
     }

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using server.DTOs;
@@ -9,6 +10,7 @@ namespace server.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class PurchaseController : ControllerBase
     {
         private readonly IPurchaseService _purchaseService;
@@ -22,6 +24,7 @@ namespace server.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         [ProducesResponseType(typeof(IEnumerable<PurchaseResponseDtos>), StatusCodes.Status200OK)]
         public async Task<ActionResult<IEnumerable<PurchaseResponseDtos>>> GetAll()
         {
@@ -70,6 +73,7 @@ namespace server.Controllers
             }
         }
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin")]
         [ProducesResponseType(typeof(PurchaseResponseDtos), StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> DeletePurchase(int id)
@@ -101,11 +105,11 @@ namespace server.Controllers
         [HttpPost("AddTicket/{purchaseId}")]
         [ProducesResponseType(typeof(PurchaseResponseDtos), StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult> AddTicketToPurchase([FromRoute] int purchaseId, [FromBody] Ticket ticket)
+        public async Task<ActionResult> AddTicketToPurchase( [FromBody] TicketCreateDtos ticket)
         {
             try
             {
-                var purchase = await _purchaseService.AddTickeToPurchase(purchaseId,ticket);
+                var purchase = await _purchaseService.AddTickeToPurchase(ticket);
                 return Ok(purchase);
             }
             catch (ArgumentException ex)
@@ -115,7 +119,7 @@ namespace server.Controllers
 
         }
 
-        [HttpDelete("{purchaseId}/{ticketId}")]
+        [HttpDelete("deleteTicket/{purchaseId}/{ticketId}")]
         [ProducesResponseType(typeof(PurchaseResponseDtos), StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> DeleteTicketFromPurchase([FromRoute]int purchaseId, [FromRoute] int ticketId)
@@ -128,14 +132,14 @@ namespace server.Controllers
             return NoContent();
         }
 
-        [HttpPost("AddPackage/{purchaseId}")]
+        [HttpPost("AddPackage/{purchaseId}/{packageId}")]
         [ProducesResponseType(typeof(PurchaseResponseDtos), StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult> AddPackageToPurchase([FromRoute] int purchaseId, [FromBody] Package package)
+        public async Task<ActionResult> AddPackageToPurchase([FromRoute] int purchaseId, [FromRoute] int packageId)
         {
             try
             {
-                var purchase = await _purchaseService.AddPackageToPurchase(purchaseId, package);
+                var purchase = await _purchaseService.AddPackageToPurchase(purchaseId, packageId);
                 return Ok(purchase);
             }
             catch (ArgumentException ex)
@@ -145,17 +149,32 @@ namespace server.Controllers
 
         }
 
-        [HttpDelete("{purchaseId}/{packageId}")]
+        [HttpDelete("deletePackage/{purchaseId}/{packageId}")]
         [ProducesResponseType(typeof(PurchaseResponseDtos), StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> DeletePackageFromPurchase([FromRoute] int purchaseId,[FromRoute] int packageId)
         {
-            var reasult = await _purchaseService.DeleteTicketFromPurchase(purchaseId, packageId);
+            var reasult = await _purchaseService.DeletePackageFromPurchase(purchaseId, packageId);
             if (reasult == null)
             {
                 return NotFound(new { message = $"Purchase with packageId {packageId} not found" });
             }
             return NoContent();
         }
+
+        [HttpPut("completePurchase/{purchaseId}")]
+        [ProducesResponseType(typeof(PurchaseResponseDtos), StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> CompletionPurchase([FromRoute] int purchaseId, [FromBody] PurchaseUpdateDtos purchase)
+        {
+            var result = await _purchaseService.CompletionPurchase(purchaseId, purchase);
+
+            if (result == null)
+            {
+                return NotFound(new { message = $"complet purchase faild" });
+            }
+            return NoContent();
+        }
+
     }
 }

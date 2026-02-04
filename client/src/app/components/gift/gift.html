@@ -1,27 +1,34 @@
 <p>gift works!</p>
 <div>
-    <input #nameInput type="text" placeholder="Name" />
-    <input #donorIdInput type="text" placeholder="donor ID" />
-    <input #buyerCountInput type="number" placeholder="buyerCount" />
+  <input #nameInput type="text" placeholder="Name" />
+  <input #donorIdInput type="text" placeholder="donor ID" />
+  <input #buyerCountInput type="number" placeholder="buyerCount" />
   <input #categoryIdInput type="number" placeholder="categoryId" />
-  
-  <button type="button" (click)="filter(nameInput.value,donorIdInput.value,buyerCountInput.value ? +buyerCountInput.value : undefined,categoryIdInput.value ? +categoryIdInput.value : undefined)">Filter</button>
+
+  <button type="button"
+    (click)="filter(nameInput.value,donorIdInput.value,buyerCountInput.value ? +buyerCountInput.value : undefined,categoryIdInput.value ? +categoryIdInput.value : undefined)">Filter</button>
   <button type="button" (click)="refreshList()">Clear Filters</button>
 </div>
 
- @for(g of list$ | async ; track g){
-    <div>
-        <button (click)="getGiftById(g.id!)">{{g.name}}</button>
-         <button (click) = "delete(g.id!)">מחק</button>
-         <button (click) = "openEdit(g)">עדכן</button>
-         <button (click) = "lottery(g.id!)">הגרל</button>
-    </div>
-    }
-
-    <input [(ngModel)] = "draftGift.name"  placeholder="name" #name  />
-    <input [(ngModel)] = "draftGift.description"  placeholder="description" #description  />
-    <input [(ngModel)] = "draftGift.imageUrl"  placeholder="imageUrl" #imageUrl  />
-    <input [(ngModel)] = "draftGift.categoryId"  placeholder="categoryId" #categoryId  />
-    <input [(ngModel)] = "draftGift.donorId"  placeholder="donorId" #donorId  />
-    <button type="button" (click)="save()">{{flagUpdate ? 'update' :'Add'}}</button>   
-    <button type="button" (click)="resetForm()" *ngIf="flagUpdate">בטל</button>
+@for(g of list$ | async ; track g){
+  
+<div>
+  <button (click)="getGiftById(g.id!)">{{g.name}}</button>
+  @if(authSrv.isAdmin()){
+  <button (click)="delete(g.id!)">מחק</button>
+  <button (click)="openEdit(g)">עדכן</button>
+  <button (click)="lottery(g.id!)">הגרל</button>}
+  <button (click)="addGift(g)">+</button>
+  <span></span>
+  <button (click)="deleteGift(g.id!)">-</button>
+</div>
+}
+@if(authSrv.isAdmin()){
+<input [(ngModel)]="draftGift.name" placeholder="name" #name />
+<input [(ngModel)]="draftGift.description" placeholder="description" #description />
+<input [(ngModel)]="draftGift.imageUrl" placeholder="imageUrl" #imageUrl />
+<input [(ngModel)]="draftGift.categoryId" placeholder="categoryId" #categoryId />
+<input [(ngModel)]="draftGift.donorId" placeholder="donorId" #donorId />
+<button type="button" (click)="save()">{{flagUpdate ? 'update' :'Add'}}</button>
+<button type="button" (click)="resetForm()" *ngIf="flagUpdate">בטל</button>
+}

@@ -10,7 +10,7 @@ namespace server.Models
         public int Quentity { get; set; }
         public int Price { get; set; }
 
-        public ICollection<Purchase> Purchases { get; set; } = new List<Purchase>();
+        public ICollection<PurchasePackage> PurchasePackages { get; set; } = new List<PurchasePackage>();
         
        
 
