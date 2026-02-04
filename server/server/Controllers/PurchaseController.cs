@@ -10,7 +10,7 @@ namespace server.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class PurchaseController : ControllerBase
     {
         private readonly IPurchaseService _purchaseService;

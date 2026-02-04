@@ -157,11 +157,26 @@ try
     app.MapControllers();
 
     Log.Information("Store API is now running");
-    app.Run();
+    try
+    {
+        app.Run();
+    }
+    catch (Exception ex) { 
+        Console.WriteLine(ex.ToString());
+        throw;
+    }
 }
 catch (Exception ex)
 {
+    Console.WriteLine("--------------------------------------------------");
+    Console.WriteLine("CRITICAL ERROR FOUND:");
+    Console.WriteLine(ex.Message);
+    Console.WriteLine(ex.StackTrace);
+    Console.WriteLine("--------------------------------------------------");
     Log.Fatal(ex, "Application terminated unexpectedly");
+
+    Console.WriteLine("Press Enter to close...");
+    Console.ReadLine(); // השורה הזו תמנע מהחלון להיסגר
 }
 finally
 {

@@ -9,7 +9,7 @@ public class UserService : IUserService
 {
     private readonly IUserRepository _userRepository;
     private readonly ITokenService _tokenService;
-    private readonly IPurchaseService _purchaseService;
+    private readonly IPurchaseRepository _purchaseRepository;
     private readonly IConfiguration _configuration;
     private readonly ILogger<UserService> _logger;
 
@@ -17,13 +17,13 @@ public class UserService : IUserService
         IUserRepository userRepository,
         ITokenService tokenService,
         IConfiguration configuration,
-        IPurchaseService purchaseService,
+        IPurchaseRepository purchaseRepository,
         ILogger<UserService> logger)
     {
         _userRepository = userRepository;
         _tokenService = tokenService;
         _configuration = configuration;
-        _purchaseService = purchaseService;
+        _purchaseRepository = purchaseRepository;
         _logger = logger;
     }
 
@@ -83,7 +83,7 @@ public class UserService : IUserService
         {
             var createdUser = await _userRepository.AddUser(user);
             _logger.LogInformation("User created with ID: {UserId}", createdUser.Id);
-            var purchase = await _purchaseService.AddPurchase(new PurchaseCreateDtos
+            var purchase = await _purchaseRepository.AddPurchase(new Purchase
             {
                 BuyerId = createdUser.Id
             });

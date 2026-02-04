@@ -10,15 +10,17 @@ namespace server.Services
         private readonly IPurchaseRepository _purchaseRepository;
         private readonly ITicketService _ticketService;
         private readonly IUserService _userService;
+        private readonly IConfiguration _configurtaion;
         private readonly ILogger<PurchaseService> _logger;
         
         
-        public PurchaseService(IPurchaseRepository purchaseRepository,ITicketService ticketService,ILogger<PurchaseService> logger,IUserService userService)
+        public PurchaseService(IConfiguration configuration, IPurchaseRepository purchaseRepository,ITicketService ticketService,ILogger<PurchaseService> logger,IUserService userService)
         {
             _purchaseRepository = purchaseRepository;
             _ticketService = ticketService;
             _logger = logger;
             _userService = userService;
+            _configurtaion = configuration;
            
         }
         public async Task<PurchaseResponseDtos> AddPurchase(PurchaseCreateDtos PurchaseDto)
@@ -293,18 +295,51 @@ namespace server.Services
                 }
                 else
                 {
-                    // 1. הגדרת התוכן עם ה-Email של המשתמש שחזר מה-Service
-                    // שים לב לשימוש ב-$ לפני המרכאות כדי להכניס משתנים בפנים
-                    var jsonBody = $"{{\"personalizations\":[{{\"to\":[{{\"email\":\"{user.Email}\"}}]}}],\"from\":{{\"email\":\"system@yourdomain.com\"}},\"subject\":\"אישור רכישה\",\"content\":[{{\"type\":\"text/plain\",\"value\":\"נשלח\"}}]}}";
-
-                    var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
-
-                    // 2. שורת השליחה האמיתית (ההדק)
-                    using (var client = new HttpClient())
+                    try
                     {
-                        client.DefaultRequestHeaders.Add("Authorization", "Bearer YOUR_API_KEY");
-                        await client.PostAsync("https://api.sendgrid.com/v3/mail/send", content);
+                         // ודאי איות נכון של המשתנה
+
+                        // בניית גוף המייל בצורה בטוחה
+                        var mailText = $"שלום {user.FullName}, הרכישה שלך על סך {sum} שח הושלמה בהצלחה.";
+
+                        var emailData = new
+                        {
+                            personalizations = new[]
+    {
+        new { to = new[] { new { email = user.Email } } }
+    },
+                            from = new { email = "rivki0259@gmail.com" },
+                            subject = $"אישור רכישה - הזמנה {purchaseId}",
+                            content = new[]
+    {
+        new { type = "text/plain", value = $"שלום {user.FullName}, הרכישה שלך על סך {sum} שח הושלמה בהצלחה." }
+    }
+                        };
+
+                        // 2. המרה ל-JSON בעזרת הספרייה המובנית
+                        var jsonPayload = System.Text.Json.JsonSerializer.Serialize(emailData);
+                        var content = new StringContent(jsonPayload, Encoding.UTF8, "application/json");
+
+                        using (var client = new HttpClient())
+                        {
+                            var apiKey = _configurtaion["SendGrid:ApiKey"]; // ודאי איות נכון!
+
+                            // שימי לב: "Bearer" בלי רווח בסוף!
+                            client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", apiKey);
+
+                            var response = await client.PostAsync("https://api.sendgrid.com/v3/mail/send", content);
+
+                            // בדיקה מה קרה
+                            var responseBody = await response.Content.ReadAsStringAsync();
+                            _logger.LogInformation("SendGrid Status: {0}, Body: {1}", response.StatusCode, responseBody);
+                        }
+
                     }
+                    catch (Exception ex)
+                    {
+                        _logger.LogError(ex, "Failed to send email");
+                    }
+
                 }
 
                 return updatePurchase; // או כל ערך אחר שאתה מחזיר
