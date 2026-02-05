@@ -1,4 +1,6 @@
 import { Component, inject, Input } from '@angular/core';
+import { CardModule } from 'primeng/card';
+import { ButtonModule } from 'primeng/button';
 import { PackageService } from '../../service/package';
 import { packageModel } from '../../models/package.model';
 import { CommonModule } from '@angular/common';
@@ -11,7 +13,7 @@ import { AuthService } from '../../auth/auth-service';
 
 @Component({
   selector: 'app-packege',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, CardModule, ButtonModule],
   templateUrl: './packege.html',
   styleUrl: './packege.css',
 })

@@ -46,12 +46,10 @@ export class AuthService {
   isLoggedIn() {
     return !!this.token;
   }
+  
   isAdmin():boolean{
     const user = this.user;
-    console.log("current user"+ user.role);
-    
-    console.log(user && user.role ==='Admin');
-     return user && user.role ==='Admin'
+    return user && user.role ==='Admin'
 
   }
 

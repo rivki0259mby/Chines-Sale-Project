@@ -1,9 +1,23 @@
-<!-- <p>busket works!</p>
-@if(user!=null){
-    <h1>המשתמש המחובר הוא:{{user.fullName}}</h1>
 
-}
-<app-counter [basketId]="basket.id" [package]="p"></app-counter> -->
+<p-card class="busket-card" [style]="{width: '100%', minWidth: '320px', maxWidth: '420px', margin: '0 auto', background: '#fcf7f5'}">
+    <ng-template pTemplate="header">
+        <div class="busket-header">
+            <span class="busket-step">שלב <b>1</b> בחירת חבילות כרטיסים</span>
+        </div>
+    </ng-template>
+    <div class="busket-content">
+        <div class="busket-title">העגלה ריקה</div>
+        <div class="busket-subtitle">בחר אחת מהחבילות בעמוד</div>
+        <img src="assets/cart-icon.png" alt="עגלה ריקה" class="busket-img" />
+    </div>
+    <ng-template pTemplate="footer">
+        <div class="busket-footer">
+            <button pButton type="button" label="לשלב הבא" class="p-button-outlined busket-next-btn" [disabled]="true"></button>
+            <span class="busket-footer-text">יש לבחור חבילת כרטיסים</span>
+            <i class="pi pi-shopping-cart busket-footer-icon"></i>
+        </div>
+    </ng-template>
+</p-card>
 
 
 

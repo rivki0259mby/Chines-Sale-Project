@@ -1,9 +1,18 @@
+
 export class packageModel {
-    id?:number;
-    name?:string;
-    description?:string;
-    quentity?:number;
-    price?:number;
+    id?: number;
+    name?: string;
+    description?: string;
+    quentity?: number;
+    price?: number;
+
+    // UI/Display fields for PrimeNG card view
+    color?: string; // background color for the card
+    popular?: boolean; // show 'פופולרי' ribbon
+    best?: boolean; // show 'הכי משתלם' ribbon
+    topLabel?: string; // top label text
+    benefits?: string[]; // list of benefits
+    gift?: string[]; // list of gifts
 }
 
  

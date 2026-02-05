@@ -129,13 +129,10 @@ try
 
     builder.Services.AddAuthorization();
 
-    // --- Build Application ---
     var app = builder.Build();
     app.UseSerilogRequestLogging();
 
-    // 8. Configure the HTTP request pipeline (ORDER MATTERS)
 
-    // קודם כל CORS כדי לאפשר דפדפנים
     app.UseCors("AllowAngular");
 
     if (app.Environment.IsDevelopment())
@@ -146,7 +143,7 @@ try
 
     app.UseHttpsRedirection();
 
-    // Middleware מותאם אישית (לוגים והגבלת קצב)
+    
     app.UseRequestLogging();
     app.UseRateLimiting();
 
@@ -176,7 +173,7 @@ catch (Exception ex)
     Log.Fatal(ex, "Application terminated unexpectedly");
 
     Console.WriteLine("Press Enter to close...");
-    Console.ReadLine(); // השורה הזו תמנע מהחלון להיסגר
+    Console.ReadLine(); 
 }
 finally
 {

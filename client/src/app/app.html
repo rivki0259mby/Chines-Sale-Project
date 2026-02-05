@@ -1,15 +1,51 @@
-<nav>
-    <a routerLink="">home</a>
-    <a routerLink="package" routerLinkActive="active-route">package</a>
-    <a routerLink="category" routerLinkActive="active-route">category</a>
-    <a routerLink="donors" routerLinkActive="active-route">donors</a>
-    <a routerLink="login" routerLinkActive="active-route">login</a>
-    <a routerLink="register" routerLinkActive="active-route">register</a>
-    <a routerLink="logout" routerLinkActive="active-route">logout</a>
-</nav>
-  
- <router-outlet />
- <app-busket></app-busket>
-<!-- <app-category></app-category> -->
-<!-- <app-register></app-register>
-<app-login></app-login> -->
+<header class="header-container">
+    <div class="header-content">
+        <div class="logo-section">
+            @if(authSrv.isLoggedIn()){
+                 <button class="login-btn" (click)="authSrv.loguot()">
+           התנתק
+        </button>
+            }@else {
+                <button class="login-btn" [routerLink]="['login']">
+           התחבר
+        </button>
+            }
+        
+            <!-- <div class="logo-text">
+                <h1>סיינס סייל</h1>
+                <div class="logo-with-star">
+                    <span class="tagline">משדה המסחר בזרימה</span>
+                    <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg" class="star-icon">
+                        <path d="M15 2L19 12H29L21 18L25 28L15 22L5 28L9 18L1 12H11L15 2Z" fill="#222" />
+                    </svg>
+                </div>
+            </div> -->
+            
+        </div>
+        
+        <nav class="nav-menu">
+            <a *ngFor="let item of fuilterNavItems" 
+               [routerLink]="item.routerLink" 
+               routerLinkActive="active"
+               [routerLinkActiveOptions]="{ exact: true }"
+               class="nav-item">
+                {{ item.label }}
+            </a>
+        </nav>
+
+        
+    </div>
+</header>
+
+
+<div class="app-layout">
+    @if(authSrv.isLoggedIn()){
+    <aside class="app-sidebar">
+        <app-busket></app-busket>
+    </aside>
+    }
+    <main class="main-content">
+        <router-outlet />
+    </main>
+</div>
+

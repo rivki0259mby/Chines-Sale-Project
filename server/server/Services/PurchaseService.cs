@@ -305,15 +305,15 @@ namespace server.Services
                         var emailData = new
                         {
                             personalizations = new[]
-    {
-        new { to = new[] { new { email = user.Email } } }
-    },
-                            from = new { email = "rivki0259@gmail.com" },
-                            subject = $"אישור רכישה - הזמנה {purchaseId}",
-                            content = new[]
-    {
-        new { type = "text/plain", value = $"שלום {user.FullName}, הרכישה שלך על סך {sum} שח הושלמה בהצלחה." }
-    }
+                                {
+                                    new { to = new[] { new { email = user.Email } } }
+                                },
+                                     from = new { email = "rivki0259@gmail.com" },
+                                     subject = $"אישור רכישה - הזמנה {purchaseId}",
+                                     content = new[]
+                                {
+                                     new { type = "text/plain", value = $"שלום {user.FullName}, הרכישה שלך על סך {sum} שח הושלמה בהצלחה." }
+                                 }   
                         };
 
                         // 2. המרה ל-JSON בעזרת הספרייה המובנית

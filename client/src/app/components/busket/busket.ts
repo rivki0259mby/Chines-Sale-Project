@@ -1,4 +1,6 @@
 import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
+import { CardModule } from 'primeng/card';
+import { ButtonModule } from 'primeng/button';
 import { BusketService } from '../../service/busket';
 import { busketModel } from '../../models/busket.model';
 import { packageModel } from '../../models/package.model';
@@ -7,7 +9,7 @@ import { Counter } from "../counter/counter";
 
 @Component({
   selector: 'app-busket',
-  imports: [],
+  imports: [CardModule, ButtonModule],
   templateUrl: './busket.html',
   styleUrl: './busket.css',
 })

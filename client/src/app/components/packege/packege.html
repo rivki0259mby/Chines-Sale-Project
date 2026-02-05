@@ -1,29 +1,59 @@
-<p>packege works!</p>
-<div>
 
-    <select #sortBySelect (change)="sortBy(sortBySelect.value)">
-        <option value="price_desc">Price Descending</option>
-        <option value="most_purchased">Most Purchases</option>
-    </select>
+<div class="package-page">
+    <h1 class="package-title">בוחרים חבילת כרטיסים</h1>
+    <div class="package-subtitle">בחרו חבילה אחת או יותר ותחלקו את הכרטיסים בין הפרסים שאהבתם</div>
+    <div class="package-sort-row">
+        <select #sortBySelect (change)="sortBy(sortBySelect.value)" class="package-sort-select">
+            <option value="price_desc">מיון לפי מחיר יורד</option>
+            <option value="most_purchased">הכי נקנה</option>
+        </select>
+    </div>
+    <div class="package-cards-row">
+        @for(p of list$ | async ; track p)
+        {
+            <p-card class="package-card">
+                <ng-template pTemplate="header">
+                    <div class="package-card-header">
+                        <span class="package-card-top-label">Package</span>
+                    </div>
+                </ng-template>
+                <div class="package-card-content">
+                    <div class="package-card-amount">{{p.name}} כרטיסים</div>
+                    <div class="package-card-amount">{{p.description}} כרטיסים</div>
+                    <div class="package-card-price">₪{{p.price}} × 12</div>
+                    <div class="package-card-receive">You will receive this package</div>
+                    <ul class="package-card-benefits">
+                        <li>Default benefit 1</li>
+                        <li>Default benefit 2</li>
+                    </ul>
+                    <div class="package-card-gift">
+                        <span class="package-gift-label">Gift:</span>
+                        <ul>
+                            <li>Default gift</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="package-card-bottom">
+                    <!-- <img [src]="p.image || 'assets/placeholder.png'" alt="package image" class="package-card-img" /> -->
+                    @if(authSrv.isLoggedIn()){
+                    <div class="package-card-actions">
+                        <button pButton icon="pi pi-minus" class="p-button-rounded p-button-text" (click)="deletePackage(p.id!)">+</button>
+                        <span class="package-card-qty">0</span>
+                        <button pButton icon="pi pi-plus" class="p-button-rounded p-button-text" (click)="addPackage(p)">_</button>
+                        <span class="package-card-add-label">להוספת חבילה</span>
+                    </div>
+                    }
+                </div>
+            </p-card>
+        }
+    </div>
+
+    <div *ngIf="authSrv.isAdmin()" class="package-admin-form">
+        <input [(ngModel)]="draftPackage.name" placeholder="name" />
+        <input [(ngModel)]="draftPackage.description" placeholder="description" />
+        <input [(ngModel)]="draftPackage.price" placeholder="price" />
+        <input [(ngModel)]="draftPackage.quentity" placeholder="quentity" />
+        <button type="button" (click)="save()">{{flagUpdate ? 'update' :'Add'}}</button>
+        <button type="button" (click)="resetForm()" *ngIf="flagUpdate">בטל</button>
+    </div>
 </div>
-@for(p of list$ | async ; track p){
-<div>
-    <h2>{{p.name}}-{{p.description}}-{{p.price}}-{{p.quentity}}</h2>
-    @if(authSrv.isAdmin()){
-    <button (click)="delete(p.id!)">מחק</button>
-    <button (click)="openEdit(p)">עדכן</button>
-    }
-    <button (click)="addPackage(p)">+</button>
-    <span></span>
-    <button (click)="deletePackage(p.id!)">-</button>
-    
-</div>
-}
-@if(authSrv.isAdmin()){
-<input [(ngModel)]="draftPackage.name" placeholder="name" #name />
-<input [(ngModel)]="draftPackage.description" placeholder="description" #description />
-<input [(ngModel)]="draftPackage.price" placeholder="price" #price />
-<input [(ngModel)]="draftPackage.quentity" placeholder="quentity" #quentity />
-<button type="button" (click)="save()">{{flagUpdate ? 'update' :'Add'}}</button>
-<button type="button" (click)="resetForm()" *ngIf="flagUpdate">בטל</button>
-}
