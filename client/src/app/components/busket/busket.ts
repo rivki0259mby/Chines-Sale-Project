@@ -6,17 +6,19 @@ import { busketModel } from '../../models/busket.model';
 import { packageModel } from '../../models/package.model';
 import { ticketModel } from '../../models/ticket.model';
 import { Counter } from "../counter/counter";
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-busket',
-  imports: [CardModule, ButtonModule],
+  imports: [FormsModule,CommonModule,CardModule, ButtonModule],
   templateUrl: './busket.html',
   styleUrl: './busket.css',
 })
 export class Busket {
 
   basketSrv: BusketService = inject(BusketService)
-
+  
   basket: busketModel = {}
   user: any = {}
 
@@ -31,10 +33,11 @@ export class Busket {
   getByUserId(userId: string) {
     this.basketSrv.getByUserId(userId).subscribe(b => {
       this.basket = b
-      console.log(this.basket);
+      console.log(this.basket.PurchasePackages);
     })
 
   }
+  
   // addPackage(item:packageModel){
   //   return this.basketSrv.addPackage(this.basket.id!,item).subscribe()
   // }

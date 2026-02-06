@@ -35,7 +35,7 @@
 .package-card-add-label {
 	margin-right: 0.7rem;
 	font-size: 1.1rem;
-	color: #fff;
+	color: #000000;
 	font-weight: 600;
 }
 /* Package Page Styles */
@@ -86,7 +86,7 @@
 	top: 18px;
 	left: -38px;
 	background: #e53935;
-	color: #fff;
+	color: #000000;
 	font-size: 1.1rem;
 	font-weight: 700;
 	padding: 0.3rem 2.2rem;
@@ -101,7 +101,7 @@
 	width: 100%;
 	text-align: right;
 	font-size: 1.1rem;
-	color: #fff;
+	color: #000000;
 	font-weight: 400;
 	margin-right: 1.5rem;
 }
@@ -115,12 +115,13 @@
 .package-card-amount {
 	font-size: 2.5rem;
 	font-weight: 800;
-	color: #fff;
+	color: #000000;
 	margin-bottom: 0.7rem;
+  
 }
 .package-card-price {
 	font-size: 1.3rem;
-	color: #fff;
+	color: #000000;
 	margin-bottom: 0.7rem;
 }
 .package-card-receive {
@@ -133,7 +134,7 @@
 	list-style: none;
 	padding: 0;
 	margin: 0 0 0.7rem 0;
-	color: #fff;
+	color: #000000;
 	font-size: 1.1rem;
 	text-align: right;
 }
@@ -145,7 +146,7 @@
 }
 .package-card-gift {
 	margin-top: 1.2rem;
-	color: #fff;
+	color: #000000;
 	font-size: 1.1rem;
 	text-align: right;
 }
@@ -181,7 +182,7 @@
 	font-size: 1rem;
 	font-weight: 600;
 	background: #e53935;
-	color: #fff;
+	color: #000000;
 	border: none;
 	cursor: pointer;
 	transition: background 0.2s;

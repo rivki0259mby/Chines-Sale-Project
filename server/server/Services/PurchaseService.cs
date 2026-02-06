@@ -217,6 +217,7 @@ namespace server.Services
 
 
                 var update = await _purchaseRepository.AddPackageToPurchase(purchaseId, packageId);
+               
                 return MapToResponeseDto(update);
             }
             catch(Exception ex)
@@ -285,6 +286,10 @@ namespace server.Services
                 {
                     BuyerId = purchase.BuyerId,
                     IsDraft = false
+                });
+                var newPurchase = await AddPurchase(new PurchaseCreateDtos
+                {
+                    BuyerId = purchase.BuyerId
                 });
 
                 var user =await _userService.GetById(purchase.BuyerId);
@@ -364,7 +369,8 @@ namespace server.Services
                 BuyerId = purchase.BuyerId,
                 TotalAmount = purchase.TotalAmount,
                 OrderDate = purchase.OrderDate,
-                IsDraft = purchase.IsDraft
+                IsDraft = purchase.IsDraft,
+                PurchasePackages = purchase.PurchasePackages
             };
         }
 

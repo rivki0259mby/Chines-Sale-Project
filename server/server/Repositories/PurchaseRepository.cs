@@ -2,6 +2,7 @@
 using server.Data;
 using server.Interfaces;
 using server.Models;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace server.Repositories
 {
@@ -100,6 +101,7 @@ namespace server.Repositories
                 existPackage.Quantity++;
             }
             else {
+               
                 var newPurchasepackage = new PurchasePackage
                 {
                     PurchaseId = purchaseId,
@@ -108,6 +110,7 @@ namespace server.Repositories
                 };
                 purchase.PurchasePackages.Add(newPurchasepackage);
             }
+           
             await _context.SaveChangesAsync();
             return purchase;
         }

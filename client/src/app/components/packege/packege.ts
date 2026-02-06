@@ -28,10 +28,6 @@ export class Packege {
 
   flagUpdate: boolean = false;
   componentName: string = ''
-
-  basket: busketModel = {}
-  user: any = {}
-
   draftPackage = {
     id: 0,
     name: '',
@@ -39,20 +35,42 @@ export class Packege {
     price: 0,
     quentity: 0
   }
+  amount: number = 0;
+  basket: busketModel = {}
+  user: any = {}
+
+
+
   ngOnInit() {
-    this.user = localStorage.getItem('user')
+    this.user = localStorage.getItem('user');
     if (this.user) {
-      this.user = JSON.parse(this.user)
-      this.getByUserId(this.user.id)
+      this.user = JSON.parse(this.user);
+      this.getByUserId(this.user.id);
     }
+    this.basketSrv.getByUserId(this.user.id).subscribe(purchase => {
+      console.log(purchase);
+      if (purchase && purchase.PurchasePackages) {
+        
+        
+        // חיפוש בטבלת הקשר (PurchasePackages)
+        const connection = purchase.PurchasePackages.find(p => p.packageId === this.draftPackage.id);
+        
+        if (connection) {
+          this.amount = connection.quentity ?? 0;
+        } else {
+          this.amount = 0; 
+        }
+      }
+    });
+  
+ 
   }
 
   getByUserId(userId: string) {
-    this.basketSrv.getByUserId(userId).subscribe(b => {
-      this.basket = b
+    this.basketSrv.getByUserId(userId).subscribe((b: any) => {
+      this.basket = b;
       console.log(this.basket);
-    })
-
+    });
   }
 
   openEdit(p: packageModel) {
@@ -65,36 +83,36 @@ export class Packege {
       quentity: p.quentity ?? 0
     };
   }
+
   save() {
-
-
     if (!this.draftPackage.name) return;
     const id = this.draftPackage.id;
     if (this.flagUpdate) {
-      this.packageSrv.update(id!, this.draftPackage).subscribe(d => {
+      this.packageSrv.update(id!, this.draftPackage).subscribe(() => {
         this.refreshList();
         this.resetForm();
       });
-    }
-    else {
-      this.packageSrv.add(this.draftPackage).subscribe(d => {
+    } else {
+      this.packageSrv.add(this.draftPackage).subscribe(() => {
         this.refreshList();
         this.resetForm();
       });
     }
   }
+
   refreshList() {
     this.list$ = this.packageSrv.getAll();
   }
+
   resetForm() {
     this.flagUpdate = false;
-    this.draftPackage = { id: 0, name: '', description: '', price: 0, quentity: 0 }
+    this.draftPackage = { id: 0, name: '', description: '', price: 0, quentity: 0 };
   }
 
   delete(id: number) {
-    this.packageSrv.delete(id).subscribe(d => {
+    this.packageSrv.delete(id).subscribe(() => {
       this.list$ = this.packageSrv.getAll();
-    })
+    });
   }
 
   sortBy(sortBy?: string) {
@@ -102,10 +120,13 @@ export class Packege {
   }
 
   addPackage(item: packageModel) {
-    return this.basketSrv.addPackage(this.basket.id!, item.id!).subscribe()
+    this.amount++;
+    return this.basketSrv.addPackage(this.basket.id!, item.id!).subscribe();
   }
+
   deletePackage(packageId: number) {
-    return this.basketSrv.deletePackage(this.basket.id!, packageId).subscribe()
+    this.amount--;
+    return this.basketSrv.deletePackage(this.basket.id!, packageId).subscribe();
   }
   // getPackageById(id:number){
   //   this.router.na

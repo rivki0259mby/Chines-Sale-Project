@@ -1,4 +1,3 @@
-
 <div class="package-page">
     <h1 class="package-title">בוחרים חבילת כרטיסים</h1>
     <div class="package-subtitle">בחרו חבילה אחת או יותר ותחלקו את הכרטיסים בין הפרסים שאהבתם</div>
@@ -11,40 +10,35 @@
     <div class="package-cards-row">
         @for(p of list$ | async ; track p)
         {
-            <p-card class="package-card">
-                <ng-template pTemplate="header">
-                    <div class="package-card-header">
-                        <span class="package-card-top-label">Package</span>
-                    </div>
-                </ng-template>
-                <div class="package-card-content">
-                    <div class="package-card-amount">{{p.name}} כרטיסים</div>
-                    <div class="package-card-amount">{{p.description}} כרטיסים</div>
-                    <div class="package-card-price">₪{{p.price}} × 12</div>
-                    <div class="package-card-receive">You will receive this package</div>
-                    <ul class="package-card-benefits">
-                        <li>Default benefit 1</li>
-                        <li>Default benefit 2</li>
-                    </ul>
-                    <div class="package-card-gift">
-                        <span class="package-gift-label">Gift:</span>
-                        <ul>
-                            <li>Default gift</li>
-                        </ul>
-                    </div>
+        <p-card class="package-card">
+            <ng-template pTemplate="header">
+                <div class="package-card-header">
+
                 </div>
-                <div class="package-card-bottom">
-                    <!-- <img [src]="p.image || 'assets/placeholder.png'" alt="package image" class="package-card-img" /> -->
-                    @if(authSrv.isLoggedIn()){
-                    <div class="package-card-actions">
-                        <button pButton icon="pi pi-minus" class="p-button-rounded p-button-text" (click)="deletePackage(p.id!)">+</button>
-                        <span class="package-card-qty">0</span>
-                        <button pButton icon="pi pi-plus" class="p-button-rounded p-button-text" (click)="addPackage(p)">_</button>
-                        <span class="package-card-add-label">להוספת חבילה</span>
-                    </div>
-                    }
+            </ng-template>
+            <div class="package-card-content">
+                <div class="package-card-amount">{{p.name}} </div>
+                <div class="package-card-amount">{{p.quentity}} כרטיסים</div>
+                <div class="package-card-price">₪{{p.price}} × 12</div>
+                <div class="package-card-receive">You will receive this package</div>
+
+            </div>
+            <div class="package-card-bottom">
+                <!-- <img [src]="p.image || 'assets/placeholder.png'" alt="package image" class="package-card-img" /> -->
+                @if(authSrv.isLoggedIn()){
+                <div class="package-card-actions">
+                    <button pButton icon="pi pi-plus" class="p-button-rounded p-button-text"
+                        (click)="addPackage(p)">+</button>
+                    <span class="package-card-qty" >{{amount}}</span>
+                    <button pButton icon="pi pi-minus" class="p-button-rounded p-button-text"
+                        (click)="deletePackage(p.id!)">-</button>
+
+
+                    <span class="package-card-add-label">להוספת חבילה</span>
                 </div>
-            </p-card>
+                }
+            </div>
+        </p-card>
         }
     </div>
 

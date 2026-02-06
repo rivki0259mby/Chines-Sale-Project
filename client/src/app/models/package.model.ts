@@ -5,6 +5,7 @@ export class packageModel {
     description?: string;
     quentity?: number;
     price?: number;
+    
 
     // UI/Display fields for PrimeNG card view
     color?: string; // background color for the card

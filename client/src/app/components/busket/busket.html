@@ -17,6 +17,14 @@
             <i class="pi pi-shopping-cart busket-footer-icon"></i>
         </div>
     </ng-template>
+    @for(b of basket.PurchasePackages ; track b)
+    {
+        <!-- <div class="busket-package-item">
+            <div class="busket-package-name">{{b.packageName}}</div>
+            <div class="busket-package-qty">כמות: {{b.quentity}}</div>
+            <div class="busket-package-price">₪{{b.packagePrice}}</div>
+        </div> -->
+    }
 </p-card>
 
 

@@ -17,7 +17,7 @@ namespace server.DTOs
         public decimal TotalAmount { get; set; } = 0;
         public DateTime OrderDate { get; set; } = DateTime.UtcNow;
         public bool IsDraft { get; set; } = true;
-        public ICollection<PurchasePackageResponseDto> Packages { get; set; } = new List<PurchasePackageResponseDto>();
+        public ICollection<PurchasePackage> PurchasePackages { get; set; } = new List<PurchasePackage>();
     }
     public class PurchaseUpdateDtos
     {

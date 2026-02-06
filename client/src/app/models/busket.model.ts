@@ -1,3 +1,4 @@
+import { purchasePackagesModel } from "./PurchasePackages.model"
 
 export class busketModel {
     id?: number
@@ -5,4 +6,5 @@ export class busketModel {
     totalAmount?: number
     orderDate?: Date
     isDraft?: boolean
+    PurchasePackages?: purchasePackagesModel[]
 }
