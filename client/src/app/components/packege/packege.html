@@ -29,7 +29,9 @@
                 <div class="package-card-actions">
                     <button pButton icon="pi pi-plus" class="p-button-rounded p-button-text"
                         (click)="addPackage(p)">+</button>
-                    <span class="package-card-qty" >{{amount}}</span>
+                    @if(getQuentityInCart(p.id!) >0){
+                    <div class="quantity-tag">  {{getQuentityInCart(p.id!)}}</div>
+                    }
                     <button pButton icon="pi pi-minus" class="p-button-rounded p-button-text"
                         (click)="deletePackage(p.id!)">-</button>
 

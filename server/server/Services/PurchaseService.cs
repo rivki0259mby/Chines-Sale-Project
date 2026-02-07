@@ -370,7 +370,8 @@ namespace server.Services
                 TotalAmount = purchase.TotalAmount,
                 OrderDate = purchase.OrderDate,
                 IsDraft = purchase.IsDraft,
-                PurchasePackages = purchase.PurchasePackages
+                PurchasePackages = purchase.PurchasePackages,
+                Tickets = purchase.Tickets
             };
         }
 

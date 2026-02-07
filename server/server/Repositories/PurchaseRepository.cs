@@ -51,6 +51,10 @@ namespace server.Repositories
             return await _context.Purchases
                 .Include(p => p.Buyer)
                 .Include(p => p.Tickets)
+                    .ThenInclude(g=>g.Gift)
+                .Include(p => p.PurchasePackages)
+                       .ThenInclude(x=>x.Package)
+                
                 .FirstOrDefaultAsync(p => p.BuyerId == userId);
         }
 
@@ -125,6 +129,8 @@ namespace server.Repositories
             if (existing != null && existing.Quantity>0 )
             {
                 existing.Quantity--;
+                if (existing.Quantity == 0)
+                    purchase.PurchasePackages.Remove(existing);
             }
             else
             {

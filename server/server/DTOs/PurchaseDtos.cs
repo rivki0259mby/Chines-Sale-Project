@@ -18,6 +18,7 @@ namespace server.DTOs
         public DateTime OrderDate { get; set; } = DateTime.UtcNow;
         public bool IsDraft { get; set; } = true;
         public ICollection<PurchasePackage> PurchasePackages { get; set; } = new List<PurchasePackage>();
+        public ICollection<Ticket> Tickets { get; set; } = new List<Ticket>();
     }
     public class PurchaseUpdateDtos
     {

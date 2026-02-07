@@ -47,29 +47,22 @@ export class Packege {
       this.user = JSON.parse(this.user);
       this.getByUserId(this.user.id);
     }
-    this.basketSrv.getByUserId(this.user.id).subscribe(purchase => {
-      console.log(purchase);
-      if (purchase && purchase.PurchasePackages) {
-        
-        
-        // חיפוש בטבלת הקשר (PurchasePackages)
-        const connection = purchase.PurchasePackages.find(p => p.packageId === this.draftPackage.id);
-        
-        if (connection) {
-          this.amount = connection.quentity ?? 0;
-        } else {
-          this.amount = 0; 
-        }
-      }
-    });
-  
- 
+  }
+  get totalItemInCart() {
+    return this.basket.purchasePackages?.reduce((sum, pkg) => sum + pkg.quantity!, 0) || 0;
   }
 
+  getQuentityInCart(packageId: number): number {
+
+    if (!this.basket || !this.basket.purchasePackages) return 0;
+    
+    const item = this.basket.purchasePackages.find(p => p.packageId === packageId);
+
+    return item ? (item.quantity || 0) : 0;
+  }
   getByUserId(userId: string) {
     this.basketSrv.getByUserId(userId).subscribe((b: any) => {
       this.basket = b;
-      console.log(this.basket);
     });
   }
 
@@ -120,13 +113,15 @@ export class Packege {
   }
 
   addPackage(item: packageModel) {
-    this.amount++;
-    return this.basketSrv.addPackage(this.basket.id!, item.id!).subscribe();
+    return this.basketSrv.addPackage(this.basket.id!, item.id!).subscribe(() => {
+      this.getByUserId(this.user.id);
+    });
   }
 
   deletePackage(packageId: number) {
-    this.amount--;
-    return this.basketSrv.deletePackage(this.basket.id!, packageId).subscribe();
+    return this.basketSrv.deletePackage(this.basket.id!, packageId).subscribe(() => {
+      this.getByUserId(this.user.id);
+    });
   }
   // getPackageById(id:number){
   //   this.router.na

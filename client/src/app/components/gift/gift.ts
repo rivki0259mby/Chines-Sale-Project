@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { BusketService } from '../../service/busket';
 import { busketModel } from '../../models/busket.model';
 import { AuthService } from '../../auth/auth-service';
+import { ticketModel } from '../../models/ticket.model';
 
 @Component({
   selector: 'app-gift',
@@ -129,11 +130,22 @@ export class Gift  {
       this.refreshList();
     });
   }
-  addGift(item : giftModel){
-    return this.basketSrv.addTicket(item).subscribe();
+  addGift(giftId : number){
+    const ticket = {
+      giftId: giftId,
+      purchaseId: this.basket.id,
+      quantity:1
+      
+    }
+    
+    return this.basketSrv.addTicket(ticket).subscribe((updateBusket:busketModel)=>{
+      this.basket = updateBusket;
+    });
   }
   deleteGift(giftId:number){
-    return this.basketSrv.deleteTicket(this.basket.id!,giftId).subscribe()
+    return this.basketSrv.deleteTicket(this.basket.id!,giftId).subscribe((updateBusket:busketModel)=>{
+      this.basket = updateBusket;
+    });
   }
 
 

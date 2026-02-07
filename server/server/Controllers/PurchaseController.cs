@@ -102,7 +102,7 @@ namespace server.Controllers
                 return BadRequest(new { messege = ex.Message });
             }
         }
-        [HttpPost("AddTicket/{purchaseId}")]
+        [HttpPost("AddTicket")]
         [ProducesResponseType(typeof(PurchaseResponseDtos), StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult> AddTicketToPurchase( [FromBody] TicketCreateDtos ticket)

@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { busketModel } from '../models/busket.model';
 import { packageModel } from '../models/package.model';
 import { ticketModel } from '../models/ticket.model';
+import { giftModel } from '../models/Gift.model';
 
 @Injectable({
   providedIn: 'root',
