@@ -83,7 +83,7 @@ try
     builder.Services.AddCors(options =>
     {
         options.AddPolicy("AllowAngular", policy => policy
-            .WithOrigins("http://localhost:4200","https://localhost:4200")
+            .WithOrigins("http://localhost:4200","https://localhost:4200", "https://localhost:61386", "http://localhost:61386")
             .AllowAnyMethod()
             .AllowAnyHeader());
     });

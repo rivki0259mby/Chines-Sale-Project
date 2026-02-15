@@ -13,5 +13,6 @@ namespace server.Interfaces
         Task<GiftResponseDto> Lottery(int giftId);
         Task<IEnumerable<GiftResponseDto>> FilterGifts(string? giftName, string? donorName, int? buyersCount,int? categoryId);
 
+        Task<byte[]> GenerateWinnersReport();
     }
 }

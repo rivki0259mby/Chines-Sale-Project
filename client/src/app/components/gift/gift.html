@@ -1,34 +1,108 @@
-<p>gift works!</p>
-<div>
-  <input #nameInput type="text" placeholder="Name" />
-  <input #donorIdInput type="text" placeholder="donor ID" />
-  <input #buyerCountInput type="number" placeholder="buyerCount" />
-  <input #categoryIdInput type="number" placeholder="categoryId" />
+<div class="gift-container-outer">
+ 
+  <div class="admin-top-action-bar" *ngIf="authSrv.isAdmin()">
+    <button nz-button nzType="primary" class="aristocrat-btn" (click)="openAddModal()">
+      <span nz-icon nzType="plus"></span>
+      הוספת מתנה חדשה
+    </button>
+  </div>
 
-  <button type="button"
-    (click)="filter(nameInput.value,donorIdInput.value,buyerCountInput.value ? +buyerCountInput.value : undefined,categoryIdInput.value ? +categoryIdInput.value : undefined)">Filter</button>
-  <button type="button" (click)="refreshList()">Clear Filters</button>
-</div>
+  <div class="gift-grid">
+    <div nz-row [nzGutter]="[16, 20]" nzJustify="start">
+      @for(g of list$ | async; track g.id) {
+        <div nz-col [nzXs]="24" [nzSm]="12" [nzMd]="8" [nzLg]="6" [nzXl]="4">
+         
+          <div class="compact-gift-card clickable-card" [routerLink]="['/gift', g.id]">
+           
+            <div class="card-image-bleed">
+              <img [src]="g.imageUrl" [alt]="g.name" class="main-gift-img" />
+             
+              <div class="donor-hover-overlay" *ngIf="g.donor?.logoUrl">
+                <img [src]="g.donor?.logoUrl" class="full-circle-logo" />
 
-@for(g of list$ | async ; track g){
-  
-<div>
-  <button (click)="getGiftById(g.id!)">{{g.name}}</button>
-  @if(authSrv.isAdmin()){
-  <button (click)="delete(g.id!)">מחק</button>
-  <button (click)="openEdit(g)">עדכן</button>
-  <button (click)="lottery(g.id!)">הגרל</button>}
-  <button (click)="addGift(g.id!)">+</button>
-  <span></span>
-  <button (click)="deleteGift(g.id!)">-</button>
+              </div>
+            </div>
+
+            <div class="card-info-section">
+              <h3 class="gift-title-compact">{{g.name}}</h3>
+             
+              <div class="user-buy-zone" *ngIf="authSrv.isLoggedIn()">
+                <button class="buy-btn-gold" (click)="$event.stopPropagation(); addGift(g.id!)">הוספה לסל</button>
+              </div>
+            </div>
+
+            <div class="admin-icons-footer" *ngIf="authSrv.isAdmin()">
+              <button class="icon-btn edit" (click)="$event.stopPropagation(); openEdit(g)" nz-tooltip nzTooltipTitle="עריכה">
+                <span nz-icon nzType="edit"></span>
+              </button>
+              <button class="icon-btn delete" (click)="$event.stopPropagation(); delete(g.id!)" nz-tooltip nzTooltipTitle="מחיקה">
+                <span nz-icon nzType="delete"></span>
+              </button>
+              <button *ngIf="!g.isDrown" class="icon-btn trophy" (click)="$event.stopPropagation(); lottery(g)" nz-tooltip nzTooltipTitle="בצע הגרלה">
+                <span nz-icon nzType="trophy">הגרל</span>
+              </button>
+              <span *ngIf="g.isDrown" class="is-drown-label">הוגרל</span>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+
+  <nz-modal
+    [(nzVisible)]="showAdminForm"
+    [nzTitle]="modalTitle"
+    nzOkText="אישור"
+    nzCancelText="ביטול"
+    (nzOnCancel)="showAdminForm = false; resetForm()"
+    (nzOnOk)="save()"
+    [nzOkDisabled]="!draftGift.name || !draftGift.categoryId || !draftGift.donorId"
+    nzCentered>
+   
+    <ng-template #modalTitle>
+      <span class="modal-header-text">{{flagUpdate ? 'עריכת מתנה יוקרתית' : 'יצירת מתנה חדשה'}}</span>
+    </ng-template>
+
+    <ng-container *nzModalContent>
+      <div class="friendly-form">
+        <div class="form-group">
+          <label>שם המתנה *</label>
+          <input nz-input [(ngModel)]="draftGift.name" placeholder="הכנס שם למתנה..." />
+        </div>
+
+        <div class="form-row">
+          <div class="form-group flex-1">
+            <label>בחר קטגוריה *</label>
+            <nz-select [(ngModel)]="draftGift.categoryId" nzPlaceHolder="קטגוריה..." class="full-width">
+              @for(cat of categories$ | async; track cat.id) {
+                <nz-option [nzValue]="cat.id" [nzLabel]="cat.name!"></nz-option>
+              }
+            </nz-select>
+          </div>
+          <div class="form-group flex-1">
+            <label>בחר תורם *</label>
+            <nz-select [(ngModel)]="draftGift.donorId" nzPlaceHolder="תורם..." class="full-width">
+              @for(donor of donors$ | async; track donor.id) {
+                <nz-option [nzValue]="donor.id" [nzLabel]="donor.name!"></nz-option>
+              }
+            </nz-select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>תמונת המתנה</label>
+          <div class="upload-container">
+            <input type="file" #fileInput (change)="onFileSelected($event)" accept="image/*" style="display: none;" />
+            <button nz-button type="button" class="upload-btn" (click)="fileInput.click()">
+              <span nz-icon nzType="picture"></span> בחר תמונה
+            </button>
+            <div class="image-preview" *ngIf="draftGift.imageUrl">
+              <img [src]="draftGift.imageUrl" />
+              <button nz-button nzType="text" nzDanger (click)="draftGift.imageUrl = ''">הסר</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </nz-modal>
 </div>
-}
-@if(authSrv.isAdmin()){
-<input [(ngModel)]="draftGift.name" placeholder="name" #name />
-<input [(ngModel)]="draftGift.description" placeholder="description" #description />
-<input [(ngModel)]="draftGift.imageUrl" placeholder="imageUrl" #imageUrl />
-<input [(ngModel)]="draftGift.categoryId" placeholder="categoryId" #categoryId />
-<input [(ngModel)]="draftGift.donorId" placeholder="donorId" #donorId />
-<button type="button" (click)="save()">{{flagUpdate ? 'update' :'Add'}}</button>
-<button type="button" (click)="resetForm()" *ngIf="flagUpdate">בטל</button>
-}

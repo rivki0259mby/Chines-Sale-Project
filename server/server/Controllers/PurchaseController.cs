@@ -162,7 +162,7 @@ namespace server.Controllers
             return NoContent();
         }
 
-        [HttpPut("completePurchase/{purchaseId}")]
+        [HttpPost("completePurchase/{purchaseId}")]
         [ProducesResponseType(typeof(PurchaseResponseDtos), StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> CompletionPurchase([FromRoute] int purchaseId, [FromBody] PurchaseUpdateDtos purchase)

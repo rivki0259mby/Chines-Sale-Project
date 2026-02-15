@@ -81,7 +81,6 @@ namespace server.Controllers
             try
             {
                 var donor = await _donorService.UpdateDonor(id, updateDto);
-                //return CreatedAtAction(nameof(GetById), new { id = category.Id, category });
                 return Ok(donor);
             }
             catch (ArgumentException ex)

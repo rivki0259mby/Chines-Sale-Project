@@ -40,24 +40,25 @@ namespace server.Repositories
         public async Task<Purchase> GetById(int id)
         {
             return await _context.Purchases
-                .Include(p => p.PurchasePackages)
-                        .ThenInclude(pp => pp.Package)
-                .Include(p => p.Buyer)
+                .Include(b => b.Buyer)
                 .Include(p => p.Tickets)
+                    .ThenInclude(g => g.Gift)
+                .Include(p => p.PurchasePackages)
+                    .ThenInclude(x => x.Package)
+                .OrderByDescending(p => p.Id) 
                 .FirstOrDefaultAsync(p => p.Id == id);
         }
         public async Task<Purchase> GetByUserId(string userId)
         {
             return await _context.Purchases
-                .Include(p => p.Buyer)
+                .Include(b => b.Buyer)
                 .Include(p => p.Tickets)
-                    .ThenInclude(g=>g.Gift)
+                    .ThenInclude(g => g.Gift)
                 .Include(p => p.PurchasePackages)
-                       .ThenInclude(x=>x.Package)
-                
+                    .ThenInclude(x => x.Package)
+                .OrderByDescending(p => p.Id) 
                 .FirstOrDefaultAsync(p => p.BuyerId == userId);
         }
-
         public async Task<Purchase> UpdatePurchase(Purchase purchase)
         {
             _context.Purchases.Update(purchase);
@@ -129,7 +130,7 @@ namespace server.Repositories
             if (existing != null && existing.Quantity>0 )
             {
                 existing.Quantity--;
-                if (existing.Quantity == 0)
+                if (existing.Quantity <= 0)
                     purchase.PurchasePackages.Remove(existing);
             }
             else

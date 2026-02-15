@@ -6,6 +6,7 @@ import { provideHttpClient } from '@angular/common/http';
 import { authInerceptor } from './auth/auth.iterceptor';
 import { providePrimeNG } from 'primeng/config';
 import { MessageService } from 'primeng/api';
+import { TrophyOutline, StarOutline } from '@ant-design/icons-angular/icons';
 import Aura from '@primeng/themes/aura'; 
 
 
@@ -24,3 +25,4 @@ export const appConfig: ApplicationConfig = {
    
   ]
 };
+

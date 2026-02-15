@@ -285,12 +285,17 @@ namespace server.Services
                 var updatePurchase = await UpdatePurchase(purchaseId, new PurchaseUpdateDtos
                 {
                     BuyerId = purchase.BuyerId,
-                    IsDraft = false
+                    IsDraft = false,
+                    TotalAmount = sum,
+
                 });
-                var newPurchase = await AddPurchase(new PurchaseCreateDtos
+                var newPurchase =await _purchaseRepository.AddPurchase(new Purchase
                 {
+
                     BuyerId = purchase.BuyerId
+
                 });
+               
 
                 var user =await _userService.GetById(purchase.BuyerId);
 
@@ -302,52 +307,16 @@ namespace server.Services
                 {
                     try
                     {
-                         // ודאי איות נכון של המשתנה
-
-                        // בניית גוף המייל בצורה בטוחה
-                        var mailText = $"שלום {user.FullName}, הרכישה שלך על סך {sum} שח הושלמה בהצלחה.";
-
-                        var emailData = new
-                        {
-                            personalizations = new[]
-                                {
-                                    new { to = new[] { new { email = user.Email } } }
-                                },
-                                     from = new { email = "rivki0259@gmail.com" },
-                                     subject = $"אישור רכישה - הזמנה {purchaseId}",
-                                     content = new[]
-                                {
-                                     new { type = "text/plain", value = $"שלום {user.FullName}, הרכישה שלך על סך {sum} שח הושלמה בהצלחה." }
-                                 }   
-                        };
-
-                        // 2. המרה ל-JSON בעזרת הספרייה המובנית
-                        var jsonPayload = System.Text.Json.JsonSerializer.Serialize(emailData);
-                        var content = new StringContent(jsonPayload, Encoding.UTF8, "application/json");
-
-                        using (var client = new HttpClient())
-                        {
-                            var apiKey = _configurtaion["SendGrid:ApiKey"]; // ודאי איות נכון!
-
-                            // שימי לב: "Bearer" בלי רווח בסוף!
-                            client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", apiKey);
-
-                            var response = await client.PostAsync("https://api.sendgrid.com/v3/mail/send", content);
-
-                            // בדיקה מה קרה
-                            var responseBody = await response.Content.ReadAsStringAsync();
-                            _logger.LogInformation("SendGrid Status: {0}, Body: {1}", response.StatusCode, responseBody);
-                        }
+                        sendEmail(updatePurchase, user, sum);
 
                     }
                     catch (Exception ex)
                     {
-                        _logger.LogError(ex, "Failed to send email");
+
+                        _logger.LogError(ex, "Failed to send email or ");
                     }
-
                 }
-
-                return updatePurchase; // או כל ערך אחר שאתה מחזיר
+                return updatePurchase; 
             }
             catch (Exception ex)
             {
@@ -361,7 +330,7 @@ namespace server.Services
 
 
 
-        private static PurchaseResponseDtos MapToResponeseDto(Purchase purchase)
+        private  PurchaseResponseDtos MapToResponeseDto(Purchase purchase)
         {
             return new PurchaseResponseDtos
             {
@@ -375,6 +344,50 @@ namespace server.Services
             };
         }
 
-       
+        private  async void sendEmail(PurchaseResponseDtos purchase,UserResponseDto user,int sum)
+        {
+            try
+            {
+                var mailText = $"שלום {user.FullName}, הרכישה שלך על סך {sum} שח הושלמה בהצלחה.";
+
+                var emailData = new
+                {
+                    personalizations = new[]
+                        {
+                                    new { to = new[] { new { email = user.Email } } }
+                                },
+                    from = new { email = "rivki0259@gmail.com" },
+                    subject = $"אישור רכישה - הזמנה {purchase.Id}",
+                    content = new[]
+                        {
+                                     new { type = "text/plain", value = $"שלום {user.FullName}, הרכישה שלך על סך {sum} שח הושלמה בהצלחה." }
+                                 }
+                };
+
+                var jsonPayload = System.Text.Json.JsonSerializer.Serialize(emailData);
+                var content = new StringContent(jsonPayload, Encoding.UTF8, "application/json");
+
+                using (var client = new HttpClient())
+                {
+                    var apiKey = _configurtaion["SendGrid:ApiKey"]; // ודאי איות נכון!
+
+                    client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", apiKey);
+
+                    var response = await client.PostAsync("https://api.sendgrid.com/v3/mail/send", content);
+
+                    var responseBody = await response.Content.ReadAsStringAsync();
+                    _logger.LogInformation("SendGrid Status: {0}, Body: {1}", response.StatusCode, responseBody);
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Failed to send email");
+            }
+
+
+        }
+        
+
+
     }
 }

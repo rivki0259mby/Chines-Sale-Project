@@ -1,4 +1,4 @@
-<p>register works!</p>
+<!-- <p>register works!</p>
 <form [formGroup]="profileForm" (ngSubmit)="register()">
     <input type="text"  placeholder="ת.ז." formControlName = Id>
     <input type="text" placeholder="שם מלא" formControlName=FullName>
@@ -7,5 +7,137 @@
     <input type="email" placeholder="מייל" formControlName= Email>
     <input type="text" placeholder="טלפון" formControlName = PhoneNumber>
     <button  type="submit">הרשם</button>
-</form>
+</form> -->
 
+<!-- <div class="register-container">
+  <div class="register-card">
+    <h1 class="register-header">היי,טוב לראות אותך!</h1>
+    
+    <form [formGroup]="profileForm" (ngSubmit)="register()" class="register-form">
+      
+
+      <div class="form-group">
+        <input 
+          type="text" 
+          class="form-input" 
+          placeholder="תעודת זהות "
+          formControlName="Id" />
+      </div>
+
+      <div class="form-group">
+        <input 
+          type="text" 
+          class="form-input" 
+          placeholder="שם"
+          formControlName="FullName" />
+      </div>
+       <div class="form-group">
+        <input 
+          type="text" 
+          class="form-input" 
+          placeholder="שם משתמש"
+          formControlName="UserName" />
+      </div>
+      <div>
+      <input 
+          type="password" 
+          class="form-input" 
+          placeholder=" סיסמא"
+          formControlName="Password" />
+      </div>
+      <div>
+       <input 
+          type="email" 
+          class="form-input" 
+          placeholder=" מייל"
+          formControlName="Email" />
+      </div>
+      <div>
+      <input 
+          type="text" 
+          class="form-input" 
+          placeholder=" טלפון"
+          formControlName="PhoneNumber" />
+      </div>
+
+      <button type="submit" class="submit-btn">הרשם </button>
+      <!-- @if(showUserNotFound()){
+        <div class="error-message">
+            המשתמש לא קיים במערכת
+            <a routerLink="/register" class="register-link">להרשמה</a>
+        </div>
+      } -->
+    <!-- </form>
+  </div>
+</div> --> -->
+<div class="register-wrapper">
+  <nz-card [nzBordered]="false" class="register-card">
+    <div class="register-header">
+      <h2>היי, טוב לראות אותך!</h2>
+      <p>צרי חשבון כדי להתחיל לזכות</p>
+    </div>
+
+    <form nz-form [formGroup]="profileForm" (ngSubmit)="register()" nzLayout="vertical">
+     
+      <nz-form-item>
+        <nz-form-label [nzNoColon]="true">תעודת זהות</nz-form-label>
+        <nz-form-control [nzHasFeedback]="true" [nzValidateStatus]="profileForm.controls.id.dirty ? (profileForm.controls.id.valid ? 'success' : 'error') : ''" nzErrorTip="נא להזין ת.ז תקינה (9 ספרות)">
+          <nz-input-group nzPrefixIcon="idcard">
+            <input type="text" nz-input formControlName="id" placeholder="תעודת זהות" />
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label [nzNoColon]="true">שם מלא</nz-form-label>
+        <nz-form-control [nzHasFeedback]="true" [nzValidateStatus]="profileForm.controls.fullName.dirty ? (profileForm.controls.fullName.valid ? 'success' : 'error') : ''" nzErrorTip="נא להזין שם מלא">
+          <nz-input-group nzPrefixIcon="user">
+            <input type="text" nz-input formControlName="fullName" placeholder="שם מלא" />
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label [nzNoColon]="true">שם משתמש</nz-form-label>
+        <nz-form-control [nzHasFeedback]="true" [nzValidateStatus]="profileForm.controls.userName.dirty ? (profileForm.controls.userName.valid ? 'success' : 'error') : ''" nzErrorTip="נא לבחור שם משתמש">
+          <nz-input-group nzPrefixIcon="customer-service">
+            <input type="text" nz-input formControlName="userName" placeholder="שם משתמש" />
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label [nzNoColon]="true">סיסמה</nz-form-label>
+        <nz-form-control [nzHasFeedback]="true" [nzValidateStatus]="profileForm.controls.password.dirty ? (profileForm.controls.password.valid ? 'success' : 'error') : ''" nzErrorTip="הסיסמה חייבת להכיל לפחות 8 תווים">
+          <nz-input-group nzPrefixIcon="lock">
+            <input type="password" nz-input formControlName="password" placeholder="סיסמה (8 תווים לפחות)" />
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label [nzNoColon]="true">מייל</nz-form-label>
+        <nz-form-control [nzHasFeedback]="true" [nzValidateStatus]="profileForm.controls.email.dirty ? (profileForm.controls.email.valid ? 'success' : 'error') : ''" nzErrorTip="כתובת המייל אינה תקינה">
+          <nz-input-group nzPrefixIcon="mail">
+            <input type="email" nz-input formControlName="email" placeholder="מייל" />
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label [nzNoColon]="true">טלפון</nz-form-label>
+        <nz-form-control [nzHasFeedback]="true" [nzValidateStatus]="profileForm.controls.phoneNumber.dirty ? (profileForm.controls.phoneNumber.valid ? 'success' : 'error') : ''" nzErrorTip="נא להזין מספר טלפון תקין">
+          <nz-input-group nzPrefixIcon="phone">
+            <input type="text" nz-input formControlName="phoneNumber" placeholder="טלפון" />
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+
+      <button nz-button nzType="primary" nzBlock [nzLoading]="isLoading()" class="register-btn">הרשמה</button>
+     
+      <div class="footer-link">
+        כבר יש לך חשבון? <a routerLink="/login">התחברי כאן</a>
+      </div>
+    </form>
+  </nz-card>
+</div>

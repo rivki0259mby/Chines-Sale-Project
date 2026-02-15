@@ -1,2 +1,109 @@
-/* You can add global styles to this file, and also import other style files */
-@import "primeflex/primeflex.css"
+@import "ng-zorro-antd/ng-zorro-antd.min.css";
+
+/* הגדרת משתנים למראה אחיד */
+:root {
+  --soft-primary: #d4a373;      /* צבע זהב-חול עדין */
+  --soft-hover: #e6c5a5;       /* גוון בהיר למעבר עכבר */
+  --bg-color: #faf9f6;         /* רקע קרם בהיר מאוד */
+  --text-main: #333333;        /* אפור כהה לטקסט */
+}
+
+/* הגדרות בסיס */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Heebo', 'Assistant', sans-serif;
+  background-color: var(--bg-color);
+  direction: rtl; /* מבטיח שהאתר יתנהג נכון בעברית */
+}
+
+/* --- ביטול צבעים כחולים גלובליים --- */
+a, a:hover, a:focus {
+  text-decoration: none !important;
+  color: inherit;
+}
+
+/* עיצוב כפתורים */
+.ant-btn-primary {
+  background-color: var(--soft-primary) !important;
+  border-color: var(--soft-primary) !important;
+  border-radius: 6px !important;
+  box-shadow: none !important;
+  margin-left: 2px;
+}
+
+.ant-btn-primary:hover {
+  background-color: var(--soft-hover) !important;
+  border-color: var(--soft-hover) !important;
+}
+
+/* עיצוב תפריט הניווט - הסרת הכחול */
+.ant-menu-horizontal {
+  border-bottom: none !important;
+}
+
+/* פריט נבחר או במעבר עכבר */
+.ant-menu-horizontal > .ant-menu-item-selected,
+.ant-menu-horizontal > .ant-menu-item:hover {
+  color: var(--soft-primary) !important;
+  border-bottom: 2px solid var(--soft-primary) !important;
+}
+
+/* צבע הקישור בתוך הפריט הנבחר */
+.ant-menu-item-selected a, .ant-menu-item:hover a {
+  color: var(--soft-primary) !important;
+}
+.ant-menu-item::before,
+.ant-menu-item::after,
+.ant-menu-submenu::before,
+.ant-menu-submenu::after {
+    border-color: var(--soft-primary) !important;
+    background-color: var(--soft-primary) !important;
+}
+
+/* ביטול ה"הילה" הכחולה (Box Shadow) שמופיעה בלחיצה */
+.ant-menu-item:active,
+.ant-menu-submenu-title:active,
+.ant-btn:focus,
+.ant-btn:active {
+    /* box-shadow: 0 0 0 2px rgba(212, 163, 115, 0.2) !important;   */
+    border-color: var(--soft-primary) !important;
+}
+
+/* ביטול הפס הכחול שצץ בגרסאות מסוימות מתחת לטקסט */
+.ant-menu-horizontal > .ant-menu-item::after,
+.ant-menu-horizontal > .ant-menu-submenu::after {
+    border-bottom: 2px solid var(--soft-primary) !important;
+}
+
+/* מניעת הבהוב כחול בזמן טעינה או פוקוס */
+.ant-menu-item-selected {
+    background-color: transparent !important;
+}
+/* --- תיקון תפריט הניווט והסרת פסים כפולים --- */
+
+/* ביטול הפס הכחול המקורי של NG-ZORRO */
+.ant-menu-horizontal {
+  border-bottom: none !important;
+  box-shadow: none !important;
+}
+
+/* הסרת כל ה-after וה-before שיוצרים פסים מיותרים */
+.ant-menu-horizontal > .ant-menu-item::after,
+.ant-menu-horizontal > .ant-menu-submenu::after {
+  display: none !important;
+}
+
+/* הגדרת פס תחתון אחד ויחיד עבור פריט נבחר או במעבר עכבר */
+.ant-menu-horizontal > .ant-menu-item-selected,
+.ant-menu-horizontal > .ant-menu-item:hover {
+  color: var(--soft-primary) !important;
+  border-bottom: 3px solid var(--soft-primary) !important; /* הפס היחיד שיופיע */
+  transition: all 0.3s ease;
+}
+
+/* ביטול רקע אפור/כחול בלחיצה */
+.ant-menu-light .ant-menu-item:active,
+.ant-menu-light .ant-menu-submenu-title:active {
+  background-color: transparent !important;
+}

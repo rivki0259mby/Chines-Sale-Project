@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
-import { inject, Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { EventEmitter, inject, Injectable } from '@angular/core';
+import { Observable, tap } from 'rxjs';
 import { busketModel } from '../models/busket.model';
 import { packageModel } from '../models/package.model';
 import { ticketModel } from '../models/ticket.model';
@@ -14,6 +14,7 @@ export class BusketService {
   BASE_URL = 'https://localhost:7280/api/Purchase'
 
   http: HttpClient = inject(HttpClient);
+  public busketUpdate :EventEmitter<void> = new EventEmitter<void>();
   constructor() { }
 
   getAll(): Observable<busketModel[]> {
@@ -47,19 +48,31 @@ export class BusketService {
 
   addPackage(purchaseId: number, packageId: number): Observable<busketModel> {
     console.log(purchaseId, packageId);
-    return this.http.post<busketModel>(this.BASE_URL + `/AddPackage/${purchaseId}/${packageId}`,{})
+    return this.http.post<busketModel>(this.BASE_URL + `/AddPackage/${purchaseId}/${packageId}`,{}).pipe(
+      tap(() => this.busketUpdate.emit())
+    )
   }
 
   deletePackage(busketId: number, packageId: number): Observable<busketModel> {
-    return this.http.delete<busketModel>(this.BASE_URL + `/deletePackage/${busketId}/${packageId}`)
+    return this.http.delete<busketModel>(this.BASE_URL + `/deletePackage/${busketId}/${packageId}`).pipe(
+      tap(() => this.busketUpdate.emit())
+    )
   }
 
   addTicket(item: ticketModel): Observable<busketModel> {
-    return this.http.post<busketModel>(this.BASE_URL + `/AddTicket`, item)
+    return this.http.post<busketModel>(this.BASE_URL + `/AddTicket`, item).pipe(
+      tap(() => this.busketUpdate.emit())
+    )
   }
 
   deleteTicket(purchaseId: number, ticketId: number): Observable<busketModel> {
-    return this.http.delete<busketModel>(this.BASE_URL + `/deleteTicket/${purchaseId}/${ticketId}`)
+    return this.http.delete<busketModel>(this.BASE_URL + `/deleteTicket/${purchaseId}/${ticketId}`).pipe(
+      tap(() => this.busketUpdate.emit())
+    )
+  }
+
+  completePurchase(purchaseId: number,purchase:busketModel): Observable<busketModel> {
+    return this.http.post<busketModel>(this.BASE_URL + `/completePurchase/${purchaseId}`,purchase)
   }
 
 }

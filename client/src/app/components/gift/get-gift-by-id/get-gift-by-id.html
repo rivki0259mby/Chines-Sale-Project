@@ -1,6 +1,50 @@
-<p>get-gift-by-id works!</p>
-<h1>{{drafgift.name}}</h1>
-<p>מספר מתנה:{{drafgift.id}}</p>
-<span>{{drafgift.description}}</span>
-<img [src]="drafgift.imageUrl" alt="Gift Image" />
+<div class="single-gift-container" *ngIf="drafgift">
+  <nz-breadcrumb>
+    <nz-breadcrumb-item>בית</nz-breadcrumb-item>
+    <nz-breadcrumb-item>
+      <a routerLink="/category">מתנות</a>
+    </nz-breadcrumb-item>
+    <nz-breadcrumb-item>{{ drafgift?.name }}</nz-breadcrumb-item>
+  </nz-breadcrumb>
 
+  <nz-page-header
+    (nzBack)="goBack()"
+    nzBackIcon
+    [nzTitle]="drafgift?.name || 'טוען מתנה...'"
+    >
+   
+  </nz-page-header>
+
+  <div class="content-layout" nz-row [nzGutter]="32">
+    <div nz-col [nzXs]="24" [nzMd]="12">
+      <nz-card nzHoverable [nzCover]="coverTemplate" class="gift-image-card">
+        <ng-template #coverTemplate>
+          <img [src]="drafgift?.imageUrl" [alt]="drafgift?.name" class="main-gift-img" />
+        </ng-template>
+      </nz-card>
+    </div>
+
+    <div nz-col [nzXs]="24" [nzMd]="12">
+      <div class="gift-details-section">
+        <nz-badge  [nzText]="'מתנה מס\' ' + (drafgift?.id || '')"></nz-badge>
+       
+        <h1 class="gift-main-title">{{ drafgift?.name }}</h1>
+       
+        <nz-divider  nzOrientation="left"></nz-divider>
+        <p class="gift-description">{{ drafgift?.description || 'אין תיאור זמין למתנה זו.' }}</p>
+
+        <nz-divider></nz-divider>
+       
+        <div class="gift-meta">
+          <p><strong>תורם המתנה:</strong> {{ drafgift?.donor?.name || 'תורם אנונימי' }}</p>
+        </div>
+
+        <div class="action-zone">
+          <button nz-button nzBlock nzSize="large" class="buy-btn-gold large">
+           הוספה לסל
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

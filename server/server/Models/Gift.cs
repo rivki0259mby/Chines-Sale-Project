@@ -1,10 +1,13 @@
-﻿namespace server.Models
+﻿using System.Reflection.Metadata;
+
+namespace server.Models
 {
     public class Gift
     {
         public int Id { get; set; }
         public string Name { get; set; }
         public string ?Description { get; set; }
+
         public string? ImageUrl { get; set; }
         public int CategoryId { get; set; }
         public string DonorId { get; set; }

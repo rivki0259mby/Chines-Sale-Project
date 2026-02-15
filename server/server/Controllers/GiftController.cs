@@ -4,7 +4,9 @@ using Microsoft.AspNetCore.Mvc;
 using server.DTOs;
 using server.Interfaces;
 using server.Models;
+using server.Repositories;
 using server.Services;
+using System.Text;
 
 namespace server.Controllers
 {
@@ -73,7 +75,7 @@ namespace server.Controllers
         }
 
         [HttpPut("{giftId}")]
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         [ProducesResponseType(typeof(GiftResponseDto), StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult> UpdateGift([FromRoute] int giftId, [FromBody] UpdateGiftDto createDto)
@@ -90,11 +92,11 @@ namespace server.Controllers
             }
         }
 
-        [HttpPut("lottery/{giftId}")]
+        [HttpPut("Lottery")]
         [Authorize(Roles = "Admin")]
         [ProducesResponseType(typeof(GiftResponseDto), StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult> Lottery([FromRoute] int giftId)
+        public async Task<ActionResult> Lottery([FromBody] int giftId)
         {
             try
             {
@@ -111,10 +113,27 @@ namespace server.Controllers
         [ProducesResponseType(typeof(GiftResponseDto), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
 
-        public async Task<ActionResult<IEnumerable<GiftResponseDto>>> FilterGifts([FromQuery] string? giftName, [FromQuery] string? donorName, [FromQuery] int? buyerCount, [FromQuery ] int? categoryId)
+        public async Task<ActionResult<IEnumerable<GiftResponseDto>>> FilterGifts([FromQuery] string? giftName, [FromQuery] string? donorName, [FromQuery] int? buyerCount, [FromQuery] int? categoryId)
         {
-            var gifts = await _giftService.FilterGifts(giftName,donorName,buyerCount, categoryId);
+            var gifts = await _giftService.FilterGifts(giftName, donorName, buyerCount, categoryId);
             return Ok(gifts);
         }
+
+        [HttpGet("download-report")]
+        public async Task<IActionResult> DownloadReport()
+        {
+            try
+            {
+                byte[] reportData = await _giftService.GenerateWinnersReport();
+                string fileName = $"WinnersReport_{DateTime.Now:yyyyMMdd}.csv";
+
+                return File(reportData, "text/csv; charset=utf-8", fileName);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "אירעה שגיאה ביצירת הדוח: " + ex.Message);
+            }
+        }
+
     }
 }

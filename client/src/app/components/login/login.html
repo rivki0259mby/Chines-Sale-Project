@@ -1,4 +1,4 @@
-<div class="login-container">
+<!-- <div class="login-container">
   <div class="login-card">
     <h1 class="login-header">היי,טוב לראות אותך!</h1>
     
@@ -30,4 +30,57 @@
       }
     </form>
   </div>
+</div> -->
+
+
+<div class="login-wrapper">
+  <nz-card [nzBordered]="false" class="login-card">
+    <div class="login-header">
+      <h2>התחברות</h2>
+    </div>
+
+    <form nz-form [formGroup]="loginForm" (ngSubmit)="login()" nzLayout="vertical">
+     
+      <nz-form-item>
+        <nz-form-label [nzNoColon]="true">שם משתמש</nz-form-label>
+        <nz-form-control
+          [nzHasFeedback]="true"
+          [nzValidateStatus]="loginForm.controls.userName.dirty ? (loginForm.controls.userName.valid ? 'success' : 'error') : ''"
+          [nzErrorTip]="userErrorTpl">
+          <nz-input-group nzPrefixIcon="user">
+            <input type="text" nz-input formControlName="userName" placeholder="הקלידי שם משתמש" />
+          </nz-input-group>
+          <ng-template #userErrorTpl>נא להזין שם משתמש</ng-template>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label [nzNoColon]="true">סיסמה</nz-form-label>
+        <nz-form-control
+          [nzHasFeedback]="true"
+          [nzValidateStatus]="loginForm.controls.password.dirty ? (loginForm.controls.password.valid ? 'success' : 'error') : ''"
+          [nzErrorTip]="passErrorTpl">
+          <nz-input-group nzPrefixIcon="lock">
+            <input type="password" nz-input formControlName="password" placeholder="הקלידי סיסמה (מינימום 8 תווים)" />
+          </nz-input-group>
+          <ng-template #passErrorTpl let-control>
+            <ng-container *ngIf="control.hasError('minlength')">הסיסמה חייבת להכיל לפחות 8 תווים</ng-container>
+            <ng-container *ngIf="control.hasError('required')">נא להזין סיסמה</ng-container>
+          </ng-template>
+        </nz-form-control>
+      </nz-form-item>
+
+      <div *ngIf="showError()" class="server-error">
+        שם משתמש או סיסמה שגויים, נסי שוב.
+      </div>
+
+      <button nz-button nzType="primary" nzBlock [nzLoading]="isLoading()" class="login-button">
+        כניסה למערכת
+      </button>
+
+      <div class="login-footer">
+        עדיין לא רשומה? <a [routerLink]="['/register']">צרי חשבון חדש</a>
+      </div>
+    </form>
+  </nz-card>
 </div>

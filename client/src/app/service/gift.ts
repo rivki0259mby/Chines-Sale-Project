@@ -25,7 +25,7 @@ export class GiftService {
     return this.http.post<giftModel>(this.BASE_URL,item);
   }
 
-  update(id:number,item:giftModel):Observable<giftModel>{
+  update(id:number,item:any):Observable<giftModel>{
     return this.http.put<giftModel>(this.BASE_URL + `/${id}`,item);
   }
 
@@ -42,9 +42,11 @@ export class GiftService {
      return this.http.get<giftModel[]>(this.BASE_URL+'/FilterGifts', { params } );
   }
 
-  lottery(giftId:number):Observable<giftModel>{
-    return this.http.put<giftModel>(this.BASE_URL+ `/lottery/${giftId}`,{});
+  lottery(gift:giftModel):Observable<giftModel>{
+    return this.http.put<giftModel>(this.BASE_URL + `/Lottery`,gift.id);
   }
-
+    
+   
+  
   
 }

@@ -1,55 +1,89 @@
-<div class="package-page">
-    <h1 class="package-title">בוחרים חבילת כרטיסים</h1>
-    <div class="package-subtitle">בחרו חבילה אחת או יותר ותחלקו את הכרטיסים בין הפרסים שאהבתם</div>
-    <div class="package-sort-row">
-        <select #sortBySelect (change)="sortBy(sortBySelect.value)" class="package-sort-select">
-            <option value="price_desc">מיון לפי מחיר יורד</option>
-            <option value="most_purchased">הכי נקנה</option>
-        </select>
-    </div>
-    <div class="package-cards-row">
-        @for(p of list$ | async ; track p)
-        {
-        <p-card class="package-card">
-            <ng-template pTemplate="header">
-                <div class="package-card-header">
+<div class="clean-luxury-container">
 
+    <div class="top-interface">
+        <div class="filter-wrapper">
+            <nz-select [(ngModel)]="selectedSort" (ngModelChange)="sortBy($event)" class="clean-select"
+                style="width: 200px;">
+                <nz-option *ngFor="let opt of sortOptions" [nzLabel]="opt.label" [nzValue]="opt.value"></nz-option>
+            </nz-select>
+        </div>
+        <div style="display: flex; flex-direction: column; align-items: center;">
+            <div class="title-decoration">
+                <span class="line"></span>
+                <span class="dot"></span>
+                <span class="line"></span>
+            </div>
+            <h1 class="luxury-title">נבחרת חבילות היוקרה</h1>
+            <p class="luxury-subtitle">השקיעו במטרה טובה והגדילו את סיכויי הזכייה שלכם</p>
+        </div>
+
+        <div class="admin-wrapper" *ngIf="authSrv.isAdmin()">
+            <button nz-button class="add-btn-gold" (click)="showModal()">
+                <span nz-icon nzType="plus"></span> הוספת חבילה
+            </button>
+        </div>
+    </div>
+
+    <div nz-row [nzGutter]="[24, 32]" nzJustify="center">
+        <div nz-col [nzXs]="24" [nzSm]="12" [nzLg]="6" *ngFor="let p of list$ | async; let i = index">
+            <div class="premium-package-card">
+
+                <div class="card-header-line"></div>
+
+                <div class="package-content">
+                    <h2 class="pkg-name">{{p.name}}</h2>
+
+                    <div class="dashed-circle-amount">
+                        <span class="num">{{p.quentity}}</span>
+                        <span class="sub">כרטיסים</span>
+                    </div>
+
+                    <div class="pkg-price">₪{{p.price}}</div>
+                    <p class="pkg-desc">{{p.description}}</p>
                 </div>
-            </ng-template>
-            <div class="package-card-content">
-                <div class="package-card-amount">{{p.name}} </div>
-                <div class="package-card-amount">{{p.quentity}} כרטיסים</div>
-                <div class="package-card-price">₪{{p.price}} × 12</div>
-                <div class="package-card-receive">You will receive this package</div>
+
+                <div class="card-footer" *ngIf="authSrv.isLoggedIn()">
+                    <div class="quantity-pill">
+                        <button (click)="deletePackage(p.id!)" class="op-btn">−</button>
+                        <span class="count">{{getQuentityInCart(p.id!)}}</span>
+                        <button (click)="addPackage(p)" class="op-btn">+</button>
+                    </div>
+                </div>
+
+                <div class="card-admin-overlay" *ngIf="authSrv.isAdmin()">
+                    <button nz-button nzType="text" class="edit-btn" (click)="openEdit(p)">
+                        <span nz-icon nzType="edit"></span> </button> <button nz-button nzType="text" nzDanger
+                        class="delete-btn" (click)="delete(p.id!)">
+                        <span nz-icon nzType="delete"></span> </button>
+                </div>
 
             </div>
-            <div class="package-card-bottom">
-                <!-- <img [src]="p.image || 'assets/placeholder.png'" alt="package image" class="package-card-img" /> -->
-                @if(authSrv.isLoggedIn()){
-                <div class="package-card-actions">
-                    <button pButton icon="pi pi-plus" class="p-button-rounded p-button-text"
-                        (click)="addPackage(p)">+</button>
-                    @if(getQuentityInCart(p.id!) >0){
-                    <div class="quantity-tag">  {{getQuentityInCart(p.id!)}}</div>
-                    }
-                    <button pButton icon="pi pi-minus" class="p-button-rounded p-button-text"
-                        (click)="deletePackage(p.id!)">-</button>
+        </div>
+    </div>
 
-
-                    <span class="package-card-add-label">להוספת חבילה</span>
+    <nz-modal [(nzVisible)]="isVisible" nzTitle="ניהול חבילת מכירה" (nzOnCancel)="handleCancel()" (nzOnOk)="save()"
+        [nzOkLoading]="isSaving" [nzOkText]="flagUpdate ? 'עדכן חבילה' : 'צור חבילה'" nzCancelText="ביטול">
+        <ng-container *nzModalContent>
+            <div class="clean-form">
+                <div class="form-field">
+                    <label>שם החבילה</label>
+                    <input nz-input [(ngModel)]="draftPackage.name" placeholder="הקלד שם..." />
                 </div>
-                }
+                <div class="form-field">
+                    <label>תיאור קצר</label>
+                    <textarea nz-input [(ngModel)]="draftPackage.description" rows="2"></textarea>
+                </div>
+                <div nz-row [nzGutter]="16">
+                    <div nz-col nzSpan="12">
+                        <label>מחיר</label>
+                        <nz-input-number [(ngModel)]="draftPackage.price" class="w-100"></nz-input-number>
+                    </div>
+                    <div nz-col nzSpan="12">
+                        <label>כמות כרטיסים</label>
+                        <nz-input-number [(ngModel)]="draftPackage.quentity" class="w-100"></nz-input-number>
+                    </div>
+                </div>
             </div>
-        </p-card>
-        }
-    </div>
-
-    <div *ngIf="authSrv.isAdmin()" class="package-admin-form">
-        <input [(ngModel)]="draftPackage.name" placeholder="name" />
-        <input [(ngModel)]="draftPackage.description" placeholder="description" />
-        <input [(ngModel)]="draftPackage.price" placeholder="price" />
-        <input [(ngModel)]="draftPackage.quentity" placeholder="quentity" />
-        <button type="button" (click)="save()">{{flagUpdate ? 'update' :'Add'}}</button>
-        <button type="button" (click)="resetForm()" *ngIf="flagUpdate">בטל</button>
-    </div>
+        </ng-container>
+    </nz-modal>
 </div>

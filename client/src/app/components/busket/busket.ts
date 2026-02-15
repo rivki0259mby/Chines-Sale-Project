@@ -1,113 +1,96 @@
-import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
-import { CardModule } from 'primeng/card';
-import { ButtonModule } from 'primeng/button';
-import { BusketService } from '../../service/busket';
-import { busketModel } from '../../models/busket.model';
-import { packageModel } from '../../models/package.model';
-import { ticketModel } from '../../models/ticket.model';
-import { Counter } from "../counter/counter";
+import { Component, inject, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
+
+// PrimeNG & Zorro Imports
+import { CardModule } from 'primeng/card';
+import { ButtonModule } from 'primeng/button';
+import { ProgressBarModule } from 'primeng/progressbar';
+import { DividerModule } from 'primeng/divider';
+import { ScrollPanelModule } from 'primeng/scrollpanel';
+import { NzDrawerModule } from 'ng-zorro-antd/drawer';
+
+import { BusketService } from '../../service/busket';
+import { busketModel } from '../../models/busket.model';
+import { ticketModel } from '../../models/ticket.model';
 
 @Component({
   selector: 'app-busket',
-  imports: [FormsModule, CommonModule, CardModule, ButtonModule],
+  standalone: true,
+  imports: [
+    FormsModule, CommonModule, CardModule, ButtonModule,
+    ProgressBarModule, DividerModule, ScrollPanelModule, NzDrawerModule
+  ],
   templateUrl: './busket.html',
   styleUrl: './busket.css',
 })
-export class Busket {
+export class Busket implements OnInit {
+  @Input() visible: boolean = false;
+  @Output() visibleChange = new EventEmitter<boolean>();
 
-  basketSrv: BusketService = inject(BusketService)
-
-  basket: busketModel = {}
-  user: any = {}
+  basketSrv: BusketService = inject(BusketService);
+  router = inject(Router);
+  basket: busketModel = {};
+  user: any = {};
 
   ngOnInit() {
-    this.user = localStorage.getItem('user')
-    if (this.user) {
-      this.user = JSON.parse(this.user)
-      this.getByUserId(this.user.id)
+    const userData = localStorage.getItem('user');
+    if (userData) {
+      this.user = JSON.parse(userData);
+      this.getByUserId(this.user.id);
     }
-
   }
 
   getByUserId(userId: string) {
-    this.basketSrv.getByUserId(userId).subscribe(b => {
-      this.basket = b
-      console.log(this.basket.tickets);
-    })
-
+    this.basketSrv.getByUserId(userId).subscribe(b => this.basket = b);
   }
-  get groupTickets() :any[]{
-    if (!this.basket || !this.basket.tickets) return [];
 
-    const gruops = this.basket.tickets.reduce((acc: any, ticket: ticketModel) => {
+  closeSidebar() {
+    this.visible = false;
+    this.visibleChange.emit(false);
+  }
+
+  addPackageToCart(packageId: number) {
+    if (!this.basket.id) return;
+    this.basketSrv.addPackage(this.basket.id, packageId).subscribe(res => this.basket = res);
+  }
+
+  removePackageFromCart(packageId: number) {
+    if (!this.basket.id) return;
+    this.basketSrv.deletePackage(this.basket.id, packageId).subscribe(res => this.basket = res);
+  }
+
+  addGift(giftId: number) {
+    const ticket = { giftId, purchaseId: this.basket.id, quantity: 1 };
+    this.basketSrv.addTicket(ticket).subscribe(res => this.basket = res);
+  }
+
+  deleteGift(ticketId: number) {
+    this.basketSrv.deleteTicket(this.basket.id!, ticketId).subscribe(res => this.basket = res);
+  }
+
+  // גטרים לחישובים (הם אלו שמעדכנים את ה-Navbar דרך ה-ViewChild)
+  get usedTickets(): number { return this.basket.tickets?.length || 0; }
+ 
+  get totalPurchasedTickets(): number {
+    return this.basket.purchasePackages?.reduce((sum, pp) =>
+      sum + ((pp.quantity || 0) * (pp.package?.quentity || 0)), 0) || 0;
+  }
+
+  get remainingTickets(): number {
+    const rem = this.totalPurchasedTickets - this.usedTickets;
+    return rem > 0 ? rem : 0;
+  }
+
+  get groupTickets(): any[] {
+    if (!this.basket?.tickets) return [];
+    const groups = this.basket.tickets.reduce((acc: any, ticket: ticketModel) => {
       const id = ticket.giftId || 'unknown';
-      if (!acc[id]) {
-        acc[id] = { ...ticket, totalTickets: 0 }
-      }
+      if (!acc[id]) acc[id] = { ...ticket, totalTickets: 0 };
       acc[id].totalTickets++;
       return acc;
     }, {});
-    return Object.values(gruops);
+    return Object.values(groups);
   }
-
-  // addPackage(item:packageModel){
-  //   return this.basketSrv.addPackage(this.basket.id!,item).subscribe()
-  // }
-  // deletePackage(packageId:number){
-  //   return this.basketSrv.deletePackage(this.basket.id!,packageId).subscribe()
-  // }
-  // addTicket(item:ticketModel){
-  //   return this.basketSrv.addTicket(item).subscribe();
-  // }
-
-  // deleteTicket(ticketId:number){
-  //   return this.basketSrv.deleteTicket(this.basket.id!,ticketId).subscribe()
-  // }
-
-addGift(giftId : number){
-    const ticket = {
-      giftId: giftId,
-      purchaseId: this.basket.id,
-      quantity:1
-      
-    }
-    
-    return this.basketSrv.addTicket(ticket).subscribe((updateBusket:busketModel)=>{
-      this.basket = updateBusket;
-    });
-  }
-  deleteGift(ticketId:number){
-    return this.basketSrv.deleteTicket(this.basket.id!,ticketId).subscribe((updateBusket:busketModel)=>{
-      this.basket = updateBusket;
-    });
-  }
- get totalPurchasedTickets(): number {
-  if (!this.basket || !this.basket.purchasePackages) return 0;
- 
-  return this.basket.purchasePackages.reduce((sum, pp) => {
-    // pp.package הוא אובייקט החבילה המחובר ל-PurchasePackage
-    // pp.quantity הוא מספר הפעמים שהחבילה הזו נקנתה
-    const ticketsInPackage = pp.package?.quentity || 0;
-    return sum + ((pp.quantity ||0 )* ticketsInPackage);
-  }, 0);
-}
-
-// 2. סך הכרטיסים שכבר נוצלו (המתנות שנבחרו ברכישה הזו)
-get usedTickets(): number {
-  if (!this.basket || !this.basket.tickets) return 0;
-  // אלו הם הכרטיסים שמשויכים ל-PurchaseId הנוכחי
-  return this.basket.tickets.length;
-}
-
-// 3. היתרה למימוש
-get remainingTickets(): number {
-  const remaining = this.totalPurchasedTickets - this.usedTickets;
-  return remaining > 0 ? remaining : 0;
-}
-
-
-
-
 }

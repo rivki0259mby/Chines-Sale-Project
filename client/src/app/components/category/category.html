@@ -1,20 +1,50 @@
-<p>category works!</p>
-<button type="button" (click)="getById(0)">Refresh List</button>
-@for(c of list$ | async ; track c ){
-<div>
-    <button (click)="getById(c.id!)">{{c.name}}</button>
-    <span>{{c.description}} </span>
-    @if(authService.isAdmin()){
-        <button (click)="delete(c.id!)">מחק</button>
-        <button (click)="openEdit(c)">עדכן</button>
-    }
+<div class="category-wrapper">
+  <div class="admin-top-action-bar" *ngIf="authService.isAdmin()">
+    <button nz-button nzType="primary" class="aristocrat-btn" (click)="showAdminForm = true">
+      <span nz-icon nzType="plus"></span>
+      הוספת קטגוריה חדשה
+    </button>
+  </div>
+
+  <div class="category-nav-bar">
+    <div class="pills-container">
+      <button class="pill-item" [class.active]="categoryId === 0" (click)="getById(0)">
+        הכל
+      </button>
+      @for(c of list$ | async; track c.id) {
+        <button class="pill-item" [class.active]="categoryId === c.id" (click)="getById(c.id!)">
+          {{c.name}}
+        </button>
+      }
+    </div>
+  </div>
+
+  <app-gift [categoryId]="categoryId"></app-gift>
+
+  <nz-modal
+    [(nzVisible)]="showAdminForm"
+    [nzTitle]="modalTitle"
+    nzOkText="אישור"
+    nzCancelText="ביטול"
+    (nzOnCancel)="showAdminForm = false; resetForm()"
+    (nzOnOk)="save()"
+    nzCentered>
+   
+    <ng-template #modalTitle>
+      <span class="modal-header-text">{{flagUpdate ? 'עריכת קטגוריה יוקרטית' : 'יצירת קטגוריה חדשה'}}</span>
+    </ng-template>
+
+    <ng-container *nzModalContent>
+      <div class="friendly-form">
+        <div class="form-group">
+          <label>שם הקטגוריה *</label>
+          <input nz-input [(ngModel)]="draftCategory.name" placeholder="לדוגמה: מוצרי חשמל..." />
+        </div>
+        <div class="form-group">
+          <label>תיאור</label>
+          <textarea nz-input [(ngModel)]="draftCategory.description" rows="3" placeholder="הוסף תיאור קצר..."></textarea>
+        </div>
+      </div>
+    </ng-container>
+  </nz-modal>
 </div>
-}
-@if(authService.isAdmin()){
-<input [(ngModel)]="draftCategory.name" placeholder="name" />
-<input [(ngModel)]="draftCategory.description" placeholder="description" />
-<button type="button" (click)="save()">{{flagUpdate ? 'update' :'Add'}}</button>
-
-<button type="button" (click)="resetForm()" *ngIf="flagUpdate">בטל</button>
-
-}<app-gift [categoryId]="categoryId"></app-gift>

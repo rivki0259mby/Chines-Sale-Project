@@ -7,6 +7,7 @@ import { tap } from 'rxjs';
 })
 export class AuthService {
   BASE_URL = 'https://localhost:7280/api/Auth';
+  BASE_URL_USER = 'https://localhost:7280/api/User';
 
   constructor(private http: HttpClient) { }
 
@@ -51,6 +52,10 @@ export class AuthService {
     const user = this.user;
     return user && user.role ==='Admin'
 
+  }
+
+  getUserById(id:string){
+    return this.http.get(`${this.BASE_URL_USER}/${id}`);
   }
 
 }

@@ -1,58 +1,86 @@
-<p-card class="busket-card"
-    [style]="{width: '100%', minWidth: '320px', maxWidth: '420px', margin: '0 auto', background: '#fcf7f5'}">
-    <ng-template pTemplate="header">
-        <div class="busket-header">
-            <span class="busket-step">שלב <b>1</b> בחירת חבילות כרטיסים</span>
-        </div>
-    </ng-template>
-    @if((basket.purchasePackages?.length || 0) === 0 ){
-    <div class="busket-content">
-        <div class="busket-title">העגלה ריקה</div>
-        <div class="busket-subtitle">בחר אחת מהחבילות בעמוד</div>
-        <img src="assets/cart-icon.png" alt="עגלה ריקה" class="busket-img" />
-    </div>
-    <ng-template pTemplate="footer">
-        <div class="busket-footer">
-            <button pButton type="button" label="לשלב הבא" class="p-button-outlined busket-next-btn"
-                [disabled]="true"></button>
-            <span class="busket-footer-text">יש לבחור חבילת כרטיסים</span>
-            <i class="pi pi-shopping-cart busket-footer-icon"></i>
-        </div>
-    </ng-template>}
-    @else{
-    @if(basket.purchasePackages?.length ){
-    <h3 class="section-title">חבילות שנבחרו:</h3>
-    @for (p of basket.purchasePackages; track p.packageId) {
-    <div class="busket-package-item">
-        <div class="busket-package-name"><b>{{p.package?.name}}</b></div>
-        <div class="busket-package-qty"> כמות: {{p.quantity}}</div>
-        <div class="busket-package-price">{{(p.package?.price||0)*(p.quantity ||0)}}</div>
-    </div>
-    }
-    }
-    @if(basket.tickets && basket.tickets.length>0){
-    <h3 class="section-title">מתנות שנבחרו:</h3>
-    @for (t of groupTickets; track t.giftId) {
-    <div class="busket-package-item">
-        <div class="busket-package-name"><b>{{t.gift?.name}}</b></div>
-
-        <button (click)="addGift(t.giftId!)">+</button>
-        <div class="busket-package-qty"> כמות: {{t.totalTickets}}</div>
-        <button (click)="deleteGift(t.id!)">-</button>
-
-    </div>
-    }
-    }
-    <div class="status-bar">
-  <div class="status-text">
-    <b>{{ remainingTickets }} / {{ totalPurchasedTickets }}</b>
-    <span>נותרו לך למימוש</span>
-  </div>
+<nz-drawer
+  [nzVisible]="visible"
+  nzPlacement="left"
+  [nzWidth]="400"
+  [nzTitle]="drawerTitle"
+  (nzOnClose)="closeSidebar()"
+  class="custom-basket-drawer">
  
-  <div class="progress-container">
-    <div class="progress-fill"
-         [style.width.%]="totalPurchasedTickets > 0 ? (usedTickets / totalPurchasedTickets) * 100 : 0">
+  <ng-template #drawerTitle>
+    <div class="drawer-header-content">
+      <span nz-icon nzType="shopping-cart" nzTheme="outline"></span>
+      <span class="title-text">סל הבחירות שלי</span>
     </div>
-  </div>
-</div>}
-</p-card>
+  </ng-template>
+
+  <ng-container *nzDrawerContent>
+    <div class="basket-wrapper">
+     
+      <p-scrollPanel [style]="{ width: '100%', height: 'calc(100vh - 250px)' }" styleClass="custom-scroll">
+       
+        <div class="basket-section" *ngIf="basket.purchasePackages?.length">
+          <h3 class="section-heading">חבילות שנבחרו</h3>
+          <div *ngFor="let p of basket.purchasePackages" class="item-card package-card">
+            <div class="card-body">
+              <div class="item-main-info">
+                <span class="item-name">{{p.package?.name}}</span>
+                <span class="item-subtitle">{{p.package?.quentity}} כרטיסים לכל חבילה</span>
+              </div>
+              <div class="quantity-manager">
+                <button pButton icon="pi pi-plus" (click)="addPackageToCart(p.packageId!)" class="control-btn plus">+</button>
+                <span class="current-qty">{{p.quantity}}</span>
+                <button pButton icon="pi pi-minus" (click)="removePackageFromCart(p.packageId!)" class="control-btn minus">-</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <p-divider *ngIf="basket.purchasePackages?.length"></p-divider>
+
+        <div class="basket-section">
+          <h3 class="section-heading">פירוט הבחירות</h3>
+          <div *ngFor="let t of groupTickets" class="item-card gift-card">
+            <div class="card-body">
+              <div class="item-main-info">
+                <span class="item-name">{{t.gift?.name}}</span>
+                <span class="tag-status" [class.no-rem]="remainingTickets === 0">כרטיס הגרלה</span>
+              </div>
+              <div class="quantity-manager">
+                <button pButton icon="pi pi-plus" (click)="addGift(t.giftId!)"
+                        [disabled]="remainingTickets === 0" class="control-btn plus">+</button>
+                <span class="current-qty">{{t.totalTickets}}</span>
+                <button pButton icon="pi pi-minus" (click)="deleteGift(t.id!)" class="control-btn delete">-</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </p-scrollPanel>
+
+      <div class="basket-summary-footer">
+        <div class="progress-container">
+          <div class="summary-labels">
+            <span class="usage-label">ניצול כרטיסים:</span>
+            <span class="usage-numbers"><strong>{{usedTickets}}</strong> מתוך <strong>{{totalPurchasedTickets}}</strong></span>
+          </div>
+          <p-progressBar [value]="totalPurchasedTickets > 0 ? (usedTickets/totalPurchasedTickets)*100 : 0"
+                        [showValue]="false"
+                        class="custom-progress">
+          </p-progressBar>
+        </div>
+
+        <div class="action-zone">
+          <button pButton label="המשך לתשלום מאובטח"
+                  icon="pi pi-lock"
+                  class="checkout-btn-gold"
+                  [disabled]="remainingTickets !== 0 || totalPurchasedTickets === 0"
+                  (click)="router.navigate(['/payment', basket.id]); closeSidebar()">
+          </button>
+          <p class="remaining-hint" *ngIf="remainingTickets > 0">
+            נותרו לך עוד <strong>{{remainingTickets}}</strong> כרטיסים לבחירה
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </ng-container>
+</nz-drawer>

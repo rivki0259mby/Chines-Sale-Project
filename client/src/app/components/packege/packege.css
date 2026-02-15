@@ -1,192 +1,282 @@
-/* Add styles for package card bottom image and counter */
-.package-card-bottom {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: flex-end;
-	margin-top: 1.5rem;
-	margin-bottom: 1rem;
+/* רקע בהיר ונקי כמו בתמונת הלוגין */
+.clean-luxury-container {
+  padding: 60px 40px;
+  background-color: #f9f7f4;
+  direction: rtl;
+  min-height: 100vh;
 }
-.package-card-img {
-	width: 110px;
-	height: auto;
-	margin-bottom: 0.7rem;
-	border-radius: 12px;
-	box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+
+.top-interface {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 50px;
+  border-bottom: 1px solid #e0d5c8;
+  padding-bottom: 20px;
 }
-.package-card-actions {
-	display: flex;
-	align-items: center;
-	gap: 0.5rem;
-	background: #fff;
-	border-radius: 30px;
-	padding: 0.3rem 1.2rem;
-	box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-	font-size: 1.2rem;
-	font-weight: 600;
+
+.main-title {
+  color: #c49667; /* צבע הזהב-חום מהתמונה */
+  font-size: 32px;
+  font-weight: 700;
+  margin: 0;
 }
-.package-card-qty {
-	min-width: 2.2rem;
-	text-align: center;
-	font-size: 1.2rem;
-	font-weight: 700;
-	color: #222;
+
+.add-btn-gold {
+  background-color: #c49667 !important;
+  color: white !important;
+  border: none !important;
+  border-radius: 8px !important;
+  height: 40px !important;
 }
-.package-card-add-label {
-	margin-right: 0.7rem;
-	font-size: 1.1rem;
-	color: #000000;
-	font-weight: 600;
+
+/* כרטיס חבילה יוקרתי ונקי */
+.premium-package-card {
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+  padding: 30px 20px;
+  text-align: center;
+  position: relative;
+  transition: transform 0.3s ease;
+  border: 1px solid #f0e6da;
 }
-/* Package Page Styles */
-.package-page {
-	padding: 2rem 1rem;
-	text-align: center;
+
+.premium-package-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(196, 150, 103, 0.15);
 }
-.package-title {
-	font-size: 2.3rem;
-	font-weight: 800;
-	color: #3a2323;
-	margin-bottom: 0.5rem;
+
+.card-header-line {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 4px;
+  background-color: #c49667;
+  border-radius: 0 0 4px 4px;
 }
-.package-subtitle {
-	font-size: 1.2rem;
-	color: #3a2323;
-	margin-bottom: 2.5rem;
+
+.pkg-name {
+  color: #4a4a4a;
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 20px;
 }
-.package-cards-row {
-	display: flex;
-	flex-wrap: wrap;
-	justify-content: center;
-	gap: 2.5rem;
-	margin-bottom: 2.5rem;
+
+/* העיגול המקוקו */
+.dashed-circle-amount {
+  width: 110px;
+  height: 110px;
+  border: 2px dashed #c49667;
+  border-radius: 50%;
+  margin: 0 auto 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
-.package-card {
-	width: 340px;
-	min-height: 520px;
-	border-radius: 28px;
-	box-shadow: 0 4px 24px 0 rgba(0,0,0,0.08);
-	padding: 0;
-	position: relative;
-	overflow: hidden;
-	background: #fff;
-	display: flex;
-	flex-direction: column;
-	align-items: stretch;
+
+.dashed-circle-amount .num {
+  font-size: 36px;
+  font-weight: 800;
+  color: #c49667;
+  line-height: 1;
 }
-.package-card-header {
-	position: relative;
-	height: 60px;
-	display: flex;
-	align-items: flex-start;
-	justify-content: flex-start;
+
+.dashed-circle-amount .sub {
+  font-size: 14px;
+  color: #8e8e8e;
 }
-.package-ribbon {
-	position: absolute;
-	top: 18px;
-	left: -38px;
-	background: #e53935;
-	color: #000000;
-	font-size: 1.1rem;
-	font-weight: 700;
-	padding: 0.3rem 2.2rem;
-	transform: rotate(-45deg);
-	border-radius: 6px;
-	z-index: 2;
+
+.pkg-price {
+  font-size: 24px;
+  font-weight: 700;
+  color: #4a4a4a;
+  margin-bottom: 10px;
 }
-.package-ribbon.best {
-	background: #1e88e5;
+
+.pkg-desc {
+  color: #7a7a7a;
+  font-size: 14px;
+  line-height: 1.5;
+  min-height: 42px;
 }
-.package-card-top-label {
-	width: 100%;
-	text-align: right;
-	font-size: 1.1rem;
-	color: #000000;
-	font-weight: 400;
-	margin-right: 1.5rem;
+
+/* פלוס מינוס מעוצב */
+.quantity-pill {
+  display: inline-flex;
+  align-items: center;
+  background-color: #f4eee6;
+  border-radius: 20px;
+  padding: 4px;
+  margin-top: 15px;
 }
-.package-card-content {
-	padding: 2.2rem 1.2rem 1.2rem 1.2rem;
-	flex: 1;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
+
+.op-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: none;
+  background-color: white;
+  color: #c49667;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
 }
-.package-card-amount {
-	font-size: 2.5rem;
-	font-weight: 800;
-	color: #000000;
-	margin-bottom: 0.7rem;
-  
+
+.count {
+  padding: 0 15px;
+  font-weight: 700;
+  color: #4a4a4a;
 }
-.package-card-price {
-	font-size: 1.3rem;
-	color: #000000;
-	margin-bottom: 0.7rem;
+
+.admin-controls {
+  position: absolute;
+  top: 10px;
+  right: 10px;
 }
-.package-card-receive {
-	font-size: 1.1rem;
-	color: #fff;
-	margin-bottom: 0.7rem;
-	font-weight: 600;
+
+/* טופס במודאל */
+.clean-form .form-field {
+  margin-bottom: 15px;
 }
-.package-card-benefits {
-	list-style: none;
-	padding: 0;
-	margin: 0 0 0.7rem 0;
-	color: #000000;
-	font-size: 1.1rem;
-	text-align: right;
+
+.clean-form label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 600;
+  color: #555;
 }
-.package-card-benefits li {
-	margin-bottom: 0.3rem;
-	display: flex;
-	align-items: center;
-	gap: 0.5rem;
+
+.w-100 { width: 100%; }
+.title-decoration {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 10px;
 }
-.package-card-gift {
-	margin-top: 1.2rem;
-	color: #000000;
-	font-size: 1.1rem;
-	text-align: right;
+
+.title-decoration .line {
+  width: 50px;
+  height: 1px;
+  background: var(--soft-primary);
 }
-.package-gift-label {
-	font-weight: 700;
-	margin-bottom: 0.3rem;
-	display: block;
+
+.title-decoration .dot {
+  width: 6px;
+  height: 6px;
+  background: var(--soft-primary);
+  border-radius: 50%;
 }
-.package-card-gift ul {
-	list-style: none;
-	padding: 0;
-	margin: 0;
+
+.luxury-title {
+  font-size: 42px;
+  font-weight: 800;
+  color: #4a3728; /* חום עמוק ומכובד */
+  margin: 0;
 }
-.package-card-gift li {
-	margin-bottom: 0.2rem;
+
+.luxury-subtitle {
+  color: #8c7b6d;
+  font-size: 18px;
+  margin-top: 10px;
 }
-.package-admin-form {
-	margin-top: 2.5rem;
-	display: flex;
-	gap: 0.7rem;
-	flex-wrap: wrap;
-	justify-content: center;
+/* שינוי צבע המסגרת בזמן פוקוס/בחירה */
+::ng-deep .elegant-select .ant-select-selector {
+    border-radius: 8px !important;
+    border-color: #d4a373 !important; /* צבע זהב עמום */
 }
-.package-admin-form input {
-	padding: 0.5rem 1rem;
-	border-radius: 8px;
-	border: 1px solid #ccc;
-	font-size: 1rem;
+
+/* ביטול הצבע הכחול בסימון (Focus) */
+::ng-deep .elegant-select.ant-select-focused:not(.ant-select-disabled).ant-select-single:not(.ant-select-customize-input) .ant-select-selector {
+    border-color: #c49667 !important;
+    box-shadow: 0 0 0 2px rgba(196, 150, 103, 0.2) !important;
 }
-.package-admin-form button {
-	padding: 0.5rem 1.5rem;
-	border-radius: 8px;
-	font-size: 1rem;
-	font-weight: 600;
-	background: #e53935;
-	color: #000000;
-	border: none;
-	cursor: pointer;
-	transition: background 0.2s;
+
+/* שינוי צבע הטקסט הנבחר */
+::ng-deep .ant-select-item-option-selected:not(.ant-select-item-option-disabled) {
+    background-color: #fdf8f2 !important; /* רקע חול עדין */
+    color: #4a3728 !important; /* חום אצילי */
+    font-weight: 600;
 }
-.package-admin-form button:hover {
-	background: #b71c1c;
+
+/* שינוי צבע ה-Hover ברשימה */
+::ng-deep .ant-select-item-option-active:not(.ant-select-item-option-disabled) {
+    background-color: #f9f4ee !important;
+}
+
+/* עיצוב החץ הקטן */
+::ng-deep .elegant-select .ant-select-arrow {
+    color: #c49667 !important;
+}
+/* 1. שינוי צבע המסגרת של הסלקט עצמו (במצב רגיל ובפוקוס) */
+::ng-deep .ant-select:not(.ant-select-disabled):hover .ant-select-selector,
+::ng-deep .ant-select-focused .ant-select-selector {
+    border-color: #c49667 !important; /* צבע הזהב מהתמונה */
+    box-shadow: 0 0 0 2px rgba(196, 150, 103, 0.2) !important;
+}
+
+/* 2. צביעת האפשרות שנבחרה בתוך הרשימה */
+::ng-deep .ant-select-item-option-selected:not(.ant-select-item-option-disabled) {
+    background-color: #f4eee6 !important; /* רקע חול עדין */
+    color: #4a3728 !important; /* טקסט חום כהה */
+}
+
+/* 3. צביעת האפשרות שעומדים עליה עם העכבר (Hover) */
+::ng-deep .ant-select-item-option-active:not(.ant-select-item-option-disabled) {
+    background-color: #fdf8f2 !important;
+}
+
+/* 4. שינוי צבע ה-V (סימן הוי) של הבחירה */
+::ng-deep .ant-select-item-option-selected .ant-select-item-option-state {
+    color: #c49667 !important;
+}
+
+/* 5. צביעת החץ הקטן של ה-Select */
+::ng-deep .ant-select-arrow {
+    color: #c49667 !important;
+}
+/* מיקום כפתורי הניהול בפינה העליונה */
+.card-admin-overlay {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  display: flex;
+  gap: 8px; /* רווח בין העריכה למחיקה */
+  z-index: 10;
+}
+
+/* עיצוב כפתור עריכה (חום/זהב) */
+.edit-btn {
+  color: #c49667 !important;
+  background: rgba(255, 255, 255, 0.8) !important;
+  border-radius: 50% !important;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.edit-btn:hover {
+  background: #fdf8f2 !important;
+  transform: scale(1.1);
+}
+
+/* עיצוב כפתור מחיקה (אדום מכובד) */
+.delete-btn {
+  color: #ff4d4f !important; /* אדום סטנדרטי של Ant Design */
+  background: rgba(255, 255, 255, 0.8) !important;
+  border-radius: 50% !important;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.delete-btn:hover {
+  background: #fff1f0 !important;
+  transform: scale(1.1);
 }

@@ -1,26 +1,98 @@
-<p>donor works!</p>
-<div>
-  <input #nameInput type="text" placeholder="Name" />
-  <input #emailInput type="text" placeholder="Email" />
-  <input #giftIdInput type="number" placeholder="Gift ID" />
-  <button type="button" (click)="filter(nameInput.value,emailInput.value, giftIdInput.value ? +giftIdInput.value : undefined )">Filter</button>
-  <button type="button" (click)="refreshList()">Clear Filters</button>
-</div>
+<div class="gift-container-outer">
+ 
+  <div class="admin-top-action-bar">
+    <button nz-button nzType="primary" class="aristocrat-btn" (click)="openAddModal()">
+      <span nz-icon nzType="user-add"></span>
+      הוספת תורם חדש
+    </button>
+  </div>
 
- @for(d of list$ | async ; track d){
-    <div>
-        <span>{{d.name}}</span>
-         <button (click) = "delete(d.id!)">מחק</button>
-       <button (click) = "openEdit(d)">עדכן</button>
-    </div>
-    }
+  <div class="table-wrapper">
+    <nz-table #donorTable [nzData]="(list$ | async) || []" [nzBordered]="false" class="luxury-table">
+      <thead>
+        <tr>
+          <th nzWidth="100px">לוגו</th>
+          <th>שם התורם</th>
+          <th>אימייל</th>
+          <th nzWidth="120px">פעולות</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (d of donorTable.data; track d.id) {
+          <tr>
+            <td>
+              <nz-avatar [nzSrc]="d.logoUrl" nzSize="large" nzIcon="user" class="donor-avatar"></nz-avatar>
+            </td>
+            <td class="donor-name-cell">{{ d.name }}</td>
+            <td class="email-cell">{{ d.email }}</td>
+            <td>
+              <div class="admin-icons-footer no-border">
+                <button class="icon-btn edit" (click)="openEdit(d)" nz-tooltip nzTooltipTitle="עריכה">
+                  <span nz-icon nzType="edit"></span>
+                </button>
+                <button class="icon-btn delete" (click)="delete(d.id!)" nz-tooltip nzTooltipTitle="מחיקה">
+                  <span nz-icon nzType="delete"></span>
+                </button>
+              </div>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </nz-table>
+  </div>
 
-    <input [(ngModel)] = "draftDonor.id" placeholder="id" />
-    <input [(ngModel)] = "draftDonor.name"  placeholder="name" #name  />
-    <input [(ngModel)] = "draftDonor.phoneNumber"  placeholder="phonNumber" #phonNumber  />
-    <input [(ngModel)] = "draftDonor.email"  placeholder="email" #email  />
-    <input [(ngModel)] = "draftDonor.logoUrl"  placeholder="logoUrl" #logoUrl  />
-    <button type="button" (click)="save()">{{flagUpdate ? 'update' :'Add'}}</button>
-
-    <button type="button" (click)="resetForm()" *ngIf="flagUpdate">בטל</button>
+  <nz-modal
+    [(nzVisible)]="showModal"
+    [nzTitle]="modalTitle"
+    nzOkText="אישור"
+    nzCancelText="ביטול"
+    (nzOnCancel)="showModal = false; resetForm()"
+    (nzOnOk)="save()"
+    [nzOkDisabled]="!draftDonor.name || !draftDonor.email"
+    nzCentered>
    
+    <ng-template #modalTitle>
+      <span class="modal-header-text">{{flagUpdate ? 'עריכת פרטי תורם' : 'הוספת תורם למערכת'}}</span>
+    </ng-template>
+
+    <ng-container *nzModalContent>
+      <div class="friendly-form">
+       
+         <div class="form-group">
+          <label>תעודת זהות התורם *</label>
+          <input nz-input [(ngModel)]="draftDonor.id" placeholder="    תעודת זהות בעלת 8 ספרות..." />
+        </div>
+
+        <div class="form-group">
+          <label>שם התורם *</label>
+          <input nz-input [(ngModel)]="draftDonor.name" placeholder="שם מלא או שם העסק..." />
+        </div>
+
+        <div class="form-group">
+          <label>אימייל *</label>
+          <input nz-input [(ngModel)]="draftDonor.email" placeholder="example@mail.com" />
+        </div>
+         <div class="form-group">
+          <label>טלפון  *</label>
+          <input nz-input [(ngModel)]="draftDonor.phoneNumber" placeholder="טלפון..." />
+        </div>
+
+        <div class="form-group">
+          <label>לוגו התורם</label>
+          <div class="upload-container">
+            <input type="file" #fileInput (change)="onFileSelected($event)" accept="image/*" style="display: none;" />
+            <button nz-button type="button" class="upload-btn" (click)="fileInput.click()">
+              <span nz-icon nzType="picture"></span> בחר לוגו
+            </button>
+           
+            <div class="image-preview" *ngIf="draftDonor.logoUrl">
+              <img [src]="draftDonor.logoUrl" class="mini-preview" />
+              <button nz-button nzType="text" nzDanger (click)="draftDonor.logoUrl = ''">הסר</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </ng-container>
+  </nz-modal>
+</div>
