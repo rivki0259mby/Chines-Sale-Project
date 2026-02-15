@@ -40,6 +40,10 @@ export class Busket implements OnInit {
       this.user = JSON.parse(userData);
       this.getByUserId(this.user.id);
     }
+    this.basketSrv.busketUpdate.subscribe(() => {
+      if (this.user.id && this.user) this.getByUserId(this.user.id);
+    }
+    );
   }
 
   getByUserId(userId: string) {
@@ -70,7 +74,6 @@ export class Busket implements OnInit {
     this.basketSrv.deleteTicket(this.basket.id!, ticketId).subscribe(res => this.basket = res);
   }
 
-  // גטרים לחישובים (הם אלו שמעדכנים את ה-Navbar דרך ה-ViewChild)
   get usedTickets(): number { return this.basket.tickets?.length || 0; }
  
   get totalPurchasedTickets(): number {
@@ -93,4 +96,5 @@ export class Busket implements OnInit {
     }, {});
     return Object.values(groups);
   }
+
 }

@@ -1,6 +1,6 @@
 <div class="gift-container-outer">
  
-  <div class="admin-top-action-bar" *ngIf="authSrv.isAdmin()">
+  <div class="admin-top-action-bar" *ngIf="authSrv.isAdmin()" style="direction: ltr;" >
     <button nz-button nzType="primary" class="aristocrat-btn" (click)="openAddModal()">
       <span nz-icon nzType="plus"></span>
       הוספת מתנה חדשה
@@ -17,8 +17,8 @@
             <div class="card-image-bleed">
               <img [src]="g.imageUrl" [alt]="g.name" class="main-gift-img" />
              
-              <div class="donor-hover-overlay" *ngIf="g.donor?.logoUrl">
-                <img [src]="g.donor?.logoUrl" class="full-circle-logo" />
+              <div class="donor-hover-overlay" *ngIf="g.donor && g.donor.logoUrl">
+                <img [src]="g.donor.logoUrl" class="full-circle-logo" />
 
               </div>
             </div>

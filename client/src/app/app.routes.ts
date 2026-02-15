@@ -9,6 +9,7 @@ import { PackageComponent } from './components/packege/packege';
 import { PaymentComponent } from './components/payment/payment';
 import { Home } from './components/home/home';
 import { Winners } from './components/winners/winners';
+import { AdminUsers } from './components/admin-users/admin-users';
 
 export const routes: Routes = [
     // {path:'',component:},
@@ -20,7 +21,8 @@ export const routes: Routes = [
     {path:'login',component:Login},
     {path:'register',component:Register},
     {path:'payment/:basketId',component:PaymentComponent},
-    {path:'winners',component:Winners}
+    {path:'winners',component:Winners},
+    {path:'admin-users', component:AdminUsers}
     
     
     

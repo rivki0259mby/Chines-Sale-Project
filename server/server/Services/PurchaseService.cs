@@ -336,6 +336,7 @@ namespace server.Services
             {
                 Id = purchase.Id,
                 BuyerId = purchase.BuyerId,
+                Buyer = purchase.Buyer,
                 TotalAmount = purchase.TotalAmount,
                 OrderDate = purchase.OrderDate,
                 IsDraft = purchase.IsDraft,

@@ -39,7 +39,7 @@ import { busketModel } from '../../models/busket.model';
   styleUrl: './packege.css'
 })
 export class PackageComponent implements OnInit {
-  // השמקות (Injections)
+  // (Injections)
   private packageSrv = inject(PackageService);
   private basketSrv = inject(BusketService);
   public authSrv = inject(AuthService);
@@ -71,8 +71,12 @@ export class PackageComponent implements OnInit {
     { label: 'הכי פופולרי', value: 'most_purchased' }
   ];
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.loadUserAndBasket();
+   if(this.user){
+    const parsedUser = JSON.parse(this.user);
+    this.basketSrv.getByUserId(parsedUser.id).subscribe(b => this.basket = b);
+   }
   }
 
  
@@ -88,7 +92,7 @@ export class PackageComponent implements OnInit {
     if (this.user?.id) {
       this.basketSrv.getByUserId(this.user.id).subscribe({
         next: (res) => this.basket = res,
-        error: () => this.message.error('שגיאה בטעינת סל הקניות')
+       
       });
     }
   }

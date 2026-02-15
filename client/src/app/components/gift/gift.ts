@@ -39,12 +39,12 @@ export class Gift implements OnInit, OnChanges {
   private categorySrv = inject(CategoryService);
 
   @Input() categoryId: number = 0;
- 
+
   list$ = this.giftSrv.getAll();
   categories$ = this.categorySrv.getAll();
   donors$ = this.donorSrv.getAll();
-  errorMessage: string |null = null;
- 
+  errorMessage: string | null = null;
+
   basket: busketModel = { tickets: [] };
   showAdminForm: boolean = false;
   flagUpdate: boolean = false;
@@ -59,7 +59,7 @@ export class Gift implements OnInit, OnChanges {
     const userData = localStorage.getItem('user');
     if (userData) {
       this.loadBasket(JSON.parse(
-userData).id);
+        userData).id);
 
     }
   }
@@ -69,29 +69,29 @@ userData).id);
   }
 
   onFileSelected(event: any) {
-  const file: File = event.target.files[0];
-  if (file) {
-    const reader = new FileReader();
-    reader.onload = (e: any) => {
-      const img = new Image();
-      img.src = e.target.result;
-      img.onload = () => {
-        const canvas = document.createElement('canvas');
-        const MAX_WIDTH = 800; // מגבילים את הרוחב ל-800 פיקסלים בלבד
-        const scaleSize = MAX_WIDTH / img.width;
-        canvas.width = MAX_WIDTH;
-        canvas.height = img.height * scaleSize;
+    const file: File = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        const img = new Image();
+        img.src = e.target.result;
+        img.onload = () => {
+          const canvas = document.createElement('canvas');
+          const MAX_WIDTH = 800; // מגבילים את הרוחב ל-800 פיקסלים בלבד
+          const scaleSize = MAX_WIDTH / img.width;
+          canvas.width = MAX_WIDTH;
+          canvas.height = img.height * scaleSize;
 
-        const ctx = canvas.getContext('2d');
-        ctx?.drawImage(img, 0, 0, canvas.width, canvas.height);
+          const ctx = canvas.getContext('2d');
+          ctx?.drawImage(img, 0, 0, canvas.width, canvas.height);
 
-        // הפיכה ל-Base64 באיכות מופחתת (0.7 מתוך 1)
-        this.draftGift.imageUrl = canvas.toDataURL('image/jpeg', 0.7);
+          // הפיכה ל-Base64 באיכות מופחתת (0.7 מתוך 1)
+          this.draftGift.imageUrl = canvas.toDataURL('image/jpeg', 0.7);
+        };
       };
-    };
-    reader.readAsDataURL(file);
+      reader.readAsDataURL(file);
+    }
   }
-}
 
   openAddModal() {
     this.resetForm();
@@ -115,10 +115,10 @@ userData).id);
       this.showAdminForm = false;
       this.resetForm();
     });
-    if(!this.draftGift.name || !this.draftGift.donorId){
+    if (!this.draftGift.name || !this.draftGift.donorId) {
       this.errorMessage = 'שם הפרס ותורם הם שדות חובה';
       return;
-     
+
     }
     this.errorMessage = null; // איפוס הודעות שגיאה קודמות
   }
@@ -153,8 +153,8 @@ userData).id);
     this.categories$ = this.categorySrv.getAll();
     this.donors$ = this.donorSrv.getAll();
   }
-    
-lottery(gift: giftModel) {
+
+  lottery(gift: giftModel) {
     this.giftSrv.lottery(gift).pipe(
       catchError(err => {
         this.errorMessage = "ההגרלה נכשלה - לא נמצאו קונים עבור המתנה .";

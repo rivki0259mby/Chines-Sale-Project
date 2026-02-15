@@ -14,6 +14,7 @@ namespace server.DTOs
     {
         public int Id { get; set; }
         public string BuyerId { get; set; }
+        public User Buyer { get; set; }
         public decimal TotalAmount { get; set; } = 0;
         public DateTime OrderDate { get; set; } = DateTime.UtcNow;
         public bool IsDraft { get; set; } = true;

@@ -30,7 +30,7 @@ public class UsersController : ControllerBase
         return Ok(users);
     }
 
-    [Authorize]
+    //[Authorize]
     [HttpGet("{id}")]
     [ProducesResponseType(typeof(UserResponseDto), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]

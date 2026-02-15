@@ -32,6 +32,7 @@ export class App {
   navItems = [
     {label:'הזוכים',routerLink:['winners'],role:'admin'},
     { label: 'תורמים', routerLink: ['donors'],role:'admin' },
+    {label:'רכישות', routerLink : ['admin-users'],role:'admin'},
     { label: 'הפרסים', routerLink: ['category'] ,role:'all'},
     { label: 'החבילות', routerLink: ['package'],role:'all' },
     { label: ' בית', routerLink: [''] ,role:'all'},
