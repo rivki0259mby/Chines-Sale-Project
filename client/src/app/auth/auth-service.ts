@@ -7,8 +7,8 @@ import { winnerModel } from '../models/Winner.model';
   providedIn: 'root',
 })
 export class AuthService {
-  BASE_URL = 'https://localhost:7280/api/Auth';
-  BASE_URL_USER = 'https://localhost:7280/api/Users';
+  BASE_URL = 'http://localhost:5065/api/Auth';
+  BASE_URL_USER = 'http://localhost:5065/api/Users';
 
   constructor(private http: HttpClient) { }
 

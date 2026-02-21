@@ -9,7 +9,7 @@ import { packageModel } from '../models/package.model';
 })
 export class PackageService {
 
-  BASE_URL = 'https://localhost:7280/api/Package';
+  BASE_URL = 'http://localhost:5065/api/Package';
 
   http:HttpClient = inject(HttpClient);
   constructor(){}

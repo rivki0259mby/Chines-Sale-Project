@@ -124,7 +124,7 @@ export class PackageComponent implements OnInit {
     const request = this.flagUpdate
       ? this.packageSrv.update(this.draftPackage.id!, this.draftPackage)
       : this.packageSrv.add(this.draftPackage);
-
+      
     request.subscribe({
       next: () => {
         this.message.success(this.flagUpdate ? 'החבילה עודכנה' : 'החבילה נוספה בהצלחה');

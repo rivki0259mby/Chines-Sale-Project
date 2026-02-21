@@ -1,0 +1,83 @@
+<div class="sale-container">
+
+  <section class="sale-hero">
+    <div class="hero-overlay">
+      <h1 class="main-title">המכירה הסינית הגדולה <span class="year">2026</span></h1>
+      <p class="sub-title">הזדמנות של פעם בשנה לזכות בפרסים שחלמת עליהם</p>
+      <button nz-button nzType="primary" nzSize="large" class="glow-button" (click)="scrollToSteps()">התחילי
+        עכשיו</button>
+    </div>
+  </section>
+
+  <section id="steps" class="steps-section">
+    <h2 class="section-title">איך זה עובד?</h2>
+
+    <div nz-row [nzGutter]="[32, 32]" nzJustify="center">
+
+      <div nz-col [nzXs]="24" [nzMd]="8">
+        <div class="process-card step-1">
+          <a class="learn-more-link" [routerLink]="['/package']">
+
+            <div class="step-number">01</div>
+            <span nz-icon nzType="shopping-cart" class="step-icon"></span>
+            <h3>בחרי חבילה</h3>
+            <p>בחרי את כמות הכרטיסים שתיתן לך את הסיכוי המקסימלי לזכות.</p>
+          </a>
+        </div>
+      </div>
+
+      <div nz-col [nzXs]="24" [nzMd]="8">
+        <div class="process-card step-2">
+         <a class="learn-more-link" [routerLink]="['/category']">
+          <div class="step-number">02</div>
+          <span nz-icon nzType="gift" class="step-icon"></span>
+          <h3>התאימי מתנות</h3>
+          <p>פזרי את הכרטיסים שלך בין עשרות מתנות יוקרתיות: רכב, חופשות, וריהוט.</p>
+          </a>
+        </div>
+      </div>
+
+      <div nz-col [nzXs]="24" [nzMd]="8">
+        <div class="process-card step-3">
+          <div class="step-number">03</div>
+          <span nz-icon nzType="trophy" class="step-icon"></span>
+          <h3>התרגשי וזכי!</h3>
+          <p>השתתפי בהגרלה הגדולה ואולי השם שלך יהיה זה שיעלה בגורל.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="about-section">
+    <div nz-row [nzGutter]="48" nzAlign="middle" nzJustify="center">
+
+      <div nz-col [nzXs]="24" [nzLg]="12" class="about-text-container">
+        <h2 class="section-title-right">מי אנחנו?</h2>
+        <p class="about-paragraph">
+          המכירה הסינית שלנו היא הרבה מעבר להגרלה – היא מסורת של נתינה, התרגשות ושותפות.
+          במשך שנים אנחנו פועלים כדי להעניק לכם הזדמנות לזכות בפרסי יוקרה, תוך שאנו מקפידים על
+          יושרה מלאה, שקיפות וסטנדרטים גבוהים של איכות. כל כרטיס שאתם רוכשים הוא חלק מקהילה גדולה
+          שחולמת יחד, תומכת ומאמינה שהנס שלכם נמצא במרחק לחיצה אחת. אנחנו כאן כדי להפוך את הציפייה לחוויה
+          ואת החלום למציאות, עם נבחרת פרסים שנבחרה בקפידה לכל אחת ואחד מכם.
+        </p>
+        <div class="about-stats">
+          <div class="stat-item">
+            <span class="stat-num">10+</span>
+            <span class="stat-label">שנות ניסיון</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-num">5,000+</span>
+            <span class="stat-label">זוכים מאושרים</span>
+          </div>
+        </div>
+      </div>
+
+      <div nz-col [nzXs]="24" [nzLg]="10">
+        <div class="about-image-wrapper">
+
+        </div>
+      </div>
+
+    </div>
+  </section>

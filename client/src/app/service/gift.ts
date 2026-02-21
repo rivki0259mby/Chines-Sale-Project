@@ -8,7 +8,7 @@ import { giftModel } from '../models/Gift.model';
 })
 export class GiftService {
 
-  BASE_URL = 'https://localhost:7280/api/Gift';
+  BASE_URL = 'http://localhost:5065/api/Gift';
 
   http:HttpClient = inject(HttpClient);
   constructor(){}

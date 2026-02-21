@@ -1,0 +1,64 @@
+<div class="winners-wrapper">
+  <div class="winners-content">
+   
+    <div class="winners-header">
+      <span nz-icon nzType="trophy" nzTheme="fill" class="gold-trophy"></span>
+      <h2>נבחרת הזוכים</h2>
+      <p>גלו מי זכה במתנות היוקרתיות של המכירה הסינית 2026</p>
+    </div>
+
+    <nz-card [nzBordered]="false" class="table-card">
+      <p-table [value]="gifts"
+               [tableStyle]="{ 'min-width': '50rem' }"
+               styleClass="p-datatable-striped custom-table">
+       
+        <ng-template pTemplate="header">
+          <tr>
+            <th style="width: 15%">קוד מתנה</th>
+            <th style="width: 25%">שם המתנה</th>
+            <th style="width: 30%">הזוכה המאושר</th>
+            <th style="width: 30%">פרטי קשר</th>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-gift>
+          <tr>
+            <td><span class="id-badge">#{{ gift.id }}</span></td>
+            <td>
+              <div class="gift-cell">
+                <img [src]="gift.imageUrl" class="mini-gift-img" *ngIf="gift.imageUrl" />
+                <span class="gift-name-text">{{ gift.name }}</span>
+              </div>
+            </td>
+            <td>
+              <div class="winner-cell" *ngIf="gift.winner; else loadingWinner">
+                
+                <span class="winner-name-text">{{ gift.winner?.fullName }}</span>
+              </div>
+              <ng-template #loadingWinner>
+                <span class="loading-text">מעבד נתונים...</span>
+              </ng-template>
+            </td>
+            <td>
+              <div class="contact-cell">
+                <span *ngIf="gift.winner?.email">
+                  <span nz-icon nzType="mail"></span> {{ gift.winner?.email }}
+                </span>
+                <span *ngIf="gift.winner?.phoneNumber">
+                  <br/>
+                  <span nz-icon nzType="phone"></span> {{ gift.winner?.phoneNumber }}
+                </span>
+              </div>
+            </td>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="emptymessage">
+          <tr>
+            <td colspan="4" class="empty-msg">עדיין לא נמצאו זוכים במערכת.</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </nz-card>
+  </div>
+</div>

@@ -11,7 +11,7 @@ import { giftModel } from '../models/Gift.model';
 })
 export class BusketService {
 
-  BASE_URL = 'https://localhost:7280/api/Purchase'
+  BASE_URL = 'http://localhost:5065/api/Purchase'
 
   http: HttpClient = inject(HttpClient);
   public busketUpdate :EventEmitter<void> = new EventEmitter<void>();

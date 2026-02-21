@@ -1,0 +1,95 @@
+.winners-wrapper {
+  min-height: 100vh;
+  background-color: #f8f5f0; /* צבע קרם עדין */
+  padding: 50px 20px;
+  direction: rtl;
+}
+
+.winners-content {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.winners-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.gold-trophy {
+  font-size: 50px;
+  color: #B8A089; /* צבע הזהב שלך */
+  margin-bottom: 10px;
+}
+
+.winners-header h2 {
+  color: #4a3728;
+  font-size: 2.5rem;
+  font-weight: 800;
+}
+
+.table-card {
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.05) !important;
+}
+
+/* עיצוב הטבלה */
+::ng-deep .custom-table .p-datatable-thead > tr > th {
+  background-color: #F5F1E8 !important; /* צבע הרקע של הרגיסטר */
+  color: #4a3728 !important;
+  padding: 20px;
+  border-bottom: 2px solid #B8A089;
+}
+
+.id-badge {
+  background-color: #f0e6da;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-weight: bold;
+  color: #8b6d45;
+}
+
+.gift-cell, .winner-cell {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.mini-gift-img {
+  width: 45px;
+  height: 45px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.avatar {
+  width: 35px;
+  height: 35px;
+  background-color: #B8A089;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+.gift-name-text, .winner-name-text {
+  font-weight: 600;
+  color: #4a3728;
+}
+
+.contact-cell {
+  font-size: 13px;
+  color: #777;
+}
+
+.loading-text {
+  color: #B8A089;
+  font-style: italic;
+}
+
+.empty-msg {
+  text-align: center;
+  padding: 30px;
+  color: #999;
+}

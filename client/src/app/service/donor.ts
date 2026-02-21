@@ -9,7 +9,7 @@ import { CategoryModel } from '../models/category.model';
 })
 export class DonorSevice {
 
-    BASE_URL = 'https://localhost:7280/api/Donor';
+    BASE_URL = 'http://localhost:5065/api/Donor';
 
     http: HttpClient = inject(HttpClient);
     constructor(){}

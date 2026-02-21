@@ -8,7 +8,7 @@ import { CategoryModel } from '../models/category.model';
 })
 export class CategoryService {
 
-  BASE_URL = 'https://localhost:7280/api/Category';
+  BASE_URL = 'http://localhost:5065/api/Category';
 
   http: HttpClient = inject(HttpClient);
   constructor(){}

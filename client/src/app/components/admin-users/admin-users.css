@@ -1,0 +1,65 @@
+.admin-container {
+  padding: 30px;
+  direction: rtl;
+  background-color: #fdfaf5;
+  min-height: 100vh;
+}
+
+.admin-header {
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.header-icon {
+  font-size: 3rem;
+  color: #B8A089;
+}
+
+.admin-header h2 {
+  color: #4a3728;
+  font-weight: 700;
+  margin-top: 10px;
+}
+
+.table-card {
+  box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+  border-radius: 12px;
+}
+
+.user-name {
+  font-weight: 600;
+  color: #8b6d45;
+}
+
+.active-buyer {
+  color: #52c41a;
+  font-weight: bold;
+}
+
+.details-box {
+  padding: 20px;
+  background: #fdfbf7;
+  border-right: 4px solid #B8A089;
+}
+
+.details-box h3 {
+  font-size: 1.1rem;
+  color: #B8A089;
+  margin-bottom: 15px;
+}
+
+.no-access {
+  text-align: center;
+  margin-top: 100px;
+  color: #ff4d4f;
+}
+
+.no-access span {
+  font-size: 4rem;
+}
+
+/* התאמת צבעי הכותרת של PrimeNG */
+::ng-deep .custom-admin-table .p-datatable-thead > tr > th {
+  background-color: #F5F1E8 !important;
+  color: #4a3728 !important;
+}
