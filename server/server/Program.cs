@@ -13,19 +13,23 @@ using System.Text;
 
 try
 {
+    var isEfMigration = args.Contains("--ef-migration");
     Log.Information("Starting Store API application");
+
     var builder = WebApplication.CreateBuilder(args);
+    builder.Configuration.AddEnvironmentVariables();
 
     // 1. Serilog Configuration
-    builder.Host.UseSerilog((context,configuration)=> configuration.ReadFrom.Configuration(context.Configuration));
+    builder.Host.UseSerilog((context, configuration) =>
+        configuration.ReadFrom.Configuration(context.Configuration));
 
     // 2. Add services to the container
     builder.Services.AddControllers()
         .AddJsonOptions(options =>
         {
-            options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;
+            options.JsonSerializerOptions.ReferenceHandler =
+                System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;
         });
-
     builder.Services.AddEndpointsApiExplorer();
 
     // 3. Swagger with JWT Support
@@ -57,10 +61,10 @@ try
     });
 
     // 4. Database Context
+    var sqlConnection = builder.Configuration.GetConnectionString("DefaultConnection") 
+                        ?? "Server=localhost,1433;Database=storedb;User Id=sa;Password=Strong@Passw0rd!;TrustServerCertificate=True;";
     builder.Services.AddDbContext<ApplicationDbContext>(options =>
-        options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")
-       )
-    );
+        options.UseSqlServer(sqlConnection, sqlOptions => sqlOptions.EnableRetryOnFailure()));
 
     // 5. Dependency Injection (Repositories & Services)
     builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
@@ -83,7 +87,7 @@ try
     builder.Services.AddCors(options =>
     {
         options.AddPolicy("AllowAngular", policy => policy
-            .WithOrigins("http://localhost:4200","http://localhost:4200", "http://localhost:61386", "http://localhost:61386")
+            .WithOrigins("http://localhost:4200", "http://localhost:61386")
             .AllowAnyMethod()
             .AllowAnyHeader());
     });
@@ -128,39 +132,39 @@ try
     });
 
     builder.Services.AddAuthorization();
+    builder.Services.AddLogging();
+
+    // 8. Redis Cache
+    builder.Services.AddStackExchangeRedisCache(options =>
+    {
+        // חשוב: כשמריצים מחוץ ל-Docker, השתמשי ב-localhost
+        options.Configuration = "localhost:6379"; 
+        options.InstanceName = "StoreApi_";
+    });
 
     var app = builder.Build();
+
     app.UseSerilogRequestLogging();
-
-
     app.UseCors("AllowAngular");
 
-    if (app.Environment.IsDevelopment())
-    {
-        app.UseSwagger();
-        app.UseSwaggerUI();
-    }
+    app.UseSwagger();
+    app.UseSwaggerUI();
 
     app.UseHttpsRedirection();
-
-    
     app.UseRequestLogging();
     app.UseRateLimiting();
 
-    // חובה: קודם אימות ואז הרשאות
+    // Authentication & Authorization
     app.UseAuthentication();
     app.UseAuthorization();
 
     app.MapControllers();
 
     Log.Information("Store API is now running");
-    try
+
+    if (!args.Contains("--ef-migration"))
     {
         app.Run();
-    }
-    catch (Exception ex) { 
-        Console.WriteLine(ex.ToString());
-        throw;
     }
 }
 catch (Exception ex)
@@ -173,7 +177,7 @@ catch (Exception ex)
     Log.Fatal(ex, "Application terminated unexpectedly");
 
     Console.WriteLine("Press Enter to close...");
-    Console.ReadLine(); 
+    Console.ReadLine();
 }
 finally
 {
