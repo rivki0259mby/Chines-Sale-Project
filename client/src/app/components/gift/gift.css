@@ -1,0 +1,107 @@
+
+.gift-container-outer { padding: 20px; direction: rtl; background: #fdfbf8; min-height: 100vh; }
+
+.admin-top-action-bar { display: flex; justify-content: flex-end; margin-bottom: 20px; }
+
+.aristocrat-btn { background: #4a3728; color: white; border: none; padding: 10px 20px; border-radius: 8px; font-weight: bold; }
+.aristocrat-btn:hover { background: #c49667; }
+
+/* כרטיס מתנה */
+.compact-gift-card {
+  background: white;
+  border-radius: 12px;
+  border: 1px solid #f0e6da;
+  overflow: hidden;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease;
+  position: relative;
+}
+.compact-gift-card:hover { transform: translateY(-4px); box-shadow: 0 8px 15px rgba(0,0,0,0.08); }
+
+/* תמונה ראשית */
+.card-image-bleed { position: relative; width: 100%; height: 160px; overflow: hidden; background: #f9f9f9; }
+.main-gift-img { width: 100%; height: 100%; object-fit: cover; }
+
+/* לוגו תורם בעיגול מושלם */
+.donor-hover-overlay {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  opacity: 0; /* נסתר כברירת מחדל */
+  width: 50px;
+  height: 50px;
+  background: white;
+  border-radius: 50%;
+  overflow: hidden; /* חובה כדי שהתמונה תהיה עגולה */
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  transition: all 0.3s ease-in-out;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: scale(0.8);
+}
+
+/* התמונה בתוך העיגול - מילוי מלא */
+.full-circle-logo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* גורם לתמונה למלא את כל העיגול */
+  display: block;
+}
+
+/* אפקט Hover על הכרטיס */
+.compact-gift-card:hover .donor-hover-overlay {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.card-info-section { padding: 12px; text-align: center; flex-grow: 1; }
+.gift-title-compact { font-size: 15px; font-weight: 700; color: #4a3728; margin-bottom: 10px; }
+
+.buy-btn-gold { background: #c49667; color: white; border: none; width: 100%; padding: 8px; border-radius: 6px; cursor: pointer; }
+.buy-btn-gold:hover { background: #4a3728; }
+
+.admin-icons-footer { display: flex; justify-content: space-around; background: #faf7f2; border-top: 1px solid #f0e6da; padding: 8px 0; }
+.icon-btn { background: transparent; border: none; cursor: pointer; color: #8c7b6d; font-size: 18px; transition: 0.2s; }
+.icon-btn:hover { transform: scale(1.2); color: #4a3728; }
+
+/* טופס */
+.friendly-form { display: flex; flex-direction: column; gap: 15px; }
+.form-group { display: flex; flex-direction: column; gap: 5px; }
+.form-group label { font-weight: 600; color: #4a3728; }
+.form-row { display: flex; gap: 12px; }
+.flex-1 { flex: 1; }
+.full-width { width: 100%; }
+
+.upload-btn { border: 1px dashed #c49667 !important; color: #c49667 !important; width: 100%; height: 42px; }
+.image-preview { display: flex; align-items: center; gap: 15px; background: #fdfbf8; padding: 10px; border-radius: 8px; border: 1px solid #f0e6da; margin-top: 10px; }
+.image-preview img { width: 60px; height: 60px; object-fit: cover; border-radius: 4px; }
+.admin-icons-footer {
+  display: flex;
+  justify-content: space-around; /* מחלק את האייקונים שווה בשווה */
+  align-items: center;
+  background: #faf7f2;
+  border-top: 1px solid #f0e6da;
+  padding: 8px 0;
+  min-height: 40px; /* מבטיח גובה קבוע לשורה */
+}
+
+.icon-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #8c7b6d;
+  font-size: 20px; /* הגדלתי מעט את האייקון שיהיה ברור */
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: 0.2s;
+}
+
+.icon-btn:hover { transform: scale(1.2); }
+.icon-btn.trophy:hover { color: #d4af37; } /* צבע זהב ב-Hover לגביע */
+.icon-btn.delete:hover { color: #ff4d4f; }

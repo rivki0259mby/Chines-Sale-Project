@@ -1,0 +1,64 @@
+
+
+<div class="admin-wrapper" *ngIf="authSrv.isAdmin()">
+  <div class="admin-header">
+    <span nz-icon nzType="solution" nzTheme="outline" class="header-icon"></span>
+    <h2>דו"ח רכישות סופיות</h2>
+    <p>ריכוז כלל העסקאות שבוצעו במערכת </p>
+    
+  </div>
+
+  <nz-card [nzBordered]="false" class="admin-card">
+    <p-table
+      [value]="(baskets$ | async) || []"
+      [paginator]="true"
+      [rows]="10"
+      styleClass="p-datatable-striped custom-admin-table"
+      [tableStyle]="{'min-width': '60rem'}"
+    >
+      <ng-template pTemplate="header">
+        <tr>
+          <th>מספר הזמנה</th>
+          <th>שם הקונה</th>
+          <th>תאריך</th>
+          <th>סה"כ שולם</th>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="body" let-basket>
+        <tr *ngIf="basket.isDraft === false">
+          <td><span class="id-badge">#{{ basket.id }}</span></td>
+         
+          <td class="user-name-cell">
+            <strong>{{ basket.buyer?.fullName || 'קונה לא ידוע' }}</strong>
+            <div class="user-email">{{ basket.buyer?.email }}</div>
+          </td>
+
+          <td>{{ basket.orderDate | date:'dd/MM/yyyy HH:mm' }}</td>
+         
+          
+
+          <td>
+            <p-tag [value]="basket.totalAmount + ' ₪'" severity="success"></p-tag>
+          </td>
+
+          
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="6" class="empty-state">
+            <i class="pi pi-search"></i>
+            <p>לא נמצאו רכישות סופיות במערכת.</p>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </nz-card>
+</div>
+
+<div class="access-denied" *ngIf="!authSrv.isAdmin()">
+  <span nz-icon nzType="warning" nzTheme="fill"></span>
+  <h3>גישה מוגבלת למנהלים בלבד</h3>
+</div>

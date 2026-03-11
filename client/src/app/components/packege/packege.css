@@ -1,0 +1,282 @@
+/* רקע בהיר ונקי כמו בתמונת הלוגין */
+.clean-luxury-container {
+  padding: 60px 40px;
+  background-color: #f9f7f4;
+  direction: rtl;
+  min-height: 100vh;
+}
+
+.top-interface {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 50px;
+  border-bottom: 1px solid #e0d5c8;
+  padding-bottom: 20px;
+}
+
+.main-title {
+  color: #c49667; /* צבע הזהב-חום מהתמונה */
+  font-size: 32px;
+  font-weight: 700;
+  margin: 0;
+}
+
+.add-btn-gold {
+  background-color: #c49667 !important;
+  color: white !important;
+  border: none !important;
+  border-radius: 8px !important;
+  height: 40px !important;
+}
+
+/* כרטיס חבילה יוקרתי ונקי */
+.premium-package-card {
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+  padding: 30px 20px;
+  text-align: center;
+  position: relative;
+  transition: transform 0.3s ease;
+  border: 1px solid #f0e6da;
+}
+
+.premium-package-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(196, 150, 103, 0.15);
+}
+
+.card-header-line {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 4px;
+  background-color: #c49667;
+  border-radius: 0 0 4px 4px;
+}
+
+.pkg-name {
+  color: #4a4a4a;
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+/* העיגול המקוקו */
+.dashed-circle-amount {
+  width: 110px;
+  height: 110px;
+  border: 2px dashed #c49667;
+  border-radius: 50%;
+  margin: 0 auto 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.dashed-circle-amount .num {
+  font-size: 36px;
+  font-weight: 800;
+  color: #c49667;
+  line-height: 1;
+}
+
+.dashed-circle-amount .sub {
+  font-size: 14px;
+  color: #8e8e8e;
+}
+
+.pkg-price {
+  font-size: 24px;
+  font-weight: 700;
+  color: #4a4a4a;
+  margin-bottom: 10px;
+}
+
+.pkg-desc {
+  color: #7a7a7a;
+  font-size: 14px;
+  line-height: 1.5;
+  min-height: 42px;
+}
+
+/* פלוס מינוס מעוצב */
+.quantity-pill {
+  display: inline-flex;
+  align-items: center;
+  background-color: #f4eee6;
+  border-radius: 20px;
+  padding: 4px;
+  margin-top: 15px;
+}
+
+.op-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: none;
+  background-color: white;
+  color: #c49667;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.count {
+  padding: 0 15px;
+  font-weight: 700;
+  color: #4a4a4a;
+}
+
+.admin-controls {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+/* טופס במודאל */
+.clean-form .form-field {
+  margin-bottom: 15px;
+}
+
+.clean-form label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 600;
+  color: #555;
+}
+
+.w-100 { width: 100%; }
+.title-decoration {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.title-decoration .line {
+  width: 50px;
+  height: 1px;
+  background: var(--soft-primary);
+}
+
+.title-decoration .dot {
+  width: 6px;
+  height: 6px;
+  background: var(--soft-primary);
+  border-radius: 50%;
+}
+
+.luxury-title {
+  font-size: 42px;
+  font-weight: 800;
+  color: #4a3728; /* חום עמוק ומכובד */
+  margin: 0;
+}
+
+.luxury-subtitle {
+  color: #8c7b6d;
+  font-size: 18px;
+  margin-top: 10px;
+}
+/* שינוי צבע המסגרת בזמן פוקוס/בחירה */
+::ng-deep .elegant-select .ant-select-selector {
+    border-radius: 8px !important;
+    border-color: #d4a373 !important; /* צבע זהב עמום */
+}
+
+/* ביטול הצבע הכחול בסימון (Focus) */
+::ng-deep .elegant-select.ant-select-focused:not(.ant-select-disabled).ant-select-single:not(.ant-select-customize-input) .ant-select-selector {
+    border-color: #c49667 !important;
+    box-shadow: 0 0 0 2px rgba(196, 150, 103, 0.2) !important;
+}
+
+/* שינוי צבע הטקסט הנבחר */
+::ng-deep .ant-select-item-option-selected:not(.ant-select-item-option-disabled) {
+    background-color: #fdf8f2 !important; /* רקע חול עדין */
+    color: #4a3728 !important; /* חום אצילי */
+    font-weight: 600;
+}
+
+/* שינוי צבע ה-Hover ברשימה */
+::ng-deep .ant-select-item-option-active:not(.ant-select-item-option-disabled) {
+    background-color: #f9f4ee !important;
+}
+
+/* עיצוב החץ הקטן */
+::ng-deep .elegant-select .ant-select-arrow {
+    color: #c49667 !important;
+}
+/* 1. שינוי צבע המסגרת של הסלקט עצמו (במצב רגיל ובפוקוס) */
+::ng-deep .ant-select:not(.ant-select-disabled):hover .ant-select-selector,
+::ng-deep .ant-select-focused .ant-select-selector {
+    border-color: #c49667 !important; /* צבע הזהב מהתמונה */
+    box-shadow: 0 0 0 2px rgba(196, 150, 103, 0.2) !important;
+}
+
+/* 2. צביעת האפשרות שנבחרה בתוך הרשימה */
+::ng-deep .ant-select-item-option-selected:not(.ant-select-item-option-disabled) {
+    background-color: #f4eee6 !important; /* רקע חול עדין */
+    color: #4a3728 !important; /* טקסט חום כהה */
+}
+
+/* 3. צביעת האפשרות שעומדים עליה עם העכבר (Hover) */
+::ng-deep .ant-select-item-option-active:not(.ant-select-item-option-disabled) {
+    background-color: #fdf8f2 !important;
+}
+
+/* 4. שינוי צבע ה-V (סימן הוי) של הבחירה */
+::ng-deep .ant-select-item-option-selected .ant-select-item-option-state {
+    color: #c49667 !important;
+}
+
+/* 5. צביעת החץ הקטן של ה-Select */
+::ng-deep .ant-select-arrow {
+    color: #c49667 !important;
+}
+/* מיקום כפתורי הניהול בפינה העליונה */
+.card-admin-overlay {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  display: flex;
+  gap: 8px; /* רווח בין העריכה למחיקה */
+  z-index: 10;
+}
+
+/* עיצוב כפתור עריכה (חום/זהב) */
+.edit-btn {
+  color: #c49667 !important;
+  background: rgba(255, 255, 255, 0.8) !important;
+  border-radius: 50% !important;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.edit-btn:hover {
+  background: #fdf8f2 !important;
+  transform: scale(1.1);
+}
+
+/* עיצוב כפתור מחיקה (אדום מכובד) */
+.delete-btn {
+  color: #ff4d4f !important; /* אדום סטנדרטי של Ant Design */
+  background: rgba(255, 255, 255, 0.8) !important;
+  border-radius: 50% !important;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.delete-btn:hover {
+  background: #fff1f0 !important;
+  transform: scale(1.1);
+}

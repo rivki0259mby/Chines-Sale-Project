@@ -1,0 +1,60 @@
+
+.app-layout {
+  min-height: 100vh;
+}
+
+/* עיצוב ה-Header (הסרגל העליון) */
+nz-header {
+  background: #ffffff !important;
+  padding: 0 50px !important;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05); /* צל עדין מאוד */
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+/* מיכל פנימי בתוך ה-Header לסידור גמיש */
+.header-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+/* מרכוז התפריט */
+.nav-menu-wrapper {
+  flex: 2;
+  display: flex;
+  justify-content: center;
+}
+
+/* עיצוב התפריט עצמו */
+.nav-menu {
+  background: transparent !important;
+  line-height: 64px;
+}
+
+/* אזור התוכן המשתנה */
+.main-content {
+  padding: 32px;
+  background-color: var(--bg-color);
+  min-height: calc(100vh - 64px);
+}
+
+/* ה-Sidebar של הסל */
+nz-sider {
+  background: #ffffff !important;
+  border-left: 1px solid #f0f0f0;
+  padding: 20px;
+}
+
+/* עיצוב הלוגו/כפתורי הצד */
+.auth-section, .logo-section {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.logo-section {
+  justify-content: flex-end;
+}

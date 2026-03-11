@@ -1,0 +1,62 @@
+/* שימוש באותם סגנונות של ה-Register */
+.register-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 40px 20px;
+  /* אם את רוצה את הרקע האפור-בהיר של ה-Register: */
+  background-color: #f4f4f4;
+  direction: rtl;
+}
+
+.register-card {
+  width: 100%;
+  max-width: 450px;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05) !important;
+  padding: 15px;
+  background: white;
+}
+
+.register-header {
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.register-header h2 {
+  color: #B8A089; /* הצבע הבהיר של הכותרות */
+  font-weight: 700;
+  margin-bottom: 5px;
+}
+
+.register-header p {
+  color: #8c8c8c;
+  font-size: 14px;
+}
+
+/* הכפתור בול בעיצוב של ה-Register */
+.register-btn {
+  height: 45px;
+  font-size: 16px;
+  border-radius: 8px !important;
+  margin-top: 15px;
+  background-color: #B8A089 !important; /* צבע ה-Submit מה-CSS ששלחת */
+  border-color: #B8A089 !important;
+}
+
+.register-btn:hover {
+  background-color: #9B8773 !important;
+  border-color: #9B8773 !important;
+}
+
+/* התאמת גובה השדות כמו ב-Register */
+input.ant-input {
+  height: 40px;
+  border-radius: 6px !important;
+}
+
+/* הסרת הקולון (נקודותיים) מהלייבלים */
+::ng-deep .ant-form-item-label > label::after {
+    display: none !important;
+}

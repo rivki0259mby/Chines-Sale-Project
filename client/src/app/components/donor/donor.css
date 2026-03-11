@@ -1,0 +1,125 @@
+
+.donors-container {
+  padding: 30px;
+  background: #fdfbf8;
+  min-height: 100vh;
+  direction: rtl;
+}
+
+.site-page-header {
+  background: white;
+  border-radius: 12px;
+  margin-bottom: 24px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+
+.add-donor-btn {
+  background-color: #4a3728 !important; /* החום האצילי */
+  border-color: #4a3728 !important;
+  border-radius: 8px;
+  height: 40px;
+}
+
+.add-donor-btn:hover {
+  background-color: #c49667 !important; /* זהב ב-Hover */
+}
+
+.luxury-table {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+}
+
+.donor-name {
+  font-weight: 700;
+  color: #4a3728;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.edit-icon {
+  color: #c49667;
+  font-size: 18px;
+}
+
+.donor-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.form-item label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: #4a3728;
+}
+.gift-container-outer { padding: 20px; direction: rtl; }
+
+.admin-top-action-bar { display: flex; justify-content: flex-end; margin-bottom: 20px; }
+
+.aristocrat-btn {
+  background: #4a3728;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.aristocrat-btn:hover { background: #c49667; }
+
+.table-wrapper {
+  background: white;
+  border-radius: 12px;
+  border: 1px solid #f0e6da;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+}
+
+.donor-name-cell { font-weight: 700; color: #4a3728; }
+.email-cell { color: #8c7b6d; }
+
+.admin-icons-footer.no-border {
+    background: transparent;
+    border-top: none;
+    justify-content: flex-start;
+    gap: 15px;
+}
+
+.icon-btn { background: transparent; border: none; cursor: pointer; color: #8c7b6d; font-size: 18px; transition: 0.2s; }
+.icon-btn:hover { transform: scale(1.2); }
+.icon-btn.edit:hover { color: #c49667; }
+.icon-btn.delete:hover { color: #ff4d4f; }
+
+/* עיצוב הטופס והעלאה */
+.friendly-form { display: flex; flex-direction: column; gap: 12px; }
+.form-group { display: flex; flex-direction: column; gap: 4px; }
+.form-group label { font-weight: 600; color: #4a3728; font-size: 13px; }
+
+.upload-container { display: flex; flex-direction: column; gap: 10px; align-items: flex-start; width: 100%; }
+.upload-btn {
+  border: 1px dashed #c49667 !important;
+  color: #c49667 !important;
+  width: 100%;
+  height: 40px;
+}
+
+.image-preview {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px;
+  background: #fdfbf8;
+  border-radius: 8px;
+  border: 1px solid #f0e6da;
+  width: 100%;
+}
+
+.image-preview img { width: 50px; height: 50px; object-fit: contain; border-radius: 4px; }
+.modal-header-text { color: #4a3728; font-weight: bold; }

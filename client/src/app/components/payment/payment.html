@@ -1,0 +1,56 @@
+<div class="register-wrapper"> <nz-card [nzBordered]="false" class="register-card"> <div class="register-header">
+      <h2>תשלום מאובטח</h2>
+      <p>נא להזין את פרטי האשראי לסיום הרכישה</p>
+    </div>
+
+    <form nz-form nzLayout="vertical" (ngSubmit)="pay()">
+     
+      <nz-form-item>
+        <nz-form-label [nzNoColon]="true">שם בעל הכרטיס</nz-form-label>
+        <nz-form-control [nzHasFeedback]="true" [nzValidateStatus]="submitted ? (isCardHolderValid ? 'success' : 'error') : ''" nzErrorTip="נא להזין שם מלא תקין">
+          <nz-input-group nzPrefixIcon="user">
+            <input type="text" nz-input [(ngModel)]="payment.cardHolder" name="cardHolder" placeholder="שם בעל הכרטיס" />
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label [nzNoColon]="true">מספר כרטיס</nz-form-label>
+        <nz-form-control [nzHasFeedback]="true" [nzValidateStatus]="submitted ? (isCardNumberValid ? 'success' : 'error') : ''" nzErrorTip="מספר כרטיס חייב להכיל 16 ספרות">
+          <nz-input-group nzPrefixIcon="credit-card">
+            <input type="text" nz-input [(ngModel)]="payment.cardNumber" name="cardNumber" placeholder="0000 0000 0000 0000" />
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+
+      <div style="display: flex; gap: 16px;">
+        <nz-form-item style="flex: 1;">
+          <nz-form-label [nzNoColon]="true">תוקף</nz-form-label>
+          <nz-form-control [nzHasFeedback]="true" [nzValidateStatus]="submitted ? (isExpiryValid ? 'success' : 'error') : ''" nzErrorTip="MM/YY">
+            <nz-input-group nzPrefixIcon="calendar">
+              <input type="text" nz-input [(ngModel)]="payment.expiry" name="expiry" placeholder="MM/YY" />
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item style="flex: 1;">
+          <nz-form-label [nzNoColon]="true">CVV</nz-form-label>
+          <nz-form-control [nzHasFeedback]="true" [nzValidateStatus]="submitted ? (isCvvValid ? 'success' : 'error') : ''" nzErrorTip="3 ספרות">
+            <nz-input-group nzPrefixIcon="lock">
+              <input type="password" nz-input [(ngModel)]="payment.cvv" name="cvv" placeholder="123" maxlength="3" />
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+
+      <button nz-button nzType="primary" nzBlock [nzLoading]="isLoading" class="register-btn">
+        בצע תשלום
+      </button>
+
+      <div *ngIf="success" style="margin-top: 15px; text-align: center; color: #52c41a;">
+        <span nz-icon nzType="check-circle" nzTheme="fill"></span> התשלום בוצע בהצלחה!
+      </div>
+     
+    </form>
+  </nz-card>
+</div>
