@@ -83,7 +83,13 @@ try
     builder.Services.AddScoped<IUserService, UserService>();
     builder.Services.AddScoped<ITokenService, TokenService>();
 
-    // 6. CORS Configuration
+    // 6. Redis Cache
+    builder.Services.AddStackExchangeRedisCache(options =>
+    {
+        options.Configuration = builder.Configuration["Redis:ConnectionString"] ?? "localhost:6379";
+    });
+
+    // 7. CORS Configuration
     builder.Services.AddCors(options =>
     {
         options.AddPolicy("AllowAngular", policy => policy
@@ -134,13 +140,7 @@ try
     builder.Services.AddAuthorization();
     builder.Services.AddLogging();
 
-    // 8. Redis Cache
-    builder.Services.AddStackExchangeRedisCache(options =>
-    {
-        // חשוב: כשמריצים מחוץ ל-Docker, השתמשי ב-localhost
-        options.Configuration = "localhost:6379"; 
-        options.InstanceName = "StoreApi_";
-    });
+   
 
     var app = builder.Build();
 

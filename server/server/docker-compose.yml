@@ -19,7 +19,7 @@ services:
 
   redis:
     image: redis:7-alpine
-    container_name: storeapi-redis
+    container_name: redis
     ports:
       - "6379:6379"
 
@@ -34,7 +34,6 @@ services:
       ASPNETCORE_ENVIRONMENT: "Development"
       ConnectionStrings__DefaultConnection: "Server=sqlserver,1433;Database=storedb;User Id=sa;Password=Strong@Passw0rd!;TrustServerCertificate=True;"
       Redis__ConnectionString: "redis:6379"
-      
     depends_on:
       sqlserver:
         condition: service_healthy

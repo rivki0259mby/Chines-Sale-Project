@@ -1,12 +1,14 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Distributed;
 using server.DTOs;
 using server.Interfaces;
 using server.Models;
 using server.Repositories;
 using server.Services;
 using System.Text;
+using System.Text.Json;
 
 namespace server.Controllers
 {
@@ -16,19 +18,42 @@ namespace server.Controllers
     {
         private readonly IGiftService _giftService;
         private readonly ILogger<GiftController> _logger;
+        private readonly IDistributedCache _cache;
 
 
-        public GiftController(IGiftService giftService, ILogger<GiftController> logger)
+        public GiftController(IGiftService giftService, ILogger<GiftController> logger, IDistributedCache cache)
         {
             _giftService = giftService;
             _logger = logger;
+            _cache = cache;
         }
 
         [HttpGet]
         [ProducesResponseType(typeof(IEnumerable<GiftResponseDto>), StatusCodes.Status200OK)]
         public async Task<ActionResult<IEnumerable<GiftResponseDto>>> GetAll()
         {
+            var cacheKey = "all-gifts";
+
+            var cachedData = await _cache.GetStringAsync(cacheKey);
+
+            if (!string.IsNullOrEmpty(cachedData))
+            {
+                _logger.LogInformation("CACHE HIT");
+                var giftsFromCache = JsonSerializer.Deserialize<IEnumerable<GiftResponseDto>>(cachedData);
+                return Ok(giftsFromCache);
+            }
+
+            _logger.LogInformation("CACHE MISS");
+
             var gifts = await _giftService.GetAll();
+
+            var serializedData = JsonSerializer.Serialize(gifts);
+            var cacheOptions = new DistributedCacheEntryOptions
+            {
+                AbsoluteExpirationRelativeToNow = TimeSpan.FromSeconds(300)
+            };
+            await _cache.SetStringAsync(cacheKey, serializedData, cacheOptions);
+
             return Ok(gifts);
         }
         [HttpGet("{id}")]
